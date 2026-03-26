@@ -1,6 +1,5 @@
 <?php
     require 'config.php';
-    $timeStamp = (new \DateTime())->format('Y-m-d_H-i-s');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -37,8 +36,7 @@
         <input type="text" name="imap" placeholder="imap.tuservidor.com" required>
         <input type="number" name="port" value="993">
 
-        <button type="submit" id="btnSubmit"
-                onclick="const emailStr = document.getElementById('email').value">
+        <button type="submit" id="btnSubmit">
             Iniciar Backup
         </button>
     </form>
@@ -54,6 +52,7 @@
 <iframe name="worker" style="display:none;"></iframe>
 
 <script>
+    let emailStr, now;
 
     function toggleCpanelField() {
         const isCpanel = document.getElementById('auth_type').value === 'cpanel';
@@ -66,6 +65,9 @@
     form.addEventListener('submit', function() {
         document.getElementById('progressContainer').style.display = 'block';
         document.getElementById('btnSubmit').disabled = true;
+
+        emailStr = document.getElementById('email').value;
+        now = new Date();
 
         if(interval) clearInterval(interval);
 
@@ -81,7 +83,7 @@
                         document.getElementById('btnSubmit').disabled = false;
 
                         window.parent.document.getElementById('resultArea').innerHTML =
-                            "<br><a href='backups/" + zipFile() + "' "
+                            "<br><a href='backups/" + baseName(zipFile()) + "' "
                                 + "style='padding:15px; background:#28a745; color:white; text-decoration:none; "
                                 + "border-radius:5px; display:inline-block;'>"
                                     + "DESCARGAR BACKUP ZIP"
@@ -94,9 +96,22 @@
 
     function zipFile ()
     {
+        let y = now.getFullYear(), m = (now.getMonth() + 1).toString().padStart(2, '0'),
+            d = (now.getDate()).toString().padStart(2, '0'), h = (now.getHours() - 1).toString().padStart(2, '0'),
+            i = now.getMinutes().toString().padStart(2, '0'), s = now.getSeconds().toString().padStart(2, '0'),
+            timeStamp = y + '-' + m + '-' + d + '_' + h + '-' + i + '-' + s;
+
         return '<?= BACKUP_PATH ?>'
-                + emailStr.replace('/[^a-zA-Z0-9]/', '_')
-                + '_<?= $timeStamp ?>.zip';
+                + emailStr.replaceAll(new RegExp('[^a-zA-Z0-9]', 'g'), '_')
+                + '_' + timeStamp + '.zip';
+    }
+
+    function baseName(str)
+    {
+        var base = str.substring(str.lastIndexOf('/') + 1);
+        //if(base.lastIndexOf(".") != -1)
+        //    base = base.substring(0, base.lastIndexOf("."));
+        return base;
     }
 </script>
 </body>

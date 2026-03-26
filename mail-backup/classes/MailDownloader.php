@@ -29,7 +29,7 @@ class MailDownloader {
     }
 
     public function downloadAll($folders, $basePath) {
-        $limit = 10; // Límite de correos por carpeta
+        $limit = 3; // Límite de correos por carpeta
 
         // 1. Contar mensajes totales para el cálculo del porcentaje
         // (Consideramos el límite en el conteo para que la barra sea precisa)
