@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 header('Cache-Control: no-cache, must-revalidate'); // Evita que el navegador cachee la respuesta
 
 // Recuperar el ID de la cookie
-$backup_id = isset($_COOKIE['backup_id']) ? $_COOKIE['backup_id'] : '';
+$backup_id = $_COOKIE['backup_id'] ?? '';
 $progress_file = TEMP_PATH . "progress_{$backup_id}.txt";
 
 if ($backup_id && file_exists($progress_file)) {
