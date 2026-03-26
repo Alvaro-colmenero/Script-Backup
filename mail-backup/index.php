@@ -63,8 +63,12 @@
         if(interval) clearInterval(interval);
 
         interval = setInterval(() => {
+            console.log('Enviando peticion...');
             fetch('progress.php?t=' + Date.now())
-                .then(res => res.json())
+                .then(res => {
+                    console.log('Recibiendo datos...', res.json())
+                    return res.json();
+                })
                 .then(data => {
                     document.getElementById('progressBar').style.width = data.percent + '%';
                     document.getElementById('progressText').textContent = data.status + ' (' + data.percent + '%)';

@@ -9,7 +9,7 @@ ini_set('memory_limit', '512M');
 
 // Crear un ID único para este backup para que no se mezclen si hay varios usuarios
 $backup_id = md5($_POST['email'] . time());
-$progress_file = __DIR__ . "/temp_progress_{$backup_id}.txt";
+$progress_file = __DIR__ . "/temp/progress_{$backup_id}.txt";
 
 // Guardar el ID en una cookie para que progress.php sepa qué archivo leer
 setcookie('backup_id', $backup_id, time() + 3600, "/");

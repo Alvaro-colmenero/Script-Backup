@@ -1,0 +1,27 @@
+Recibiendo datos...
+Promise {<pending>}
+[[Prototype]]
+:
+Promise
+[[PromiseState]]
+:
+"fulfilled"
+[[PromiseResult]]
+:
+Object
+percent
+:
+0
+status
+:
+"Iniciando transferencia..."
+[[Prototype]]
+:
+Object
+index.php?_ijt=kupkk…d=RELOAD_ON_SAVE:81 Error: TypeError: Failed to execute 'json' on 'Response': body stream already read
+    at index.php?_ijt=kupkk…ELOAD_ON_SAVE:70:32
+(anonymous)	@	index.php?_ijt=kupkk…d=RELOAD_ON_SAVE:81
+Promise.catch
+(anonymous)	@	index.php?_ijt=kupkk…d=RELOAD_ON_SAVE:81
+setInterval
+(anonymous)	@	index.php?_ijt=kupkk…d=RELOAD_ON_SAVE:65
