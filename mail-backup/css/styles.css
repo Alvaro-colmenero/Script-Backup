@@ -81,32 +81,3 @@ button:hover {
     }
 }
 
-/* Barra de progreso */
-.progress-container {
-    width: 100%;
-    background-color: #eee;
-    border-radius: 12px;
-    margin-top: 20px;
-    position: relative;
-    height: 25px;
-    overflow: hidden;
-}
-
-.progress-bar {
-    height: 100%;
-    width: 0%;
-    background-color: #4a90e2;
-    border-radius: 12px 0 0 12px;
-    transition: width 0.3s ease;
-}
-
-.progress-container span {
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    top: 0;
-    left: 0;
-    line-height: 25px;
-    font-weight: 500;
-    color: #fff;
-}

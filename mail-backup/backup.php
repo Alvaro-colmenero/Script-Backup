@@ -1,65 +1,58 @@
 <?php
-
+session_start();
 require 'config.php';
 require 'classes/ImapClient.php';
 require 'classes/MailDownloader.php';
 require 'classes/ZipManager.php';
 
-// Captura de datos
+// Inicializar progreso
+$_SESSION['progress_percent'] = 5;
+$_SESSION['progress_status'] = "Conectando al servidor...";
+session_write_close();
+
 $auth_type = $_POST['auth_type'] ?? 'direct';
-$target_email = $_POST['email'];
+$email = $_POST['email'];
 $password = $_POST['password'];
 $host = $_POST['imap'];
 $port = $_POST['port'];
 
-/**
- * LÓGICA DE AUTENTICACIÓN
- * Si es cPanel, el usuario IMAP debe ser: usuario_cpanel|email_objetivo
- */
-$login_user = $target_email;
-if ($auth_type === 'cpanel' && !empty($_POST['cpanel_user'])) {
-    $login_user = $_POST['cpanel_user'] . "|" . $target_email;
-}
+$login_user = ($auth_type === 'cpanel') ? $_POST['cpanel_user'] . "|" . $email : $email;
 
-$emailSafe = preg_replace('/[^a-zA-Z0-9]/', '_', $target_email);
-$fecha = date('Y-m-d_H-i-s');
-$backupDir = BACKUP_PATH . $emailSafe . '_' . $fecha;
-
-if (!mkdir($backupDir, 0777, true)) {
-    die("Error al crear el directorio de backup.");
-}
+$emailSafe = preg_replace('/[^a-zA-Z0-9]/', '_', $email);
+$backupDir = BACKUP_PATH . $emailSafe . '_' . date('Y-m-d_H-i-s');
+mkdir($backupDir, 0777, true);
 
 try {
-    // Conectar IMAP usando el login procesado
     $imap = new ImapClient();
     $imap->connect($login_user, $password, $host, $port);
 
-    // Obtener carpetas
     $folders = $imap->getFolders();
 
-    if (!$folders) {
-        die("No se encontraron carpetas o error en la autenticación.");
-    }
-
-    // Descargar correos
     $downloader = new MailDownloader($imap);
     $downloader->downloadAll($folders, $backupDir);
 
-    // Cerrar conexión
-    $imap->close();
+    // Comprimir
+    session_start();
+    $_SESSION['progress_status'] = "Comprimiendo archivos...";
+    session_write_close();
 
-    // Crear zip
     $zipFile = $backupDir . '.zip';
     $zip = new ZipManager();
+    $zip->createZip($backupDir, $zipFile);
 
-    if ($zip->createZip($backupDir, $zipFile)) {
-        echo "<h3>Backup completado con éxito</h3>";
-        echo "<p>Cuenta respaldada: $target_email</p>";
-        echo "<a href='backups/" . basename($zipFile) . "' class='btn-download' download>Descargar archivo ZIP</a>";
-    } else {
-        echo "Error al generar el archivo comprimido.";
-    }
+    // Finalizar
+    session_start();
+    $_SESSION['progress_percent'] = 100;
+    $_SESSION['progress_status'] = "¡Completado!";
+    session_write_close();
+
+    // Enviar respuesta al iframe (se mostrará al usuario)
+    echo "<script>
+        window.parent.document.getElementById('resultArea').innerHTML = \"<h3>Backup listo</h3><a href='backups/" . basename($zipFile) . "' download>Descargar ZIP</a>\";
+    </script>";
 
 } catch (Exception $e) {
-    echo "Error crítico: " . $e->getMessage();
+    session_start();
+    $_SESSION['progress_status'] = "Error: " . $e->getMessage();
+    session_write_close();
 }
