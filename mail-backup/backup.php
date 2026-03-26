@@ -5,41 +5,61 @@ require 'classes/ImapClient.php';
 require 'classes/MailDownloader.php';
 require 'classes/ZipManager.php';
 
-$email = $_POST['email'];
+// Captura de datos
+$auth_type = $_POST['auth_type'] ?? 'direct';
+$target_email = $_POST['email'];
 $password = $_POST['password'];
 $host = $_POST['imap'];
 $port = $_POST['port'];
 
-$emailSafe = preg_replace('/[^a-zA-Z0-9]/', '_', $email);
-$fecha = date('Y-m-d_H-i-s');
-
-$backupDir = BACKUP_PATH . $emailSafe . '_' . $fecha;
-
-mkdir($backupDir, 0777, true);
-
-// conectar IMAP
-$imap = new ImapClient();
-$imap->connect($email, $password, $host, $port);
-
-// obtener carpetas
-$folders = $imap->getFolders();
-
-if (!$folders) {
-    die("No se encontraron carpetas.");
+/**
+ * LÓGICA DE AUTENTICACIÓN
+ * Si es cPanel, el usuario IMAP debe ser: usuario_cpanel|email_objetivo
+ */
+$login_user = $target_email;
+if ($auth_type === 'cpanel' && !empty($_POST['cpanel_user'])) {
+    $login_user = $_POST['cpanel_user'] . "|" . $target_email;
 }
 
-// descargar correos
-$downloader = new MailDownloader($imap);
-$downloader->downloadAll($folders, $backupDir);
+$emailSafe = preg_replace('/[^a-zA-Z0-9]/', '_', $target_email);
+$fecha = date('Y-m-d_H-i-s');
+$backupDir = BACKUP_PATH . $emailSafe . '_' . $fecha;
 
-// cerrar conexión
-$imap->close();
+if (!mkdir($backupDir, 0777, true)) {
+    die("Error al crear el directorio de backup.");
+}
 
-// crear zip
-$zipFile = $backupDir . '.zip';
+try {
+    // Conectar IMAP usando el login procesado
+    $imap = new ImapClient();
+    $imap->connect($login_user, $password, $host, $port);
 
-$zip = new ZipManager();
-$zip->createZip($backupDir, $zipFile);
+    // Obtener carpetas
+    $folders = $imap->getFolders();
 
-echo "<h3>Backup completado</h3>";
-echo "<a href='backups/" . basename($zipFile) . "' download>Descargar ZIP</a>";
+    if (!$folders) {
+        die("No se encontraron carpetas o error en la autenticación.");
+    }
+
+    // Descargar correos
+    $downloader = new MailDownloader($imap);
+    $downloader->downloadAll($folders, $backupDir);
+
+    // Cerrar conexión
+    $imap->close();
+
+    // Crear zip
+    $zipFile = $backupDir . '.zip';
+    $zip = new ZipManager();
+
+    if ($zip->createZip($backupDir, $zipFile)) {
+        echo "<h3>Backup completado con éxito</h3>";
+        echo "<p>Cuenta respaldada: $target_email</p>";
+        echo "<a href='backups/" . basename($zipFile) . "' class='btn-download' download>Descargar archivo ZIP</a>";
+    } else {
+        echo "Error al generar el archivo comprimido.";
+    }
+
+} catch (Exception $e) {
+    echo "Error crítico: " . $e->getMessage();
+}

@@ -5,13 +5,15 @@ class ImapClient {
     private $connection;
     private $mailbox;
 
-    public function connect($email, $password, $host, $port) {
+    public function connect($user, $password, $host, $port) {
+        // Estructura de conexión estándar SSL
         $this->mailbox = "{{$host}:{$port}/imap/ssl/novalidate-cert}";
 
-        $this->connection = imap_open($this->mailbox, $email, $password);
+        // Usamos @ para manejar el error nosotros mismos y evitar el die() directo del sistema
+        $this->connection = @imap_open($this->mailbox, $user, $password);
 
         if (!$this->connection) {
-            die('Error IMAP: ' . imap_last_error());
+            throw new Exception('Fallo en la conexión IMAP: ' . imap_last_error());
         }
     }
 
@@ -20,7 +22,7 @@ class ImapClient {
     }
 
     public function openFolder($folder) {
-        imap_reopen($this->connection, $folder);
+        return imap_reopen($this->connection, $folder);
     }
 
     public function getMessageCount() {
@@ -36,6 +38,8 @@ class ImapClient {
     }
 
     public function close() {
-        imap_close($this->connection);
+        if ($this->connection) {
+            imap_close($this->connection);
+        }
     }
 }
