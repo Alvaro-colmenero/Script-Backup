@@ -1,6 +1,7 @@
 <?php
 
 class MailDownloader {
+
     private $imap;
     private $progressFile;
 
@@ -8,26 +9,41 @@ class MailDownloader {
         $this->imap = $imapClient;
     }
 
+    /**
+     * Establece el archivo donde se escribirá el progreso para la barra real
+     */
     public function setProgressFile($file) {
         $this->progressFile = $file;
     }
 
+    /**
+     * Función interna para actualizar el archivo .txt de progreso
+     */
     private function updateRealProgress($percent, $status) {
         if ($this->progressFile) {
-            file_put_contents($this->progressFile, json_encode(['percent' => $percent, 'status' => $status]));
+            file_put_contents($this->progressFile, json_encode([
+                'percent' => $percent,
+                'status' => $status
+            ]));
         }
     }
 
     public function downloadAll($folders, $basePath) {
+        $limit = 500; // Límite de correos por carpeta
+
+        // 1. Contar mensajes totales para el cálculo del porcentaje
+        // (Consideramos el límite en el conteo para que la barra sea precisa)
         $totalGlobal = 0;
         foreach ($folders as $folder) {
             $this->imap->openFolder($folder);
-            $totalGlobal += $this->imap->getMessageCount();
+            $count = $this->imap->getMessageCount();
+            $totalGlobal += ($count > $limit) ? $limit : $count;
         }
 
+        if ($totalGlobal == 0) $totalGlobal = 1;
         $processed = 0;
-        $totalGlobal = ($totalGlobal == 0) ? 1 : $totalGlobal;
 
+        // 2. Proceso de descarga
         foreach ($folders as $folder) {
             $decodedFolder = imap_utf7_decode(str_replace($this->getMailboxPrefix(), '', $folder));
             $safeFolder = str_replace(['/', '\\'], '_', $decodedFolder);
@@ -38,16 +54,25 @@ class MailDownloader {
             }
 
             $this->imap->openFolder($folder);
-            $count = $this->imap->getMessageCount();
+            $messageCount = $this->imap->getMessageCount();
 
-            for ($i = 1; $i <= $count; $i++) {
+            // Calculamos desde dónde empezar para obtener los últimos 500
+            // IMAP cuenta de 1 a N, siendo N el más reciente.
+            $start = ($messageCount - $limit > 0) ? ($messageCount - $limit + 1) : 1;
+
+            // Recorremos desde el más reciente hacia atrás
+            for ($i = $messageCount; $i >= $start; $i--) {
+
                 $header = $this->imap->getHeaders($i);
                 $body = $this->imap->getBody($i);
-                file_put_contents($folderPath . "/msg_$i.eml", $header . "\n" . $body);
+                $emailContent = $header . "\n" . $body;
+
+                // Guardamos el archivo .eml
+                file_put_contents($folderPath . "/msg_$i.eml", $emailContent);
 
                 $processed++;
 
-                // Actualizamos el archivo de texto
+                // Actualizamos el progreso en el archivo .txt (reservamos el 10% final para el ZIP)
                 $percent = round(($processed / $totalGlobal) * 90);
                 $this->updateRealProgress($percent, "Descargando: $processed de $totalGlobal correos...");
             }
@@ -56,6 +81,9 @@ class MailDownloader {
 
     private function getMailboxPrefix() {
         $folders = $this->imap->getFolders();
-        return (isset($folders[0])) ? strstr($folders[0], '}', true) . '}' : '';
+        if (isset($folders[0])) {
+            return strstr($folders[0], '}', true) . '}';
+        }
+        return '';
     }
 }
