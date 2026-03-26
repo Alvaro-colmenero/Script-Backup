@@ -25,3 +25,34 @@ Promise.catch
 (anonymous)	@	index.php?_ijt=kupkk…d=RELOAD_ON_SAVE:81
 setInterval
 (anonymous)	@	index.php?_ijt=kupkk…d=RELOAD_ON_SAVE:65
+
+
+interval = setInterval(() => {
+    // Usamos Date.now() para evitar la caché y asegurar un hilo nuevo
+    fetch('progress.php?t=' + Date.now())
+        .then(response => {
+            if (!response.ok) throw new Error("Error en la red");
+            return response.json(); // Solo se lee una vez aquí
+        })
+        .then(data => {
+            console.log("Datos reales:", data);
+
+            const pBar = document.getElementById('progressBar');
+            const pText = document.getElementById('progressText');
+
+            if (data && typeof data.percent !== 'undefined') {
+                // Forzamos el renderizado de la barra
+                const porcentaje = parseInt(data.percent);
+                pBar.style.width = porcentaje + '%';
+                pText.textContent = data.status + ' (' + porcentaje + '%)';
+
+                if (porcentaje >= 100) {
+                    clearInterval(interval);
+                    document.getElementById('btnSubmit').disabled = false;
+                }
+            }
+        })
+        .catch(err => {
+            console.error("Error en el ciclo de progreso:", err.message);
+        });
+}, 1000);
