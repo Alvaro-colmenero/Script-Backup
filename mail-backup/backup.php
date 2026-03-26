@@ -10,7 +10,10 @@ $password = $_POST['password'];
 $host = $_POST['imap'];
 $port = $_POST['port'];
 
-$backupDir = BACKUP_PATH . md5($email . time());
+$emailSafe = preg_replace('/[^a-zA-Z0-9]/', '_', $email);
+$fecha = date('Y-m-d_H-i-s');
+
+$backupDir = BACKUP_PATH . $emailSafe . '_' . $fecha;
 
 mkdir($backupDir, 0777, true);
 
