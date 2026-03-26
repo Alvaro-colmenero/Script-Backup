@@ -1,9 +1,9 @@
 <?php
 session_start();
-header('Content-Type: application/json');
+// Leemos y cerramos inmediatamente para no bloquear el script de backup
+$percent = isset($_SESSION['progress_percent']) ? $_SESSION['progress_percent'] : 0;
+$status  = isset($_SESSION['progress_status']) ? $_SESSION['progress_status'] : 'Cargando...';
+session_write_close();
 
-// Devolvemos el porcentaje guardado en la sesión
-echo json_encode([
-    'percentage' => $_SESSION['backup_progress'] ?? 0,
-    'status' => $_SESSION['backup_status'] ?? 'Iniciando...'
-]);
+header('Content-Type: application/json');
+echo json_encode(['percent' => $percent, 'status' => $status]);

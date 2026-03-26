@@ -8,17 +8,15 @@ class MailDownloader {
     }
 
     public function downloadAll($folders, $basePath) {
-        // 1. Calcular total global para el porcentaje
         $totalGlobal = 0;
         foreach ($folders as $folder) {
             $this->imap->openFolder($folder);
             $totalGlobal += $this->imap->getMessageCount();
         }
 
-        if ($totalGlobal == 0) $totalGlobal = 1; // Evitar división por cero
         $processed = 0;
+        if ($totalGlobal == 0) $totalGlobal = 1;
 
-        // 2. Descargar
         foreach ($folders as $folder) {
             $decodedFolder = imap_utf7_decode(str_replace($this->getMailboxPrefix(), '', $folder));
             $safeFolder = str_replace(['/', '\\'], '_', $decodedFolder);
@@ -38,10 +36,10 @@ class MailDownloader {
 
                 $processed++;
 
-                // Actualizar sesión para el progreso real
-                if ($processed % 5 == 0 || $processed == $totalGlobal) { // Actualizar cada 5 correos para no saturar
+                // Actualizamos sesión cada 2 correos para fluidez
+                if ($processed % 2 == 0 || $processed == $totalGlobal) {
                     session_start();
-                    $_SESSION['progress_percent'] = round(($processed / $totalGlobal) * 90); // Reservamos 10% para el ZIP
+                    $_SESSION['progress_percent'] = round(($processed / $totalGlobal) * 90);
                     $_SESSION['progress_status'] = "Descargando: $processed de $totalGlobal correos...";
                     session_write_close();
                 }
@@ -51,6 +49,6 @@ class MailDownloader {
 
     private function getMailboxPrefix() {
         $folders = $this->imap->getFolders();
-        return strstr($folders[0], '}', true) . '}';
+        return (isset($folders[0])) ? strstr($folders[0], '}', true) . '}' : '';
     }
 }
