@@ -4,11 +4,22 @@ require 'classes/ImapClient.php';
 require 'classes/MailDownloader.php';
 require 'classes/ZipManager.php';
 
-// Iniciar sesión y limpiar progreso anterior
-session_start();
-$_SESSION['progress_percent'] = 0;
-$_SESSION['progress_status'] = "Estableciendo conexión...";
-session_write_close();
+set_time_limit(0);
+ini_set('memory_limit', '512M');
+
+// Crear un ID único para este backup para que no se mezclen si hay varios usuarios
+$backup_id = md5($_POST['email'] . time());
+$progress_file = __DIR__ . "/temp_progress_{$backup_id}.txt";
+
+// Guardar el ID en una cookie para que progress.php sepa qué archivo leer
+setcookie('backup_id', $backup_id, time() + 3600, "/");
+
+function updateProgress($percent, $status, $file) {
+    $data = json_encode(['percent' => $percent, 'status' => $status]);
+    file_put_contents($file, $data);
+}
+
+updateProgress(5, "Conectando al servidor IMAP...", $progress_file);
 
 $auth_type = $_POST['auth_type'] ?? 'direct';
 $email = $_POST['email'];
@@ -19,7 +30,7 @@ $port = $_POST['port'];
 $login_user = ($auth_type === 'cpanel') ? $_POST['cpanel_user'] . "|" . $email : $email;
 
 $emailSafe = preg_replace('/[^a-zA-Z0-9]/', '_', $email);
-$backupDir = BACKUP_PATH . $emailSafe . '_' . date('Y-m-d_H-s');
+$backupDir = BACKUP_PATH . $emailSafe . '_' . date('Y-m-d_H-i-s');
 mkdir($backupDir, 0777, true);
 
 try {
@@ -28,31 +39,26 @@ try {
 
     $folders = $imap->getFolders();
 
+    // Pasamos el archivo de progreso al downloader
     $downloader = new MailDownloader($imap);
+    $downloader->setProgressFile($progress_file);
     $downloader->downloadAll($folders, $backupDir);
 
-    // Compresión
-    session_start();
-    $_SESSION['progress_percent'] = 95;
-    $_SESSION['progress_status'] = "Creando archivo comprimido...";
-    session_write_close();
+    updateProgress(95, "Comprimiendo archivos...", $progress_file);
 
     $zipFile = $backupDir . '.zip';
     $zip = new ZipManager();
     $zip->createZip($backupDir, $zipFile);
 
-    session_start();
-    $_SESSION['progress_percent'] = 100;
-    $_SESSION['progress_status'] = "¡Backup completado!";
-    session_write_close();
+    updateProgress(100, "¡Finalizado!", $progress_file);
 
     echo "<script>
-        window.parent.document.getElementById('resultArea').innerHTML = \"<a href='backups/" . basename($zipFile) . "' class='btn-download' download>Descargar Backup ZIP</a>\";
+        window.parent.document.getElementById('resultArea').innerHTML = \"<br><a href='backups/" . basename($zipFile) . "' style='padding:15px; background:#28a745; color:white; text-decoration:none; border-radius:5px; display:inline-block;'>DESCARGAR BACKUP ZIP</a>\";
+        window.parent.finishBackup();
     </script>";
 
+    // Borrar archivo temporal después de un rato (opcional)
 } catch (Exception $e) {
-    session_start();
-    $_SESSION['progress_status'] = "Error: " . $e->getMessage();
-    session_write_close();
+    updateProgress(0, "Error: " . $e->getMessage(), $progress_file);
     echo "<script>window.parent.document.getElementById('resultArea').innerHTML = '<b style=\"color:red\">Error: " . addslashes($e->getMessage()) . "</b>';</script>";
 }

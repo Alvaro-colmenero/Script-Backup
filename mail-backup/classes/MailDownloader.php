@@ -2,9 +2,20 @@
 
 class MailDownloader {
     private $imap;
+    private $progressFile;
 
     public function __construct($imapClient) {
         $this->imap = $imapClient;
+    }
+
+    public function setProgressFile($file) {
+        $this->progressFile = $file;
+    }
+
+    private function updateRealProgress($percent, $status) {
+        if ($this->progressFile) {
+            file_put_contents($this->progressFile, json_encode(['percent' => $percent, 'status' => $status]));
+        }
     }
 
     public function downloadAll($folders, $basePath) {
@@ -15,7 +26,7 @@ class MailDownloader {
         }
 
         $processed = 0;
-        if ($totalGlobal == 0) $totalGlobal = 1;
+        $totalGlobal = ($totalGlobal == 0) ? 1 : $totalGlobal;
 
         foreach ($folders as $folder) {
             $decodedFolder = imap_utf7_decode(str_replace($this->getMailboxPrefix(), '', $folder));
@@ -36,13 +47,9 @@ class MailDownloader {
 
                 $processed++;
 
-                // Actualizamos sesión cada 2 correos para fluidez
-                if ($processed % 2 == 0 || $processed == $totalGlobal) {
-                    session_start();
-                    $_SESSION['progress_percent'] = round(($processed / $totalGlobal) * 90);
-                    $_SESSION['progress_status'] = "Descargando: $processed de $totalGlobal correos...";
-                    session_write_close();
-                }
+                // Actualizamos el archivo de texto
+                $percent = round(($processed / $totalGlobal) * 90);
+                $this->updateRealProgress($percent, "Descargando: $processed de $totalGlobal correos...");
             }
         }
     }

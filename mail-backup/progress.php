@@ -1,9 +1,17 @@
 <?php
-session_start();
-// Leemos y cerramos inmediatamente para no bloquear el script de backup
-$percent = isset($_SESSION['progress_percent']) ? $_SESSION['progress_percent'] : 0;
-$status  = isset($_SESSION['progress_status']) ? $_SESSION['progress_status'] : 'Cargando...';
-session_write_close();
-
 header('Content-Type: application/json');
-echo json_encode(['percent' => $percent, 'status' => $status]);
+
+$backup_id = isset($_COOKIE['backup_id']) ? $_COOKIE['backup_id'] : '';
+$progress_file = __DIR__ . "/temp_progress_{$backup_id}.txt";
+
+if ($backup_id && file_exists($progress_file)) {
+    echo file_get_contents($progress_file);
+
+    // Si el proceso terminó (100%), borramos el archivo temporal
+    $data = json_decode(file_get_contents($progress_file), true);
+    if (isset($data['percent']) && $data['percent'] >= 100) {
+        // unlink($progress_file); // Opcional: borrar al terminar
+    }
+} else {
+    echo json_encode(['percent' => 0, 'status' => 'Iniciando transferencia...']);
+}
