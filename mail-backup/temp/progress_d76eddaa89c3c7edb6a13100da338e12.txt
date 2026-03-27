@@ -1,1 +1,0 @@
-{"percent":0,"status":"Error IMAP: Error de Autenticaci\u00f3n: Can't open mailbox {https:\/\/www.tonexrotulos.es\/cpanel:993\/imap\/ssl\/novalidate-cert}: invalid remote specification"}

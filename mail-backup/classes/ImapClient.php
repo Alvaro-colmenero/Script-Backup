@@ -13,7 +13,7 @@ class ImapClient {
         $this->connection = @imap_open($this->mailbox, $user, $password);
 
         if (!$this->connection) {
-            throw new Exception('Fallo en la conexión IMAP: ' . imap_last_error());
+            throw new Exception(imap_last_error());
         }
     }
 

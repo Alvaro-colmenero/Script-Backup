@@ -12,14 +12,16 @@ class MailDownloader {
     /**
      * Establece el archivo donde se escribirá el progreso para la barra real
      */
-    public function setProgressFile($file) {
+    public function setProgressFile($file): void
+    {
         $this->progressFile = $file;
     }
 
     /**
      * Función interna para actualizar el archivo .txt de progreso
      */
-    public function updateRealProgress($percent, $status) {
+    public function updateRealProgress($percent, $status): void
+    {
         if ($this->progressFile) {
             file_put_contents($this->progressFile, json_encode([
                 'percent' => $percent,
@@ -28,7 +30,8 @@ class MailDownloader {
         }
     }
 
-    public function downloadAll($folders, $basePath) {
+    public function downloadAll($folders, $basePath): void
+    {
         $limit = 3; // Límite de correos por carpeta
 
         // 1. Contar mensajes totales para el cálculo del porcentaje

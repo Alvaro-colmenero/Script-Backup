@@ -1,1 +1,0 @@
-{"percent":0,"status":"Error IMAP: Can't open mailbox {109.73.173.66\/cpanel:993\/imap\/ssl\/novalidate-cert}: invalid remote specification"}

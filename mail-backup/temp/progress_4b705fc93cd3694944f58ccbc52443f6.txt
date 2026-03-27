@@ -1,1 +1,0 @@
-{"percent":1,"status":"Conectando con el servidor IMAP..."}

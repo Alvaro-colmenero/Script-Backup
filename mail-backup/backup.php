@@ -29,19 +29,17 @@ try {
 
     $downloader->updateRealProgress(100, "¡Finalizado!");
 
-    // Respuesta para el iframe
-    echo "<script>
-        window.parent.document.getElementById('resultArea').innerHTML =
-        \"<br><a href='backups/"
-            . basename($zipFile)
-            . "' style='padding:15px; background:#28a745; color:white; text-decoration:none;"
-            . " border-radius:5px; display:inline-block;'>"
-            . "DESCARGAR BACKUP ZIP"
-        . "</a>\";
-        window.parent.finishBackup();
-    </script>";
-
 } catch (Exception $e) {
     updateProgress(0, "Error: " . $e->getMessage(), $progress_file);
-    echo "<script>window.parent.document.getElementById('resultArea').innerHTML = '<b style=\"color:red\">Error: " . addslashes($e->getMessage()) . "</b>';</script>";
+    //echo "<script>window.parent.document.getElementById('resultArea').innerHTML = '<b style=\"color:red\">Error: " . addslashes($e->getMessage()) . "</b>';</script>";
+}
+
+function updateProgress($percent, $status, $progressFile): void
+{
+    if ($progressFile) {
+        file_put_contents($progressFile, json_encode([
+            'percent' => $percent,
+            'status' => $status
+        ]));
+    }
 }

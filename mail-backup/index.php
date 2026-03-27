@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+    require 'config.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -34,6 +34,9 @@ require 'config.php';
         #btnSubmit { background-color: #007bff; color: white; border: none; cursor: pointer; font-weight: bold; margin-top: 15px; width: 100%; padding: 12px; }
         #btnSubmit:hover { background-color: #0056b3; }
         #btnSubmit:disabled { background-color: #ccc; cursor: not-allowed; }
+        select, input { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; }
+        .btn-download { display: inline-block; margin-top: 10px; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;
+        p.error-panel { display: inline-block; background-color: lightcoral; border: 1px solid red;}
     </style>
 </head>
 <body>
@@ -80,7 +83,6 @@ require 'config.php';
 <iframe name="worker" style="display:none;"></iframe>
 
 <script>
-    // ... (resto del script JS permanece igual) ...
     let emailStr, now;
 
     function toggleCpanelField() {
@@ -96,6 +98,7 @@ require 'config.php';
     form.addEventListener('submit', function() {
         document.getElementById('progressContainer').style.display = 'block';
         document.getElementById('btnSubmit').disabled = true;
+        document.getElementById('resultArea').innerHTML = "";
 
         emailStr = document.getElementById('email').value;
         now = new Date();
@@ -107,7 +110,47 @@ require 'config.php';
                 .then(res => res.json())
                 .then(data => {
                     document.getElementById('progressBar').style.width = data.percent + '%';
-                    document.getElementById('progressText').textContent = data.status + ' (' + data.percent + '%)';
+
+                    if (data.status.startsWith('Error')) {
+                        document.getElementById('progressContainer').style.display = 'none';
+                        let error = data.status,
+                            fin = error.lastIndexOf(':');
+                        if (fin === error.indexOf(':')) fin = null;
+
+                        error = error.substring(
+                            error.indexOf(':') + 1,
+                            fin ?? error.length
+                        ).trim();
+
+                        //Se procesan los errores
+                        switch(true){
+                            case data.status.includes('Too many login failures'):
+                                error = "Correo y/o contraseña incorrectos."
+                                break;
+                            case data.status.includes("Timed out"):
+                                error = "Servidor de correo no responde.";
+                                break;
+                            case data.status.includes("Host not found (#11001)"):
+                                error = "Servidor no existe";
+                                break;
+                            default:
+                                console.error(data.status);
+                        }
+
+                        document.getElementById('resultArea').innerHTML =
+                          "<p class='error-panel' style='"
+                            + "border: 1px solid red;"
+                            + "background-color: lightcoral;"
+                            + "padding: 5px;"
+                            + "border-radius: 3px;'>" +
+                               error
+                        + "</p>";
+                        clearInterval(interval);
+                        document.getElementById('btnSubmit').disabled = false;
+                    } else {
+                        document.getElementById('progressText')
+                                .textContent = data.status + ' (' + data.percent + '%)';
+                    }
 
                     if(data.percent >= 100) {
                         clearInterval(interval);
@@ -115,31 +158,36 @@ require 'config.php';
 
                         document.getElementById('resultArea').innerHTML =
                             "<br><a href='backups/" + baseName(zipFile()) + "' "
-                            + "style='padding:15px; background:#28a745; color:white; text-decoration:none; "
-                            + "border-radius:5px; display:inline-block;'>"
-                            + "DESCARGAR BACKUP ZIP"
+                                + "style='padding:15px; background:#28a745; color:white; text-decoration:none; "
+                                + "border-radius:5px; display:inline-block;'>"
+                                    + "DESCARGAR BACKUP ZIP"
                             + "</a>";
                     }
                 })
-                .catch(err => console.error("Error:", err));
+                .catch(err => {
+                    console.error("Error:", err)
+                });
         }, 1000);
     });
 
     function zipFile ()
     {
         let y = now.getFullYear(), m = (now.getMonth() + 1).toString().padStart(2, '0'),
-            d = (now.getDate()).toString().padStart(2, '0'), h = (now.getHours()).toString().padStart(2, '0'),
+            d = (now.getDate()).toString().padStart(2, '0'), h = (now.getHours() - 1).toString().padStart(2, '0'),
             i = now.getMinutes().toString().padStart(2, '0'), s = now.getSeconds().toString().padStart(2, '0'),
             timeStamp = y + '-' + m + '-' + d + '_' + h + '-' + i + '-' + s;
 
         return '<?= BACKUP_PATH ?>'
-            + emailStr.replaceAll(new RegExp('[^a-zA-Z0-9]', 'g'), '_')
-            + '_' + timeStamp + '.zip';
+                + emailStr.replaceAll(new RegExp('[^a-zA-Z0-9]', 'g'), '_')
+                + '_' + timeStamp + '.zip';
     }
 
     function baseName(str)
     {
-        return str.substring(str.lastIndexOf('/') + 1);
+        var base = str.substring(str.lastIndexOf('/') + 1);
+        //if(base.lastIndexOf(".") != -1)
+        //    base = base.substring(0, base.lastIndexOf("."));
+        return base;
     }
 </script>
 </body>
