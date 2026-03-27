@@ -44,10 +44,11 @@ try {
 }
 
 // Función optimizada para escribir progreso sin bloqueos
-function updateProgress($percent, $status, $progressFile): void
-{
-    file_put_contents($progressFile, json_encode([
-        'percent' => $percent,
-        'status' => $status
-    ]));
+function updateProgress($percent, $status, $progressFile) {
+    if ($progressFile) {
+        file_put_contents($progressFile, json_encode([
+            'percent' => $percent,
+            'status' => $status
+        ]));
+    }
 }
