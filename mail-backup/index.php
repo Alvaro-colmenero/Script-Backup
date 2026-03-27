@@ -10,7 +10,7 @@
     <style>
         .hidden { display: none; }
         .progress-container { width: 100%; background: #eee; border-radius: 8px; margin-top: 20px; height: 30px; position: relative; overflow: hidden; display: none; border: 1px solid #ddd; }
-        .progress-bar { width: 0%; height: 100%; background: #28a745; transition: width 0.3s ease; }
+        .progress-bar { width: 0; height: 100%; background: #28a745; transition: width 0.3s ease; }
         #progressText { position: absolute; width: 100%; text-align: center; top: 5px; font-weight: bold; color: #333; z-index: 1; }
 
         /* Estilos para etiquetas y campos */
@@ -30,13 +30,12 @@
 
         select, input { width: 100%; padding: 10px; margin: 5px 0 10px 0; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; }
 
-        .btn-download { display: inline-block; margin-top: 10px; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; }
+        /*.btn-download { display: inline-block; margin-top: 10px; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; }*/
         #btnSubmit { background-color: #007bff; color: white; border: none; cursor: pointer; font-weight: bold; margin-top: 15px; width: 100%; padding: 12px; }
         #btnSubmit:hover { background-color: #0056b3; }
         #btnSubmit:disabled { background-color: #ccc; cursor: not-allowed; }
         select, input { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; }
-        .btn-download { display: inline-block; margin-top: 10px; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;
-        p.error-panel { display: inline-block; background-color: lightcoral; border: 1px solid red;}
+        p.error-panel { display: inline-block; background-color: lightcoral; border: 1px solid red;padding: 5px; border-radius: 3px; }
     </style>
 </head>
 <body>
@@ -138,11 +137,7 @@
                         }
 
                         document.getElementById('resultArea').innerHTML =
-                          "<p class='error-panel' style='"
-                            + "border: 1px solid red;"
-                            + "background-color: lightcoral;"
-                            + "padding: 5px;"
-                            + "border-radius: 3px;'>" +
+                          "<p class='error-panel'>" +
                                error
                         + "</p>";
                         clearInterval(interval);
@@ -157,7 +152,7 @@
                         document.getElementById('btnSubmit').disabled = false;
 
                         document.getElementById('resultArea').innerHTML =
-                            "<br><a href='backups/" + baseName(zipFile()) + "' "
+                            "<br><a href='backups/" + zipFile() + "' "
                                 + "style='padding:15px; background:#28a745; color:white; text-decoration:none; "
                                 + "border-radius:5px; display:inline-block;'>"
                                     + "DESCARGAR BACKUP ZIP"
@@ -175,19 +170,12 @@
         let y = now.getFullYear(), m = (now.getMonth() + 1).toString().padStart(2, '0'),
             d = (now.getDate()).toString().padStart(2, '0'), h = (now.getHours() - 1).toString().padStart(2, '0'),
             i = now.getMinutes().toString().padStart(2, '0'), s = now.getSeconds().toString().padStart(2, '0'),
-            timeStamp = y + '-' + m + '-' + d + '_' + h + '-' + i + '-' + s;
-
-        return '<?= BACKUP_PATH ?>'
+            timeStamp = y + '-' + m + '-' + d + '_' + h + '-' + i + '-' + s,
+            path = '<?= BACKUP_PATH ?>'
                 + emailStr.replaceAll(new RegExp('[^a-zA-Z0-9]', 'g'), '_')
                 + '_' + timeStamp + '.zip';
-    }
 
-    function baseName(str)
-    {
-        var base = str.substring(str.lastIndexOf('/') + 1);
-        //if(base.lastIndexOf(".") != -1)
-        //    base = base.substring(0, base.lastIndexOf("."));
-        return base;
+        return path.substring(path.lastIndexOf('/') + 1);
     }
 </script>
 </body>
