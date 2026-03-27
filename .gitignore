@@ -1,1 +1,2 @@
-/mail-backup/backups/
+/mail-backup/backups/*
+/mail-backup/temp/*
