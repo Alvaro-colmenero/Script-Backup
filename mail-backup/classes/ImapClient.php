@@ -9,8 +9,7 @@ class ImapClient {
         // Estructura de conexión estándar SSL
         $this->mailbox = "{{$host}:{$port}/imap/ssl/novalidate-cert}";
 
-        // Usamos @ para manejar el error nosotros mismos y evitar el die() directo del sistema
-        $this->connection = @imap_open($this->mailbox, $user, $password);
+        $this->connection = imap_open($this->mailbox, $user, $password);
 
         if (!$this->connection) {
             throw new Exception(imap_last_error());

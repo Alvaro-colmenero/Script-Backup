@@ -25,14 +25,18 @@ try {
     $emailSafe = preg_replace('/[^a-zA-Z0-9]/', '_', $email);
     $backupDir = BACKUP_PATH . $emailSafe . '_' . date('Y-m-d_H-i-s');
 
-    if (!file_exists($backupDir)) mkdir($backupDir, 0777, true);
+    if (!file_exists($backupDir)) {
+        updateProgress(0, "Creando nueva carpeta en backups... ", $progress_file);
+        mkdir($backupDir, 0777, true);
+    }
 
     pclose(
         popen(
-            "start /B php backup.php "
-            . "$login_user $password $host $port $progress_file $backupDir "    //Parametros
-            . "> NUL 2> NUL",                                                   //Redireccion del output
-            'r'
+            "start /B php backup.php "             //Comando de shell que lanza 'backup.php' en segundo plano
+            . "\"$login_user\" \"$password\" \"$host\" "    //Parametros
+            . "\"$port\" \"$progress_file\" \"$backupDir\" "
+            . "> NUL 2> NUL",                               //Redireccion del output
+            'r'                                       //Modo de operacion (lectura)
         )
     );
 } catch (Exception $e) {
@@ -40,8 +44,10 @@ try {
 }
 
 // Función optimizada para escribir progreso sin bloqueos
-function updateProgress($percent, $status, $file) {
-    $data = json_encode(['percent' => $percent, 'status' => $status]);
-    file_put_contents($file, $data);
-    clearstatcache(); // Obliga al sistema a refrescar el estado del archivo en disco
+function updateProgress($percent, $status, $progressFile): void
+{
+    file_put_contents($progressFile, json_encode([
+        'percent' => $percent,
+        'status' => $status
+    ]));
 }

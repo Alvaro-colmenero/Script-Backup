@@ -12,6 +12,7 @@ $progress_file = $argv[5];
 $backupDir = $argv[6];
 
 try {
+    updateProgress(0, "Lanzado el subproceso... ", $progress_file);
     $imap = new ImapClient();
     $imap->connect($login_user, $password, $host, $port);
     $folders = $imap->getFolders();

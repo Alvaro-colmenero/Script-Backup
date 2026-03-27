@@ -51,6 +51,7 @@ class MailDownloader {
 
         if (!$totalGlobal) $totalGlobal = 1;
         $processed = 0;
+        $percent = 0;
 
         // 2. Proceso de descarga
         foreach ($folders as $folder) {
@@ -58,9 +59,9 @@ class MailDownloader {
             $safeFolder = str_replace(['/', '\\'], '_', $decodedFolder);
             $folderPath = $basePath . '/' . $safeFolder;
 
-            if (!file_exists($folderPath)) {
-                mkdir($folderPath, 0777, true);
-            }
+            $this->updateRealProgress($percent, "Creando carpeta $safeFolder... ");
+            if (!file_exists($folderPath)) mkdir($folderPath, 0777, true);
+
 
             $this->imap->openFolder($folder);
             $messageCount = $this->imap->getMessageCount();
