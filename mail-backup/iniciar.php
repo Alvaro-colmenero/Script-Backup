@@ -40,8 +40,11 @@ try {
 }
 
 // Función optimizada para escribir progreso sin bloqueos
-function updateProgress($percent, $status, $file) {
-    $data = json_encode(['percent' => $percent, 'status' => $status]);
-    file_put_contents($file, $data);
-    clearstatcache(); // Obliga al sistema a refrescar el estado del archivo en disco
+function updateProgress($percent, $status, $progressFile) {
+    if ($progressFile) {
+        file_put_contents($progressFile, json_encode([
+            'percent' => $percent,
+            'status' => $status
+        ]));
+    }
 }
