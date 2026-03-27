@@ -1,5 +1,5 @@
 <?php
-    require 'config.php';
+require 'config.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -12,29 +12,57 @@
         .progress-container { width: 100%; background: #eee; border-radius: 8px; margin-top: 20px; height: 30px; position: relative; overflow: hidden; display: none; border: 1px solid #ddd; }
         .progress-bar { width: 0%; height: 100%; background: #28a745; transition: width 0.3s ease; }
         #progressText { position: absolute; width: 100%; text-align: center; top: 5px; font-weight: bold; color: #333; z-index: 1; }
-        select, input { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; }
+
+        /* Estilos para etiquetas y campos */
+        .form-container label {
+            display: block;
+            margin-top: 12px; /* Espaciado entre campos */
+            font-weight: bold;
+            font-size: 0.9em;
+            color: #555;
+            text-align: left;
+        }
+
+        /* --- CAMBIO AQUÍ: Quita el espacio superior de la primera etiqueta --- */
+        .form-container label:first-of-type {
+            margin-top: 0;
+        }
+
+        select, input { width: 100%; padding: 10px; margin: 5px 0 10px 0; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; }
+
         .btn-download { display: inline-block; margin-top: 10px; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; }
+        #btnSubmit { background-color: #007bff; color: white; border: none; cursor: pointer; font-weight: bold; margin-top: 15px; width: 100%; padding: 12px; }
+        #btnSubmit:hover { background-color: #0056b3; }
+        #btnSubmit:disabled { background-color: #ccc; cursor: not-allowed; }
     </style>
 </head>
 <body>
 <div class="form-container">
     <h2>Backup de Correo</h2>
     <form id="backupForm" method="POST" action="iniciar.php" target="worker">
-        <label>Método de conexión:</label>
+
+        <label for="auth_type">Método de conexión:</label>
         <select name="auth_type" id="auth_type" onchange="toggleCpanelField()">
             <option value="direct">Correo + Contraseña Individual</option>
             <option value="cpanel">Acceso Maestro (cPanel)</option>
         </select>
 
-        <input id="email" type="text" name="email" placeholder="Correo a respaldar (ej: info@dominio.com)" required>
+        <label for="email">Correo electrónico:</label>
+        <input id="email" type="text" name="email" placeholder="ej: info@dominio.com" required>
 
         <div id="cpanel_user_div" class="hidden">
-            <input type="text" name="cpanel_user" id="cpanel_user" placeholder="Usuario de tu cPanel">
+            <label for="cpanel_user">Usuario de cPanel:</label>
+            <input type="text" name="cpanel_user" id="cpanel_user" placeholder="Tu usuario de hosting">
         </div>
 
-        <input type="password" name="password" placeholder="Contraseña" required>
-        <input type="text" name="imap" placeholder="imap.tuservidor.com" required>
-        <input type="number" name="port" value="993">
+        <label for="password">Contraseña:</label>
+        <input id="password" type="password" name="password" placeholder="••••••••" required>
+
+        <label for="imap">Servidor IMAP:</label>
+        <input id="imap" type="text" name="imap" placeholder="imap.tuservidor.com" required>
+
+        <label for="port">Puerto:</label>
+        <input id="port" type="number" name="port" value="993">
 
         <button type="submit" id="btnSubmit">
             Iniciar Backup
@@ -52,11 +80,14 @@
 <iframe name="worker" style="display:none;"></iframe>
 
 <script>
+    // ... (resto del script JS permanece igual) ...
     let emailStr, now;
 
     function toggleCpanelField() {
         const isCpanel = document.getElementById('auth_type').value === 'cpanel';
-        document.getElementById('cpanel_user_div').style.display = isCpanel ? 'block' : 'none';
+        const cpanelDiv = document.getElementById('cpanel_user_div');
+        cpanelDiv.style.display = isCpanel ? 'block' : 'none';
+        document.getElementById('cpanel_user').required = isCpanel;
     }
 
     const form = document.getElementById('backupForm');
@@ -82,11 +113,11 @@
                         clearInterval(interval);
                         document.getElementById('btnSubmit').disabled = false;
 
-                        window.parent.document.getElementById('resultArea').innerHTML =
+                        document.getElementById('resultArea').innerHTML =
                             "<br><a href='backups/" + baseName(zipFile()) + "' "
-                                + "style='padding:15px; background:#28a745; color:white; text-decoration:none; "
-                                + "border-radius:5px; display:inline-block;'>"
-                                    + "DESCARGAR BACKUP ZIP"
+                            + "style='padding:15px; background:#28a745; color:white; text-decoration:none; "
+                            + "border-radius:5px; display:inline-block;'>"
+                            + "DESCARGAR BACKUP ZIP"
                             + "</a>";
                     }
                 })
@@ -97,21 +128,18 @@
     function zipFile ()
     {
         let y = now.getFullYear(), m = (now.getMonth() + 1).toString().padStart(2, '0'),
-            d = (now.getDate()).toString().padStart(2, '0'), h = (now.getHours() - 1).toString().padStart(2, '0'),
+            d = (now.getDate()).toString().padStart(2, '0'), h = (now.getHours()).toString().padStart(2, '0'),
             i = now.getMinutes().toString().padStart(2, '0'), s = now.getSeconds().toString().padStart(2, '0'),
             timeStamp = y + '-' + m + '-' + d + '_' + h + '-' + i + '-' + s;
 
         return '<?= BACKUP_PATH ?>'
-                + emailStr.replaceAll(new RegExp('[^a-zA-Z0-9]', 'g'), '_')
-                + '_' + timeStamp + '.zip';
+            + emailStr.replaceAll(new RegExp('[^a-zA-Z0-9]', 'g'), '_')
+            + '_' + timeStamp + '.zip';
     }
 
     function baseName(str)
     {
-        var base = str.substring(str.lastIndexOf('/') + 1);
-        //if(base.lastIndexOf(".") != -1)
-        //    base = base.substring(0, base.lastIndexOf("."));
-        return base;
+        return str.substring(str.lastIndexOf('/') + 1);
     }
 </script>
 </body>

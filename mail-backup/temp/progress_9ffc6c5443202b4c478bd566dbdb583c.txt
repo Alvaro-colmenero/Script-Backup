@@ -1,0 +1,1 @@
+{"percent":0,"status":"Error: RecursiveDirectoryIterator::__construct(C:\\Users\\alumno\\Desktop\\Mail\\Script-Backup\\mail-backup\/backups\/alexvirgo13_gmail_com_2026-03-27_09-49-05): El sistema no puede encontrar el archivo especifica (code: 2)"}
