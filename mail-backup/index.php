@@ -126,12 +126,15 @@
                             case data.status.includes('Too many login failures'):
                                 error = "Correo y/o contraseña incorrectos."
                                 break;
+
                             case data.status.includes("Timed out"):
                                 error = "Servidor de correo no responde.";
                                 break;
+
                             case data.status.includes("Host not found (#11001)"):
                                 error = "Servidor no existe";
                                 break;
+
                             default:
                                 console.error(data.status);
                         }

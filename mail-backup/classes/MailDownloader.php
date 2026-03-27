@@ -30,9 +30,14 @@ class MailDownloader {
         }
     }
 
+    public function uploadAll (): void{
+
+    }
+
     public function downloadAll($folders, $basePath): void
     {
-        $limit = 3; // Límite de correos por carpeta
+        // Límite de correos por carpeta, si es 0 los coge todos
+        $limit = 3;
 
         // 1. Contar mensajes totales para el cálculo del porcentaje
         // (Consideramos el límite en el conteo para que la barra sea precisa)
@@ -40,10 +45,11 @@ class MailDownloader {
         foreach ($folders as $folder) {
             $this->imap->openFolder($folder);
             $count = $this->imap->getMessageCount();
-            $totalGlobal += ($count > $limit) ? $limit : $count;
+            if (!$limit || $count < $limit) $totalGlobal += $count;
+            else $totalGlobal += $limit;
         }
 
-        if ($totalGlobal == 0) $totalGlobal = 1;
+        if (!$totalGlobal) $totalGlobal = 1;
         $processed = 0;
 
         // 2. Proceso de descarga
@@ -61,7 +67,8 @@ class MailDownloader {
 
             // Calculamos desde dónde empezar para obtener los últimos 500
             // IMAP cuenta de 1 a N, siendo N el más reciente.
-            $start = ($messageCount - $limit > 0) ? ($messageCount - $limit + 1) : 1;
+            if (!$limit || $limit > $messageCount) $start = 1;
+            else $start = $messageCount - $limit + 1;
 
             // Recorremos desde el más reciente hacia atrás
             for ($i = $messageCount; $i >= $start; $i--) {
