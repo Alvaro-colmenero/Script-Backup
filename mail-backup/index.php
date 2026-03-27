@@ -43,12 +43,6 @@
     <h2>Backup de Correo</h2>
     <form id="backupForm" method="POST" action="iniciar.php" target="worker">
 
-        <label for="auth_type">Método de conexión:</label>
-        <select name="auth_type" id="auth_type" onchange="toggleCpanelField()">
-            <option value="direct">Correo + Contraseña Individual</option>
-            <option value="cpanel">Acceso Maestro (cPanel)</option>
-        </select>
-
         <label for="email">Correo electrónico:</label>
         <input id="email" type="text" name="email" placeholder="ej: info@dominio.com" required>
 
