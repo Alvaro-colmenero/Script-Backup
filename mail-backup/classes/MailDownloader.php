@@ -30,7 +30,7 @@ class MailDownloader {
         }
     }
 
-    public function uploadAll (): void{
+    public function uploadAll ($email): void{
 
     }
 

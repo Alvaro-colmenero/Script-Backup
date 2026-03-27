@@ -11,13 +11,6 @@ $progress_file = TEMP_PATH . "progress_{$backup_id}.txt";
 // 2. Enviar cookie al navegador para que progress.php sepa qué leer
 setcookie('backup_id', $backup_id, time() + 3600, "/");
 
-// Función optimizada para escribir progreso sin bloqueos
-function updateProgress($percent, $status, $file) {
-    $data = json_encode(['percent' => $percent, 'status' => $status]);
-    file_put_contents($file, $data);
-    clearstatcache(); // Obliga al sistema a refrescar el estado del archivo en disco
-}
-
 // Estado inicial
 updateProgress(0, "Conectando al servidor IMAP...", $progress_file);
 
@@ -31,9 +24,8 @@ $login_user = ($auth_type === 'cpanel') ? $_POST['cpanel_user'] . "|" . $email :
 $emailSafe = preg_replace('/[^a-zA-Z0-9]/', '_', $email);
 $backupDir = BACKUP_PATH . $emailSafe . '_' . date('Y-m-d_H-i-s');
 
-if (!file_exists($backupDir)) {
-    mkdir($backupDir, 0777, true);
-}
+if (!file_exists($backupDir)) mkdir($backupDir, 0777, true);
+
 pclose(
     popen(
         "start /B php backup.php "
@@ -42,3 +34,10 @@ pclose(
         'r'
     )
 );
+
+// Función optimizada para escribir progreso sin bloqueos
+function updateProgress($percent, $status, $file) {
+    $data = json_encode(['percent' => $percent, 'status' => $status]);
+    file_put_contents($file, $data);
+    clearstatcache(); // Obliga al sistema a refrescar el estado del archivo en disco
+}
