@@ -1,0 +1,98 @@
+Return-path: <admin@store.chukiweb.com>
+Envelope-to: nico.araoz@cubetic.com
+Delivery-date: Sat, 14 Mar 2026 00:52:45 +0000
+Received: from [185.56.87.2] (port=13824 helo=delivery.antispam.mailspamprotection.com)
+	by c118270.sgvps.net with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.99.1)
+	(envelope-from <admin@store.chukiweb.com>)
+	id 1w1DFF-00000000OF6-1AcO
+	for nico.araoz@cubetic.com;
+	Sat, 14 Mar 2026 00:52:45 +0000
+ARC-Seal: i=1; cv=none; a=rsa-sha256; d=incoming.instance-europe-west4-x8sc.prod.antispam.mailspamprotection.com; s=arckey; t=1773449565;
+	 b=BSMoI+FVZxtHIKl9UsuA8LhGP2SAytHxVkC0P+spyrTf87xsIsYKUFXP1oIxrm12Z9HKw8xR3F
+	  s4qXTbz0IUbt2Q3/D51TzcOPCp4PMPJgZLyiyd3X5PbkJ5HL97rgWcNTQ5HUFw5AlgmiLPJG4v
+	  gCuvQETE7CtKBvipNFiCcZU3rFxhoPeU5A9MLytJmwDueS3f0PfdmYlfVsYpmQnYNRT0PVMxbf
+	  TqkfjnAyl2PXOFaG2YJVnl2yp9UxoSIc4Ms209xhLCkCIEgzB9tbeLP4sRx2iQGVQKb5eQdIVa
+	  lOedTD9yfN0XJQXau2m40wdFrlZ2dERsh0v6OuvhQHlbeA==;
+ARC-Authentication-Results: i=1; incoming.instance-europe-west4-x8sc.prod.antispam.mailspamprotection.com; smtp.remote-ip=92.222.22.125;
+	iprev=pass (vps-b658144e.vps.ovh.net) smtp.remote-ip=92.222.22.125;
+	spf=pass (best guess record for domain) smtp.mailfrom=store.chukiweb.com;
+	dkim=tmperror (pubkey unavailable)
+		 header.d=store.chukiweb.com header.s=mail header.a=rsa-sha256;
+	dmarc=none header.from=store.chukiweb.com;
+	arc=none
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed; d=incoming.instance-europe-west4-x8sc.prod.antispam.mailspamprotection.com; s=arckey; t=1773449565;
+	bh=e2tNHOc1Y47GXuqZfOjW1il+d3jbrM2sefCK2ysD8Sg=;
+	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:From:Date:
+	  Subject:To:DKIM-Signature;
+	b=NmeJAq8+7CgGaZn9vlvMrLowPrtlvbv6GHmbX63VylPO4amcV56ALByC1kBY6akmkxAxeimain
+	  2QbN6YhgFqPkKxerKLfi/XXWXjBMdHX1nhu5Y8fXeeCqtJ387lXQC09SVt1ZmuHaFgwknMFy/Z
+	  5MdYA+yBGD566bnOxha38iDQqQR6GELqAf59Kq0attTTje0URgSU8qQaosncaRSVijX+ZjdnWJ
+	  PS0qQPmQhSdBLldy0ZzVYOwMmPmWjvy7i82jPvLwG0TB5PA/86UaIyC2g1GaauM7ruqKuJ5lGc
+	  QE6I0VDq5c/WCTfjKv1f3JWNdE5b53B8mL37B18aJ3ohKg==;
+Received: from vps-b658144e.vps.ovh.net ([92.222.22.125])
+	by instance-europe-west4-x8sc.prod.antispam.mailspamprotection.com with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.98.1)
+	(envelope-from <admin@store.chukiweb.com>)
+	id 1w1DFB-0000000412W-0ZRo
+	for nico.araoz@cubetic.com;
+	Sat, 14 Mar 2026 00:52:44 +0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=store.chukiweb.com; s=mail; h=Content-Transfer-Encoding:Content-Type:
+	MIME-Version:Message-ID:From:Date:Subject:To:Sender:Reply-To:Cc:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=pwYKOUeAl3eLZfoKoXuPXu6Wlt9obHfSQ4ZSQh740Zo=; b=eWWThDGge0NsNK93jTIQIA1MgQ
+	dW+fOYvQ7LAknwXygbgMOvtznXPBGeprywtPqALp/BSDIAMQwrc95uiRbKiJcTp4LgzyKbzy4H9Wj
+	+DiP/qSU4+9mxAqR/leHt2c/LgYv1/CxBwAGPtogsOXsu6PmGSrWOdIVo66dEoGvcjDI=;
+Received: from Nicolas by vps-b658144e.vps.ovh.net with local (Exim 4.95)
+	(envelope-from <admin@store.chukiweb.com>)
+	id 1w1DF4-005n50-BO
+	for nico.araoz@cubetic.com;
+	Sat, 14 Mar 2026 00:52:34 +0000
+To: nico.araoz@cubetic.com
+Subject: =?UTF-8?Q?[store_site]_Pendientes_de_moderaci=C3=B3n:_?=
+ =?UTF-8?Q?=C2=ABPrueba=C2=BB?=
+Date: Sat, 14 Mar 2026 01:52:34 +0100
+From: WordPress <wordpress@store.chukiweb.com>
+Message-ID: <dB3e1CtkK0KNKRWCKKpNU7HiEZFtOpvZO80dTdq5CY@store.chukiweb.com>
+X-Mailer: PHPMailer 7.0.0 (https://github.com/PHPMailer/PHPMailer)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-SGantispam-id: 479d2b27f15e48b1361eb0661a4d1487
+X-AntiAbuse: ID - 479d2b27f15e48b1361eb0661a4d1487
+X-SGantispam-rep: "10/1m"
+AntiSpam-DLS: false
+AntiSpam-DLSP: 
+AntiSpam-DLSRS: 
+AntiSpam-TS: 1.0
+AntiSpam-RBL: 0
+Authentication-Results: incoming.instance-europe-west4-x8sc.prod.antispam.mailspamprotection.com;
+	iprev=pass (vps-b658144e.vps.ovh.net) smtp.remote-ip=92.222.22.125;
+	spf=pass (best guess record for domain) smtp.mailfrom=store.chukiweb.com;
+	dkim=tmperror (pubkey unavailable)
+		 header.d=store.chukiweb.com header.s=mail header.a=rsa-sha256;
+	dmarc=none header.from=store.chukiweb.com;
+	arc=none
+X-Antispam-Scanned: incoming
+X-Antispam-Scan-Timestamp: 1773449565
+X-Antispam-Scan-Result: spam
+X-Antispam-Scan-Hash: a24e9801c10309040b7799c59e92c4eeca0a4897
+
+Un nuevo comentario en la entrada «Prueba» está esperando tu aprobación
+https://store.chukiweb.com/2025/01/13/prueba-2/
+
+Autor: rong.bach kim (dirección IP: 69.165.67.22, 69.165.67.22)
+Correo electrónico: admin@rongbachkimnet.net
+URL: https://rongbachkimnet.net
+Comentario: 
+Hey friends, heard about this 'rong.bach kim'. Anyone use it? I need the feedback for it, haha! Go here and check: <a href='https://rongbachkimnet.net' rel="nofollow ugc">rong.bach kim</a>
+
+Aprobarlo: https://store.chukiweb.com/wp-admin/comment.php?action=approve&c=159#wpbody-content
+Enviarlo a la papelera: https://store.chukiweb.com/wp-admin/comment.php?action=trash&c=159#wpbody-content
+Marcarlo como spam: https://store.chukiweb.com/wp-admin/comment.php?action=spam&c=159#wpbody-content
+Actualmente hay 15 comentarios en espera de aprobación. Por favor, visita el panel de moderación:
+https://store.chukiweb.com/wp-admin/edit-comments.php?comment_status=moderated#wpbody-content
+

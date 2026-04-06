@@ -1,0 +1,1116 @@
+Return-path: <b-yr5gpj8qcgznjl-dpnpyhunfzr2cq@boletines.oapcnc.es>
+Envelope-to: nico.araoz@cubetic.com
+Delivery-date: Tue, 10 Mar 2026 09:28:10 +0000
+Received: from [185.56.87.0] (port=36864 helo=delivery.antispam.mailspamprotection.com)
+	by c118270.sgvps.net with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.99.1)
+	(envelope-from <b-yr5gpj8qcgznjl-dpnpyhunfzr2cq@boletines.oapcnc.es>)
+	id 1vztNq-000000008ku-3JNF
+	for nico.araoz@cubetic.com;
+	Tue, 10 Mar 2026 09:28:10 +0000
+ARC-Seal: i=1; cv=none; a=rsa-sha256; d=incoming.instance-europe-west4-7d4q.prod.antispam.mailspamprotection.com; s=arckey; t=1773134890;
+	 b=f98T2WM+q29IDppXOE+A9vude0YMNHLnOUeiJJx8gnXz7GDziysC7DKtxavupVLoncEbyLFJLr
+	  rOPmoZHEE+Q6T44qIEqkKp5hU7plH2/dffumpvy9ftvHHVIAVeUH932G1jcSZNE7Fm86QLrhot
+	  3nx27g2iZ72o8OChi1KFe8ziWmnW5tHSi6D1cvYzmQKtcl90PEPn+AoI5PRTfUPZlrKwwAzvGq
+	  IfNO1V0Fm4APWKuqmCgkITaauvYmZiBuLPzy0n0isFF8zocGeJXKVHnDhcY8PI+8nwhvwggaKt
+	  1/QvYzG9N0AIZo6Cc3RsaJ5K3WtRe6gz6VWG4DI5ejNSsA==;
+ARC-Authentication-Results: i=1; incoming.instance-europe-west4-7d4q.prod.antispam.mailspamprotection.com; smtp.remote-ip=91.194.237.144;
+	iprev=pass (smtp-eo.id.mx-router-i.com) smtp.remote-ip=91.194.237.144;
+	spf=pass smtp.mailfrom=boletines.oapcnc.es;
+	dkim=pass header.d=oapcnc.es header.i=ciudadreal@oapcnc.es header.s=ipz1 header.a=rsa-sha256;
+	dkim=pass header.d=mx-router-i.com header.s=ipzs2 header.a=rsa-sha256;
+	dmarc=pass header.from=oapcnc.es;
+	arc=none
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed; d=incoming.instance-europe-west4-7d4q.prod.antispam.mailspamprotection.com; s=arckey; t=1773134890;
+	bh=n7jqkZUAHVj1aXrtpIT3g/isd5QIaFdK2vSAlF/ONP4=;
+	h=List-Unsubscribe-Post:List-Unsubscribe:Content-Transfer-Encoding:
+	  Content-Type:MIME-Version:Subject:Message-ID:To:From:Date:DKIM-Signature:
+	  DKIM-Signature;
+	b=Vs0daORCzo1l7CNBZIavtWNb1+xcnByS2vfMLZ55crbeYzPZ1InV13wYNu+PKx3XwZGg7lGAkJ
+	  KX2Z7HC6ULykHffjybb3cPaharIG8b9LEOfJckw8WxSbjvjfAg2kmvV85F4TYCEjvhLQfWFdwd
+	  +G0/QyKJLgf5UxWffppofU0frgC5P6jBGI9diX29t4dT2D5wR651t+orDJ95EsE5q6bD1g0gY4
+	  hDHK7w3lQvX9kRacqQsMIAj0EGRZxrBSQebFAfsHkEXIwI5uGAuJDJ6s0olY1UAjvnXdZb9Hzm
+	  HzpZ18nloOprCHsB6L6/XbMNklkMcJKzx18Sa5S2JOcQnA==;
+Received: from smtp-eo.id.mx-router-i.com ([91.194.237.144])
+	by instance-europe-west4-7d4q.prod.antispam.mailspamprotection.com with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.98.1)
+	(envelope-from <b-yr5gpj8qcgznjl-dpnpyhunfzr2cq@boletines.oapcnc.es>)
+	id 1vztNo-00000005pfR-3aIY
+	for nico.araoz@cubetic.com;
+	Tue, 10 Mar 2026 09:28:09 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=ipz1; d=oapcnc.es;
+ h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type:
+ Content-Transfer-Encoding:List-Unsubscribe:List-Unsubscribe-Post;
+ i=ciudadreal@oapcnc.es;
+ bh=ZMl6o9vTGc6nQcHJEgqGijMI5NJg7rnsTU8sBoHkmnc=;
+ b=c8igccSppK8x2j6ZYUzc0KDSoDiJ2i83pAMbHiGxQeKWPTt/B3LdWPaNaXn7ILEc102wUQZ1jzTs
+   ZFRwlMidbq35tmOG2ZrGO14T0zrcEuOjVcnt4iTZVQPOlPtbxP8+pzwMVgKy4Co9wmxEtLH1edch
+   /lpkH6+l1fl+brbYXjoKZSyqjmei5cUiNFr3L7DAEOprKO195zG9cfg3p07rtT9mA6nAFeUXj0Yr
+   MnpTbIRPXD/JDu8XSwUf5/yNkn8Iq3eRjgpQQFt5tVwlOcohix/y29sSDdwue8a9Oy2yvchNDQx1
+   NpMtV14T86MotNEQS/zhMd/hWISZUf14tDOpWA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=ipzs2; d=mx-router-i.com;
+ h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type:
+ Content-Transfer-Encoding:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=ZMl6o9vTGc6nQcHJEgqGijMI5NJg7rnsTU8sBoHkmnc=;
+ b=EWkN7twtgi6qyUUKhKWbnGkv1UikLUxXEbExgDiI8+hOA4bKF/77uHpHxXqlUufYbdo97ZyfqE5V
+   W0cbXFcW+qTfVFPMKObd3itCya/sjc8HPat43ZvRtIIz3soYGZcyFU7nsl0z5jnpiYB8RL0uoSZb
+   4xV+ArZhrJ66vm0Jb12j68h2iubh4NU6lnGwU5hivPUDCllv0uwivMpa8j476G8Wj4ZvYLUNTyF5
+   aFcY3NkGUGxl7p1InRFbotbvEGCSQ3WzyCDUIiTeZ2zb7FyELbXUGO3Xia0vPEkwen19VpCk+yap
+   yjUQrbSVQ+aG8372SyIqTQMnbAfllcAi0DhtfQ==
+Date: Tue, 10 Mar 2026 09:28:03 +0000
+From: OAP CIUDAD REAL <ciudadreal@oapcnc.es>
+To: nico.araoz@cubetic.com
+Message-ID: <1_JVrrEcnyo6@boletines.oapcnc.es>
+Subject: =?UTF-8?Q?Te_invitamos_a_la_presentaci=C3=B3n_de_PyDE,_la_Plataf?=
+ =?UTF-8?Q?orma_de_Digitalizaci=C3=B3n_y_Emprendimiento?=
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_69afe4231bf88_1449bc17120552";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-SEID: 1_JVrrEcnyo6
+List-Unsubscribe: <mailto:yr5gpj8qcgznjl-dpnpyhunfzr2cq@boletines.oapcnc.es>,
+ <https://boletines.oapcnc.es/unsubscribe/z34n0d/list_unsubscribe?token=l6lrtf5x&unsubscribe_token=dpnpyhunfzr2cq>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Feedback-ID: 168812:168812-171:campaign:IPRPL
+X-SGantispam-id: d7fbdf914bdcff0459bd96993f3dbd78
+X-AntiAbuse: ID - d7fbdf914bdcff0459bd96993f3dbd78
+X-SGantispam-rep: "10/1m"
+Received-SPF: pass (instance-europe-west4-7d4q.prod.antispam.mailspamprotection.com: domain of boletines.oapcnc.es designates 91.194.237.144 as permitted sender) client-ip=91.194.237.144; envelope-from=b-yr5gpj8qcgznjl-dpnpyhunfzr2cq@boletines.oapcnc.es; helo=smtp-eo.id.mx-router-i.com;
+X-SPF-Result: instance-europe-west4-7d4q.prod.antispam.mailspamprotection.com: domain of boletines.oapcnc.es designates 91.194.237.144 as permitted sender
+AntiSpam-DLS: false
+AntiSpam-DLSP: 
+AntiSpam-DLSRS: 
+AntiSpam-TS: 1.0
+X-DKIM-Status: none /  / boletines.oapcnc.es /  /  / 
+X-DKIM-Status: pass /  / oapcnc.es / oapcnc.es / ciudadreal@oapcnc.es / ipz1
+X-DKIM-Status: pass /  / ciudadreal@oapcnc.es / oapcnc.es / ciudadreal@oapcnc.es / ipz1
+X-DKIM-Status: pass /  / mx-router-i.com / mx-router-i.com /  / ipzs2
+AntiSpam-LS-skip: true
+Authentication-Results: incoming.instance-europe-west4-7d4q.prod.antispam.mailspamprotection.com;
+	iprev=pass (smtp-eo.id.mx-router-i.com) smtp.remote-ip=91.194.237.144;
+	spf=pass smtp.mailfrom=boletines.oapcnc.es;
+	dkim=pass header.d=oapcnc.es header.i=ciudadreal@oapcnc.es header.s=ipz1 header.a=rsa-sha256;
+	dkim=pass header.d=mx-router-i.com header.s=ipzs2 header.a=rsa-sha256;
+	dmarc=pass header.from=oapcnc.es;
+	arc=none
+
+
+----==_mimepart_69afe4231bf88_1449bc17120552
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Inscr=C3=ADbete a este webinar gratuito donde te contaremos c=C3=B3mo usa=
+r
+
+este nuevo portal para que no te pierdas nada
+
+
+( https://boletines.oapcnc.es/c/z34n0d/l6lrtf5x/5nbr8ufjz1a )
+
+Descubre PyDE: la nueva Plataforma de Digitalizaci=C3=B3n y
+Emprendimiento para empresas
+
+No te pierdas la presentaci=C3=B3n de este portal gratuito y
+novedoso de la mano de la Oficina Acelera Pyme APEC en Ciudad
+Real
+
+INSCR=C3=8DBETE YA =
+
+( https://boletines.oapcnc.es/c/z34n0d/l6lrtf5x/tiajgnriboc )
+
+Cada d=C3=ADa se publican ayudas, licitaciones y cursos.
+Y cada d=C3=ADa muchas empresas las dejan pasar porque no saben d=C3=B3nd=
+e
+mirar o no tienen tiempo para hacerlo.
+
+PyDE es una plataforma gratuita pensada para pymes que re=C3=BAne toda
+esa informaci=C3=B3n en un solo portal y la adapta a tu empresa.
+Con PyDE puedes:
+* Saber qu=C3=A9 ayudas y subvenciones puedes solicitar ahora.
+* Ver licitaciones que encajan con tu actividad y territorio.
+* Acceder a formaci=C3=B3n gratuita relacionada con digitalizaci=C3=B3n y=
+
+emprendimiento.
+* Consultar tu minimis disponible.
+* Evaluar c=C3=B3mo est=C3=A1 tu empresa a nivel digital y qu=C3=A9 pasos=
+ puedes
+dar para mejorar.
+
+Para presentarte la plataforma y explicarte c=C3=B3mo
+utilizarla, desde la Oficina Acelera Pyme APEC Ciudad Real te
+invitamos a este webinar informativo:
+
+=F0=9F=93=85 Fecha: 16/03/2026
+=F0=9F=95=9B Hora: 12:00 h
+=F0=9F=93=8D Modalidad: Online y presencial
+=F0=9F=8F=A2 Lugar: C. Pedro Mu=C3=B1oz 1, Office 7 =C2=B7 13005 Ciudad R=
+eal
+
+Durante la sesi=C3=B3n veremos de forma pr=C3=A1ctica c=C3=B3mo funciona =
+PyDE,
+c=C3=B3mo est=C3=A1 estructurada la plataforma y c=C3=B3mo puedes usarla =
+como
+apoyo en la gesti=C3=B3n de tu empresa.
+
+=F0=9F=93=9E Tel=C3=A9fono de contacto: 826 907 100 ( tel:826%20907%20100=
+ )
+
+=E2=9C=89=EF=B8=8F Correo: ciudad@oapcnc.es ( ciudadreal@oapcnc.es?subjec=
+t=3D&body=3D
+)
+
+=F0=9F=8C=90 Web: ciudadreal.oapcnc.es =
+
+( https://boletines.oapcnc.es/c/z34n0d/l6lrtf5x/qsb8xtynxxk )
+
+=F0=9F=91=89 Inscr=C3=ADbete al webinar y conoce la plataforma PyDE en de=
+talle. =
+
+( https://boletines.oapcnc.es/c/z34n0d/l6lrtf5x/yhdzoq9e1bq )
+
+
+( https://boletines.oapcnc.es/c/z34n0d/l6lrtf5x/o7uh-lxs9la )
+
+
+( https://boletines.oapcnc.es/c/z34n0d/l6lrtf5x/vmymrrmihnu )
+
+
+( https://boletines.oapcnc.es/c/z34n0d/l6lrtf5x/23lzxvcgl-e )
+
+
+( https://boletines.oapcnc.es/c/z34n0d/l6lrtf5x/cgdzm4lkaj4 )
+
+En cumplimiento de lo dispuesto en la Protecci=C3=B3n de Datos,
+para el ejercicio de sus derechos de acceso, rectificaci=C3=B3n,
+cancelaci=C3=B3n y oposici=C3=B3n al tratamiento de sus datos personales,=
+
+contenidos en nuestras condiciones de protecci=C3=B3n de datos,
+solamente tiene que responder a este e-mail indicando su email en
+el asunto, o bien a trav=C3=A9s del env=C3=ADo de un correo ordinario a l=
+a
+direcci=C3=B3n: ciudadreal@oapcnc.es. Si desea darse de baja tambi=C3=A9n=
+
+puede hacer clic aqu=C3=AD =
+
+( https://boletines.oapcnc.es/unsubscribe/z34n0d/click?token=3Dl6lrtf5x )=
+
+.=
+
+----==_mimepart_69afe4231bf88_1449bc17120552
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html lang=3D"und" dir=3D"auto" xmlns=3D"http://www.w3.org/1999/xhtml" xm=
+lns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-=
+com:office:office">
+  <head>
+    <title>Te invitamos a la presentaci=C3=B3n de PyDE, la Plataforma de =
+Digitalizaci=C3=B3n y Emprendimiento</title>
+    <!--[if !mso]><!-->
+    <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+    <!--<![endif]-->
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF=
+-8">
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scal=
+e=3D1">
+    <style type=3D"text/css">
+      #outlook a { padding:0; }
+      body { margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-si=
+ze-adjust:100%; }
+      table, td { border-collapse:collapse;mso-table-lspace:0pt;mso-table=
+-rspace:0pt; }
+      img { border:0;height:auto;line-height:100%; outline:none;text-deco=
+ration:none;-ms-interpolation-mode:bicubic; }
+      p { display:block;margin:13px 0; }
+    </style>
+    <!--[if mso]>
+    <noscript>
+    <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml>
+    </noscript>
+    <![endif]-->
+    <!--[if lte mso 11]>
+    <style type=3D"text/css">
+      .mj-outlook-group-fix { width:100% !important; }
+    </style>
+    <![endif]-->
+    =
+
+    =
+
+    <style type=3D"text/css">
+      @media only screen and (min-width:480px) {
+        .mj-column-per-100 { width:100% !important; max-width: 100%; }
+      }
+    </style>
+    <style media=3D"screen and (min-width:480px)">
+      .moz-text-html .mj-column-per-100 { width:100% !important; max-widt=
+h: 100%; }
+    </style>
+    =
+
+    =
+
+  =
+
+    =
+
+    <style type=3D"text/css">
+
+    @media only screen and (max-width:479px) {
+      table.mj-full-width-mobile { width: 100% !important; }
+      td.mj-full-width-mobile { width: auto !important; }
+    }
+  =
+
+    </style>
+     =
+
+    <style type=3D"text/css">
+.mjbody a{color:inherit}@media (max-width: 480px){.hide-mobile-block{max-=
+height:0px;overflow:hidden;display:none!important}.hide-desktop-block{dis=
+play:block!important}.hide-mobile-inline-block{max-height:0px;overflow:hi=
+dden;display:none!important}.hide-desktop-inline-block{display:inline-blo=
+ck!important}}
+.mjbody a, .mjbody a:hover, .mjbody a:active, .mjbody a[href], .mjbody a[=
+href]:hover, .mjbody a[href]:active {color: inherit;text-decoration: unde=
+rline}
+    </style>
+    =
+
+  </head>
+  <body style=3D"word-spacing:normal;background-color:#ffffff;">
+<div class=3D"ed-preview-text" style=3D"display: none; font-size: 0px; li=
+ne-height: 0px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hi=
+dden; visibility: hidden; mso-hide: all">Inscr=C3=ADbete a este webinar g=
+ratuito donde te contaremos c=C3=B3mo usar este nuevo portal para que no =
+te pierdas nada</div>
+    =
+
+    =
+
+      <div aria-roledescription=3D"email" class=3D"mjbody" style=3D"backg=
+round-color:#ffffff;" role=3D"article" lang=3D"und" dir=3D"auto">
+        =
+
+      <table align=3D"center" class=3D"ed-section ed-section-header" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D=
+"background:#ffffff;background-color:#ffffff;width:100%;">
+        <tbody>
+          <tr>
+            <td>
+              =
+
+        =
+
+      <!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" class=3D"ed-section-outlook ed-section-header-outlo=
+ok" role=3D"presentation" style=3D"width:700px;" width=3D"700" bgcolor=3D=
+"#ffffff" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height=
+-rule:exactly;"><![endif]-->
+    =
+
+        =
+
+      <div style=3D"margin:0px auto;max-width:700px;">
+        =
+
+        <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"width:100%;">
+          <tbody>
+            <tr>
+              <td style=3D"direction:ltr;font-size:0px;padding:20px 0px;p=
+adding-bottom:0px;padding-top:0px;text-align:center;">
+                <!--[if mso | IE]><table role=3D"presentation" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"ed-block-outlook =
+ed-block-7-outlook" width=3D"700px" ><table align=3D"center" border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" class=3D"ed-block-outlook ed-block-7=
+-outlook" role=3D"presentation" style=3D"width:700px;" width=3D"700" ><tr=
+><td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;=
+"><![endif]-->
+    =
+
+      =
+
+      <div class=3D"ed-block ed-block-7" style=3D"margin:0px auto;max-wid=
+th:700px;">
+        =
+
+        <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"width:100%;">
+          <tbody>
+            <tr>
+              <td style=3D"direction:ltr;font-size:0px;padding:20px 0;tex=
+t-align:center;">
+                <!--[if mso | IE]><table role=3D"presentation" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertic=
+al-align:top;width:700px;" ><![endif]-->
+            =
+
+      <div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font=
+-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-ali=
+gn:top;width:100%;">
+        =
+
+      <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pre=
+sentation" style=3D"vertical-align:top;" width=3D"100%">
+        <tbody>
+          =
+
+              <tr>
+                <td align=3D"center" style=3D"font-size:0px;padding:10px =
+25px;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0p=
+x;word-break:break-word;">
+                  =
+
+      <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pre=
+sentation" style=3D"border-collapse:collapse;border-spacing:0px;">
+        <tbody>
+          <tr>
+            <td style=3D"width:700px;">
+              =
+
+        <a href=3D"https://boletines.oapcnc.es/c/z34n0d/l6lrtf5x/5nbr8ufj=
+z1a" target=3D"_blank">
+          =
+
+      <img alt src=3D"https://boletines.oapcnc.es/data/cdabe3b77863bced33=
+5223cf53be1c709fbf3fb9/media_files/377/original/Ciudad_Real_16-03-26_GENE=
+RAL_-_1200x630.jpg" style=3D"border:0;display:block;outline:none;text-dec=
+oration:none;height:auto;width:100%;font-size:13px;" width=3D"700" height=
+=3D"auto">
+    =
+
+        </a>
+      =
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    =
+
+                </td>
+              </tr>
+            =
+
+              <tr>
+                <td align=3D"center" style=3D"font-size:0px;padding:10px =
+25px;padding-top:8px;padding-bottom:8px;word-break:break-word;">
+                  =
+
+      <div style=3D"font-family:Arial, sans-serif;font-size:14px;font-wei=
+ght:normal;line-height:1.5;text-align:center;color:#524481;"><span style=3D=
+"font-size:18px"><strong>Descubre PyDE: la nueva Plataforma de Digitaliza=
+ci=C3=B3n y Emprendimiento para empresas</strong></span></div>
+    =
+
+                </td>
+              </tr>
+            =
+
+        </tbody>
+      </table>
+    =
+
+      </div>
+    =
+
+          <!--[if mso | IE]></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        =
+
+      </div>
+    =
+
+      =
+
+      <!--[if mso | IE]></td></tr></table></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        =
+
+      </div>
+    =
+
+        =
+
+      <!--[if mso | IE]></td></tr></table><![endif]-->
+    =
+
+      =
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    =
+
+      <table align=3D"center" class=3D"ed-section ed-section-contentWithB=
+ackground" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"prese=
+ntation" style=3D"background:#25387e;background-color:#25387e;width:100%;=
+">
+        <tbody>
+          <tr>
+            <td>
+              =
+
+        =
+
+      <!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" class=3D"ed-section-outlook ed-section-contentWithB=
+ackground-outlook" role=3D"presentation" style=3D"width:700px;" width=3D"=
+700" bgcolor=3D"#25387e" ><tr><td style=3D"line-height:0px;font-size:0px;=
+mso-line-height-rule:exactly;"><![endif]-->
+    =
+
+        =
+
+      <div style=3D"margin:0px auto;max-width:700px;">
+        =
+
+        <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"width:100%;">
+          <tbody>
+            <tr>
+              <td style=3D"direction:ltr;font-size:0px;padding:20px 0px;p=
+adding-bottom:0px;padding-top:0px;text-align:center;">
+                <!--[if mso | IE]><table role=3D"presentation" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"ed-block-outlook =
+ed-block-2-outlook" width=3D"700px" ><table align=3D"center" border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" class=3D"ed-block-outlook ed-block-2=
+-outlook" role=3D"presentation" style=3D"width:700px;" width=3D"700" ><tr=
+><td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;=
+"><![endif]-->
+    =
+
+      =
+
+      <div class=3D"ed-block ed-block-2" style=3D"margin:0px auto;max-wid=
+th:700px;">
+        =
+
+        <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"width:100%;">
+          <tbody>
+            <tr>
+              <td style=3D"direction:ltr;font-size:0px;padding:20px 0;tex=
+t-align:center;">
+                <!--[if mso | IE]><table role=3D"presentation" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertic=
+al-align:top;width:700px;" ><![endif]-->
+            =
+
+      <div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font=
+-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-ali=
+gn:top;width:100%;">
+        =
+
+      <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pre=
+sentation" style=3D"vertical-align:top;" width=3D"100%">
+        <tbody>
+          =
+
+              <tr>
+                <td align=3D"center" class=3D"ed-text-container ed-column=
+-number-0" style=3D"color: #111111; font-family: 'Helvetica Neue', Helvet=
+ica, Arial, sans-serif; font-size: 0px; padding: 10px 25px; padding-top: =
+0px; padding-right: 10px; padding-bottom: 0px; padding-left: 10px; word-b=
+reak: break-word;">
+                  =
+
+      <div style=3D"font-family:Helvetica;font-size:16px;line-height:norm=
+al;text-align:center;color:#ffffff;"><div>No te pierdas la presentaci=C3=B3=
+n de este portal gratuito y novedoso de la mano de la Oficina Acelera Pym=
+e APEC en Ciudad Real</div></div>
+    =
+
+                </td>
+              </tr>
+            =
+
+        </tbody>
+      </table>
+    =
+
+      </div>
+    =
+
+          <!--[if mso | IE]></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        =
+
+      </div>
+    =
+
+      =
+
+      <!--[if mso | IE]></td></tr></table></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        =
+
+      </div>
+    =
+
+        =
+
+      <!--[if mso | IE]></td></tr></table><![endif]-->
+    =
+
+      =
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    =
+
+      <table align=3D"center" class=3D"ed-section ed-section-content" bor=
+der=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=
+=3D"background:#ffffff;background-color:#ffffff;width:100%;">
+        <tbody>
+          <tr>
+            <td>
+              =
+
+        =
+
+      <!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" class=3D"ed-section-outlook ed-section-content-outl=
+ook" role=3D"presentation" style=3D"width:700px;" width=3D"700" bgcolor=3D=
+"#ffffff" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height=
+-rule:exactly;"><![endif]-->
+    =
+
+        =
+
+      <div style=3D"margin:0px auto;max-width:700px;">
+        =
+
+        <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"width:100%;">
+          <tbody>
+            <tr>
+              <td style=3D"direction:ltr;font-size:0px;padding:20px 0px;p=
+adding-bottom:0px;padding-top:0px;text-align:center;">
+                <!--[if mso | IE]><table role=3D"presentation" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"ed-block-outlook =
+ed-block-4-outlook" width=3D"700px" ><table align=3D"center" border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" class=3D"ed-block-outlook ed-block-4=
+-outlook" role=3D"presentation" style=3D"width:700px;" width=3D"700" ><tr=
+><td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;=
+"><![endif]-->
+    =
+
+      =
+
+      <div class=3D"ed-block ed-block-4" style=3D"margin:0px auto;max-wid=
+th:700px;">
+        =
+
+        <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"width:100%;">
+          <tbody>
+            <tr>
+              <td style=3D"direction:ltr;font-size:0px;padding:20px 0;tex=
+t-align:center;">
+                <!--[if mso | IE]><table role=3D"presentation" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertic=
+al-align:top;width:700px;" ><![endif]-->
+            =
+
+      <div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font=
+-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-ali=
+gn:top;width:100%;">
+        =
+
+      <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pre=
+sentation" style=3D"vertical-align:top;" width=3D"100%">
+        <tbody>
+          =
+
+              <tr>
+                <td align=3D"center" style=3D"font-size:0px;padding:10px =
+25px;word-break:break-word;">
+                  =
+
+      <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pre=
+sentation" style=3D"border-collapse:separate;line-height:100%;">
+        <tbody>
+          <tr>
+            <td align=3D"center" bgcolor=3D"#524481" role=3D"presentation=
+" style=3D"border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px=
+ 25px 10px 25px;background:#524481;" valign=3D"middle">
+              <a href=3D"https://boletines.oapcnc.es/c/z34n0d/l6lrtf5x/ti=
+ajgnriboc" style=3D"display:inline-block;background:#524481;color:#ffffff=
+;font-family:Arial, sans-serif;font-size:13px;font-weight:normal;line-hei=
+ght:130%;margin:0;text-decoration:none;text-transform:none;padding:10px 2=
+5px 10px 25px;mso-padding-alt:0px;border-radius:3px;" target=3D"_blank">
+                INSCR=C3=8DBETE YA
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    =
+
+                </td>
+              </tr>
+            =
+
+              <tr>
+                <td align=3D"left" class=3D"ed-text-container ed-column-n=
+umber-0" style=3D"color: #111111; font-family: 'Helvetica Neue', Helvetic=
+a, Arial, sans-serif; font-size: 0px; padding: 10px 25px; padding-top: 0p=
+x; padding-right: 10px; padding-bottom: 0px; padding-left: 10px; word-bre=
+ak: break-word;">
+                  =
+
+      <div style=3D"font-family:Helvetica;font-size:16px;line-height:1.5;=
+text-align:left;color:#111111;"><div>
+<div>
+<div>Cada d=C3=ADa se publican ayudas, licitaciones y cursos.</div>
+<div>Y cada d=C3=ADa muchas empresas las dejan pasar porque no saben d=C3=
+=B3nde mirar o no tienen tiempo para hacerlo.</div>
+<div>=C2=A0</div>
+<div>PyDE es una plataforma gratuita pensada para pymes que re=C3=BAne to=
+da esa informaci=C3=B3n en un solo portal y la adapta a tu empresa.</div>=
+
+<div>Con PyDE puedes:</div>
+<ul>
+<li>Saber qu=C3=A9 ayudas y subvenciones puedes solicitar ahora.</li>
+<li>Ver licitaciones que encajan con tu actividad y territorio.</li>
+<li>Acceder a formaci=C3=B3n gratuita relacionada con digitalizaci=C3=B3n=
+ y emprendimiento.</li>
+<li>Consultar tu minimis disponible.</li>
+<li>Evaluar c=C3=B3mo est=C3=A1 tu empresa a nivel digital y qu=C3=A9 pas=
+os puedes dar para mejorar.</li>
+</ul>
+</div>
+<div>Para presentarte la plataforma y explicarte c=C3=B3mo utilizarla,=C2=
+=A0<span style=3D"color:#524481"><strong>desde la Oficina Acelera Pyme AP=
+EC Ciudad Real te invitamos a este webinar informativo:</strong></span>
+</div>
+<div>=C2=A0</div>
+<div>=F0=9F=93=85=C2=A0<span style=3D"color:#524481"><strong>Fecha:</stro=
+ng></span><span style=3D"color:#524481">=C2=A0</span>16/03/2026</div>
+<div>=F0=9F=95=9B=C2=A0<span style=3D"color:#524481"><strong>Hora:</stron=
+g></span><span style=3D"color:#524481">=C2=A0</span>12:00 h</div>
+<div>=F0=9F=93=8D<span style=3D"color:#4c48a9">=C2=A0</span><span style=3D=
+"color:#524481"><strong>Modalidad:</strong></span> Online y presencial</d=
+iv>
+<div><div>=F0=9F=8F=A2<span style=3D"color:#4c48a9">=C2=A0</span><span st=
+yle=3D"color:#524481"><strong>Lugar:</strong></span><span style=3D"color:=
+#524481">=C2=A0</span>C. Pedro Mu=C3=B1oz 1, Office 7 =C2=B7 13005 Ciudad=
+ Real</div></div>
+<div>=C2=A0</div>
+<div>Durante la sesi=C3=B3n veremos de forma pr=C3=A1ctica c=C3=B3mo func=
+iona PyDE, c=C3=B3mo est=C3=A1 estructurada la plataforma y c=C3=B3mo pue=
+des usarla como apoyo en la gesti=C3=B3n de tu empresa.</div>
+<div>=C2=A0</div>
+<div>=F0=9F=93=9E Tel=C3=A9fono de contacto:=C2=A0<span><a href=3D"tel:82=
+6%20907%20100" target=3D"_blank" style=3D"color: #337ab7; text-decoration=
+: underline;">826 907 100</a></span>
+</div>
+<div>=E2=9C=89=EF=B8=8F Correo:=C2=A0<span><a href=3D"mailto:ciudadreal@o=
+apcnc.es?subject=3D&amp;body=3D" target=3D"_blank" style=3D"color: #337ab=
+7; text-decoration: underline;">ciudad@oapcnc.es</a></span>
+</div>
+<div>=F0=9F=8C=90 Web:=C2=A0<span><a href=3D"https://boletines.oapcnc.es/=
+c/z34n0d/l6lrtf5x/qsb8xtynxxk" target=3D"_blank" style=3D"color: #337ab7;=
+ text-decoration: underline;">ciudadreal.oapcnc.es</a></span>
+</div>
+<div>=C2=A0</div>
+<div>=F0=9F=91=89=C2=A0<span><a href=3D"https://boletines.oapcnc.es/c/z34=
+n0d/l6lrtf5x/yhdzoq9e1bq" target=3D"_blank" style=3D"color: #337ab7; text=
+-decoration: underline;"><strong>Inscr=C3=ADbete al webinar y conoce la p=
+lataforma PyDE en detalle.</strong></a></span>
+</div>
+</div></div>
+    =
+
+                </td>
+              </tr>
+            =
+
+              <tr>
+                <td align=3D"center" style=3D"font-size:0px;padding:10px =
+25px;word-break:break-word;">
+                  =
+
+      =
+
+     <!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" role=3D"presentation" ><tr><td><![endif]-->
+              <table align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" style=3D"float:none;display:inline-ta=
+ble;">
+                <tbody>
+                  =
+
+      <tr>
+        =
+
+        <td style=3D"padding:4px;padding-top:0px;padding-right:0px;paddin=
+g-bottom:0px;padding-left:0px;vertical-align:middle;">
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"border-radius:3px;width:30px;">
+            <tbody>
+              <tr>
+                <td style=3D"font-size:0;height:30px;vertical-align:middl=
+e;width:30px;">
+                  <a href=3D"https://boletines.oapcnc.es/c/z34n0d/l6lrtf5=
+x/o7uh-lxs9la" target=3D"_blank">
+                    <img alt src=3D"https://boletines.oapcnc.es/assets/so=
+cial-buttons/instagram.png" style=3D"border-radius:3px;display:block;" wi=
+dth=3D"30">
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+       =
+
+        =
+
+      =
+
+      </tr>
+    =
+
+                </tbody>
+              </table>
+            <!--[if mso | IE]></td><td><![endif]-->
+              <table align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" style=3D"float:none;display:inline-ta=
+ble;">
+                <tbody>
+                  =
+
+      <tr>
+        =
+
+        <td style=3D"padding:4px;padding-top:0px;padding-right:0px;paddin=
+g-bottom:0px;padding-left:20px;vertical-align:middle;">
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"border-radius:3px;width:30px;">
+            <tbody>
+              <tr>
+                <td style=3D"font-size:0;height:30px;vertical-align:middl=
+e;width:30px;">
+                  <a href=3D"https://boletines.oapcnc.es/c/z34n0d/l6lrtf5=
+x/vmymrrmihnu" target=3D"_blank">
+                    <img alt src=3D"https://boletines.oapcnc.es/assets/so=
+cial-buttons/facebook.png" style=3D"border-radius:3px;display:block;" wid=
+th=3D"30">
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+       =
+
+        =
+
+      =
+
+      </tr>
+    =
+
+                </tbody>
+              </table>
+            <!--[if mso | IE]></td><td><![endif]-->
+              <table align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" style=3D"float:none;display:inline-ta=
+ble;">
+                <tbody>
+                  =
+
+      <tr>
+        =
+
+        <td style=3D"padding:4px;padding-top:0px;padding-right:0px;paddin=
+g-bottom:0px;padding-left:20px;vertical-align:middle;">
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"border-radius:3px;width:30px;">
+            <tbody>
+              <tr>
+                <td style=3D"font-size:0;height:30px;vertical-align:middl=
+e;width:30px;">
+                  <a href=3D"https://boletines.oapcnc.es/c/z34n0d/l6lrtf5=
+x/23lzxvcgl-e" target=3D"_blank">
+                    <img alt src=3D"https://boletines.oapcnc.es/assets/so=
+cial-buttons/youtube.png" style=3D"border-radius:3px;display:block;" widt=
+h=3D"30">
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+       =
+
+        =
+
+      =
+
+      </tr>
+    =
+
+                </tbody>
+              </table>
+            <!--[if mso | IE]></td><td><![endif]-->
+              <table align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" style=3D"float:none;display:inline-ta=
+ble;">
+                <tbody>
+                  =
+
+      <tr>
+        =
+
+        <td style=3D"padding:4px;padding-top:0px;padding-right:0px;paddin=
+g-bottom:0px;padding-left:20px;vertical-align:middle;">
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"border-radius:3px;width:30px;">
+            <tbody>
+              <tr>
+                <td style=3D"font-size:0;height:30px;vertical-align:middl=
+e;width:30px;">
+                  <a href=3D"https://boletines.oapcnc.es/c/z34n0d/l6lrtf5=
+x/cgdzm4lkaj4" target=3D"_blank">
+                    <img alt src=3D"https://boletines.oapcnc.es/assets/so=
+cial-buttons/linkedin.png" style=3D"border-radius:3px;display:block;" wid=
+th=3D"30">
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+       =
+
+        =
+
+      =
+
+      </tr>
+    =
+
+                </tbody>
+              </table>
+            <!--[if mso | IE]></td></tr></table><![endif]-->
+    =
+
+    =
+
+                </td>
+              </tr>
+            =
+
+        </tbody>
+      </table>
+    =
+
+      </div>
+    =
+
+          <!--[if mso | IE]></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        =
+
+      </div>
+    =
+
+      =
+
+      <!--[if mso | IE]></td></tr></table></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        =
+
+      </div>
+    =
+
+        =
+
+      <!--[if mso | IE]></td></tr></table><![endif]-->
+    =
+
+      =
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    =
+
+      <table align=3D"center" class=3D"ed-section ed-section-footer" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D=
+"background:#524481;background-color:#524481;width:100%;">
+        <tbody>
+          <tr>
+            <td>
+              =
+
+        =
+
+      <!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" class=3D"ed-section-outlook ed-section-footer-outlo=
+ok" role=3D"presentation" style=3D"width:700px;" width=3D"700" bgcolor=3D=
+"#524481" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height=
+-rule:exactly;"><![endif]-->
+    =
+
+        =
+
+      <div style=3D"margin:0px auto;max-width:700px;">
+        =
+
+        <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"width:100%;">
+          <tbody>
+            <tr>
+              <td style=3D"direction:ltr;font-size:0px;padding:20px 0px;p=
+adding-bottom:0px;padding-top:0px;text-align:center;">
+                <!--[if mso | IE]><table role=3D"presentation" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"ed-block-outlook =
+ed-block-6-outlook" width=3D"700px" ><table align=3D"center" border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" class=3D"ed-block-outlook ed-block-6=
+-outlook" role=3D"presentation" style=3D"width:700px;" width=3D"700" ><tr=
+><td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;=
+"><![endif]-->
+    =
+
+      =
+
+      <div class=3D"ed-block ed-block-6" style=3D"margin:0px auto;max-wid=
+th:700px;">
+        =
+
+        <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"width:100%;">
+          <tbody>
+            <tr>
+              <td style=3D"direction:ltr;font-size:0px;padding:20px 0;tex=
+t-align:center;">
+                <!--[if mso | IE]><table role=3D"presentation" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertic=
+al-align:top;width:700px;" ><![endif]-->
+            =
+
+      <div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font=
+-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-ali=
+gn:top;width:100%;">
+        =
+
+      <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pre=
+sentation" style=3D"vertical-align:top;" width=3D"100%">
+        <tbody>
+          =
+
+              <tr>
+                <td align=3D"left" class=3D"ed-text-container ed-column-n=
+umber-0" style=3D"color: #ffffff; font-family: 'Helvetica Neue', Helvetic=
+a, Arial, sans-serif; font-size: 0px; padding: 10px 25px; padding-top: 0p=
+x; padding-right: 10px; padding-bottom: 0px; padding-left: 10px; word-bre=
+ak: break-word;">
+                  =
+
+      <div style=3D"font-family:Helvetica;font-size:15px;line-height:norm=
+al;text-align:left;color:#ffffff;"><div>En cumplimiento de lo dispuesto e=
+n la Protecci=C3=B3n de Datos, para el ejercicio de sus derechos de acces=
+o, rectificaci=C3=B3n, cancelaci=C3=B3n y oposici=C3=B3n al tratamiento d=
+e sus datos personales, contenidos en nuestras condiciones de protecci=C3=
+=B3n de datos, solamente tiene que responder a este e-mail indicando su e=
+mail en el asunto, o bien a trav=C3=A9s del env=C3=ADo de un correo ordin=
+ario a la direcci=C3=B3n: ciudadreal@oapcnc.es. Si desea darse de baja ta=
+mbi=C3=A9n puede hacer clic=C2=A0<a href=3D"https://boletines.oapcnc.es/u=
+nsubscribe/z34n0d/click?token=3Dl6lrtf5x" target=3D"_blank" style=3D"colo=
+r: #337ab7; text-decoration: underline;"><span><a href=3D"https://boletin=
+es.oapcnc.es/unsubscribe/z34n0d/form?token=3Dl6lrtf5x" target=3D"_blank" =
+style=3D"color: #337ab7; text-decoration: underline;">aqu=C3=AD</a></span=
+></a>.</div></div>
+    =
+
+                </td>
+              </tr>
+            =
+
+        </tbody>
+      </table>
+    =
+
+      </div>
+    =
+
+          <!--[if mso | IE]></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        =
+
+      </div>
+    =
+
+      =
+
+      <!--[if mso | IE]></td></tr></table></td></tr></table><![endif]-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        =
+
+      </div>
+    =
+
+        =
+
+      <!--[if mso | IE]></td></tr></table><![endif]-->
+    =
+
+      =
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    =
+
+      </div>
+    =
+
+  <img src=3D"https://boletines.oapcnc.es/i/z34n0d/l6lrtf5x.gif" width=3D=
+"1" height=3D"1" alt=3D"">
+</body>
+</html>
+
+----==_mimepart_69afe4231bf88_1449bc17120552--

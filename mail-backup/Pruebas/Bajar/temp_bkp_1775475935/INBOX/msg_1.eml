@@ -1,0 +1,829 @@
+Return-path: <bounce-1527748-2609-128466-nico.araoz=cubetic.com@em-1527748.lidr.co>
+Envelope-to: nico.araoz@cubetic.com
+Delivery-date: Mon, 30 Mar 2026 16:39:13 +0000
+Received: from [185.56.87.0] (port=2050 helo=delivery.antispam.mailspamprotection.com)
+	by c118270.sgvps.net with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.99.1)
+	(envelope-from <bounce-1527748-2609-128466-nico.araoz=cubetic.com@em-1527748.lidr.co>)
+	id 1w7Fdw-00000000Gxw-46qT
+	for nico.araoz@cubetic.com;
+	Mon, 30 Mar 2026 16:39:13 +0000
+ARC-Seal: i=1; cv=none; a=rsa-sha256; d=incoming.instance-europe-west4-gmc9.prod.antispam.mailspamprotection.com; s=arckey; t=1774888752;
+	 b=EXTYGe9nbKMcDG6hYARQTYtB6Xc7NOAnvK98Z2RqcIpDTo8IdGMzZQY/6E4+8IUDttYVGVwar6
+	  /97x4YfZtKGlwMPXH6FqbnC+15VHf5MJLHhEtN+Bn76Jz9cpJGavtK8qrcXCX/qZIF8pAKKZvR
+	  HJ9PuEOy8tqMn6lAO614w4kmVX4ukalOdrQGXVarOcPdjwOLwlfVPIdtt2ozcvxdFa/EbBAild
+	  cd//nosErYNtjZsr57j+aCsXvVhf35EuwPKqPNLmD/UJohz4UrxAebx/BE9U5l0yY7cTbLI1Yt
+	  pANQgCpYm6XxJeZC03JilPb63bu/GRA84ARiNKTtPPdy/g==;
+ARC-Authentication-Results: i=1; incoming.instance-europe-west4-gmc9.prod.antispam.mailspamprotection.com; smtp.remote-ip=217.8.118.32;
+	iprev=pass (mail32.euc1.acems2.com) smtp.remote-ip=217.8.118.32;
+	spf=pass smtp.mailfrom=em-1527748.lidr.co;
+	dkim=pass header.d=lidr.co header.s=acdkim1 header.a=rsa-sha256;
+	dkim=pass header.d=acems2.com header.s=acdkim1 header.a=rsa-sha256;
+	dmarc=pass header.from=lidr.co;
+	arc=none
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed; d=incoming.instance-europe-west4-gmc9.prod.antispam.mailspamprotection.com; s=arckey; t=1774888752;
+	bh=F8+pUYv8xLWEvbcWmDbjWL3b0ogfNWESao4yXq9Go+M=;
+	h=List-Unsubscribe:List-Unsubscribe-Post:Content-Type:MIME-Version:Subject:
+	  Message-ID:To:From:Date:DKIM-Signature:DKIM-Signature;
+	b=J6NFSRk6dCn7tEmSVD4Vg/6BtBEe/W7x0hDO8XvIlRS3o9f7YdxhU8201VCky0duSn43t2wbXO
+	  VG3l2WV964af/6bKJcFQVwHWk7jW0YErZKF2ITwgdwKXpcRmrdN8mqr3Xn9g25ovPTdxlKAbBP
+	  h0dMn+BN/f6Xymzdc/+47aKsToS1oLZ++Pdq0x2UF/XSvhXSknI8AlVFpEyUiFcOvHre/nFKAy
+	  atuWUZ+q2Nnpi6/Zpi6vGZ658MidBqomA14f+ZS7DfY+sH9KZcuIx5pCmBVg0A9FdedB0DVFym
+	  +JZmVDLeTLwV9ANoqIIk6qp/qzC5yLuDJ9YBZRH/aH562w==;
+Received: from mail32.euc1.acems2.com ([217.8.118.32])
+	by instance-europe-west4-gmc9.prod.antispam.mailspamprotection.com with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.98.1)
+	(envelope-from <bounce-1527748-2609-128466-nico.araoz=cubetic.com@em-1527748.lidr.co>)
+	id 1w7Fdu-0000000EgX0-1kzU
+	for nico.araoz@cubetic.com;
+	Mon, 30 Mar 2026 16:39:12 +0000
+X-KumoRef: eyJfQF8iOiJcXF8vIiwicmVjaXBpZW50Ijoibmljby5hcmFvekBjdWJldGljLmNvbSJ9
+DKIM-Signature: v=1; a=rsa-sha256; d=lidr.co; s=acdkim1; c=relaxed/relaxed;
+	bh=F8+pUYv8xLWEvbcWmDbjWL3b0ogfNWESao4yXq9Go+M=;
+	h=from:to:subject:date:mime-version:content-type:sender:cc:date:message-id:
+		list-unsubscribe:list-unsubscribe-post; t=1774888533; x=1774974933;
+	b=pfpORCQ+CiNhfwtHsHWeskTSDnvV5KXmEJKov8KegypfY1kE2GPnASdArSH0qx3p2JKKCWQI2
+	rx9LopFxbnD8QTMp1+JMNWvhV6L1GfX87YONhfa4jSsl4vx9nvI4eURW363gxkIvuBAGAQyKHk0
+	a9dmmuDtR6/dJkoENxzHRQZWrhfR4SynGq06pirvgGn/D8eEWAf1uiGwG9wEqWF6u/jGRWL+Kmf
+	dRYbmSOE8pY3TatdzmI9Cr3bghBUcko8JlYzvgivIliQLwhJNh2LcT3Q9EPTP+KavmwB4gwg6YQ
+	e/YKVR7xHluIdpsSZ/f2zIuvAdX5ACGli573xYxAbdOw==;
+DKIM-Signature: v=1; a=rsa-sha256; d=acems2.com; s=acdkim1; c=relaxed/relaxed;
+	bh=F8+pUYv8xLWEvbcWmDbjWL3b0ogfNWESao4yXq9Go+M=;
+	h=from:to:subject:date:mime-version:content-type:sender:cc:date:message-id:
+		list-unsubscribe:list-unsubscribe-post; t=1774888533; x=1774974933;
+	b=AbUUU7Ldd0drnkJe2nnMdFu3Nr1t0syOLvieb1CBuWFg/xf/0BimF0Q9KcBQQt0ndswekJJ93
+	DilmdRKUsLA6BvYoYd8Jl5cqNlF6Ra/Gf2b8cJRAOl0wymGhiSlJveWIpY+oAvymYwZmaIdEfbl
+	inA4buNTu3gyTsgECP1tIKAAJ8nbMOAiOCOLDsru/lH0aIXyekIF92oT8cGrUmDaR++nS78Vw4a
+	eDSi9jHqSiRon29+Hw10PlDD9lzSkif9SERrYC6kdPJHnAPv/hwR+9A7JbNTR1xjE+OyC/V7FXE
+	jEHqRXKVEUL6SAptjQfKQIo/czCX3q6O5yu7o/1JNOOQ==;
+CFBL-Address: fbl-report@acems1.com; report=arf
+X-Mailer: ActiveCampaign Mailer
+Received: from service-9 (10.64.81.84)
+  by acems1.com (KumoMTA 10.64.51.244) 
+  with ESMTPS (TLSv1_3:TLS13_AES_256_GCM_SHA384)  id 791d6b062c5611f184ca026c63c1e3bf for <nico.araoz@cubetic.com>;
+  Mon, 30 Mar 2026 16:35:33 +0000
+Date: Mon, 30 Mar 2026 16:35:33 +0000 (GMT)
+From: Alvaro Moya <hi@lidr.co>
+To: nico.araoz@cubetic.com
+Message-ID: <1211020865.4130524.1774888533590@service-9>
+Subject: Resistencia, PRs colapsadas y el nuevo cuello de botella de la IA
+ en equipos tech
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_4130523_856761490.1774888533590"
+X-DKIM-Options: s=acdkim1
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+X-Virtual-Mta: camp-euc1-a-c2-31-35
+X-250ok-CID: 1527748-2609
+List-Unsubscribe: <https://lidr86894.activehosted.com/box.php?nl=100&c=2609&m=3015&s=e705197b8262f18e724a50311e20b4db&funcml=unsub2&luha=1>,<mailto:unsubscribe-5736139add2ee06ec86d9288bad48fea-2609-e705197b8262f18e724a50311e20b4db@mail31.euc1.acems2.com>
+Feedback-ID: 1527748:activecampaign
+X-Sending-Engine: Hedwig PCS
+X-Report-Abuse: Please report abuse to abuse@activecampaign.com
+X-lid: bmljby5hcmFvekBjdWJldGljLmNvbSAsIGMyNjA5ICwgbTMwMTUgLCBzODczMDggLCBsMTAw
+X-mid: bmljby5hcmFvekBjdWJldGljLmNvbSAsIGMyNjA5ICwgbTMwMTUgLCBzODczMDg=
+X-SGantispam-id: e5df321b5e6929380389a22c375027a4
+X-AntiAbuse: ID - e5df321b5e6929380389a22c375027a4
+X-SGantispam-rep: "10/1m"
+Received-SPF: pass (instance-europe-west4-gmc9.prod.antispam.mailspamprotection.com: domain of em-1527748.lidr.co designates 217.8.118.32 as permitted sender) client-ip=217.8.118.32; envelope-from=bounce-1527748-2609-128466-nico.araoz=cubetic.com@em-1527748.lidr.co; helo=mail32.euc1.acems2.com;
+X-SPF-Result: instance-europe-west4-gmc9.prod.antispam.mailspamprotection.com: domain of em-1527748.lidr.co designates 217.8.118.32 as permitted sender
+AntiSpam-DLS: false
+AntiSpam-DLSP: 
+AntiSpam-DLSRS: 
+AntiSpam-TS: 1.0
+X-DKIM-Status: none /  / em-1527748.lidr.co /  /  / 
+X-DKIM-Status: pass /  / lidr.co / lidr.co /  / acdkim1
+X-DKIM-Status: pass /  / acems2.com / acems2.com /  / acdkim1
+AntiSpam-RBL: 0
+Authentication-Results: incoming.instance-europe-west4-gmc9.prod.antispam.mailspamprotection.com;
+	iprev=pass (mail32.euc1.acems2.com) smtp.remote-ip=217.8.118.32;
+	spf=pass smtp.mailfrom=em-1527748.lidr.co;
+	dkim=pass header.d=lidr.co header.s=acdkim1 header.a=rsa-sha256;
+	dkim=pass header.d=acems2.com header.s=acdkim1 header.a=rsa-sha256;
+	dmarc=pass header.from=lidr.co;
+	arc=none
+X-Antispam-Scanned: incoming
+X-Antispam-Scan-Timestamp: 1774888752
+X-Antispam-Scan-Result: clean
+X-Antispam-Scan-Hash: 301746eced1dc3a69407be8d28eb20ee40de2cfb
+
+------=_Part_4130523_856761490.1774888533590
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+La adopci=C3=B3n es un problema de sistema&#128075; Muy buenas,
+
+Hace unos d=C3=ADas te habl=C3=A9 de los 5 pilares que aseguran el =C3=A9xi=
+to entre adoptar IA y simplemente tolerar que el equipo la use.
+
+Esta es la segunda parte. Y viene desde dentro.
+
+**Francisco Marro=C3=B1as, VP of Engineering en Civitatis,** se sienta a ha=
+blar sin filtro sobre c=C3=B3mo se escala un equipo cuando la IA ya est=C3=
+=A1 dentro pero el sistema todav=C3=ADa no existe.=C2=A0
+
+El miedo al despido, el colapso de las Code Reviews, la figura del Product =
+Engineer y c=C3=B3mo medir la adopci=C3=B3n con m=C3=A9tricas y no bajo per=
+cepciones.
+
+Recuerda que en LIDR te regalamos una entrada al=20
+
+**CTO Connect de Codemotion** 2026. Madrid, 20 de abril. Si a=C3=BAn no has=
+ reservado la tuya=E2=80=A6
+
+Hazlo ahora en este enlace >> https://codemo.tech/LIDR_CTO-CONNECT
+
+2 casos reales de adopci=C3=B3n: Civitatis y Europcar
+
+**Del monolito al micro, y del onboarding de 6 semanas a 1.**
+
+Dos resultados concretos. El desmantelamiento de monolito que no avanzaba p=
+as=C3=B3 de meses a 4 d=C3=ADas con IA integrada en el flujo =E2=80=94Copil=
+ot, Cursor, Claude y agentes=E2=80=94 con el contexto correcto y las revisi=
+ones correctas. Y el onboarding de nuevos ingenieros baj=C3=B3 de 6 semanas=
+ a 1: no salt=C3=A1ndose pasos, sino permitiendo que el nuevo developer con=
+sulte arquitectura, patrones internos y DDD directamente sobre el c=C3=B3di=
+go del proyecto, sin depender de que un senior tenga hueco.
+
+**Primeros pasos reales, no piloto de laboratorio.**
+
+Francisco comparte c=C3=B3mo Europcar abord=C3=B3 la adopci=C3=B3n en un en=
+torno con inercia alta y equipos acostumbrados a procesos consolidados. La =
+clave: empezar con casos de uso concretos y Champions internos que reducen =
+la fricci=C3=B3n antes de escalar. Sin esto, la herramienta se impone desde=
+ arriba y muere en dos semanas.
+
+Las dificultades que nadie cuenta en las keynotes
+
+*=20
+
+**Resistencia del equipo:** miedo al despido, ego de developer senior y des=
+conocimiento de qu=C3=A9 cambia en su rol. Son tres resistencias distintas =
+que necesitan tres respuestas distintas.
+
+*=20
+
+**El cuello de botella se desplaza:** si la IA escribe el c=C3=B3digo en mi=
+nutos, =C2=BFqui=C3=A9n lo revisa? Las PRs y el QA se convierten en el nuev=
+o punto de colapso. El problema no desaparece: cambia de sitio.
+
+*=20
+
+**Riesgo de opacidad:** el peligro de no entender el c=C3=B3digo que genera=
+ la IA. Producir m=C3=A1s no es lo mismo que producir mejor. Y el criterio =
+t=C3=A9cnico =E2=80=94la capacidad de revisar y validar=E2=80=94 no se pued=
+e delegar.
+
+*=20
+
+**ROI dif=C3=ADcil de justificar:** no con PRs ni l=C3=ADneas de c=C3=B3dig=
+o. Francisco explica qu=C3=A9 m=C3=A9tricas ha usado para demostrar el impa=
+cto hacia arriba en la organizaci=C3=B3n.
+
+Los tips que s=C3=AD funcionan a nivel equipo
+
+*=20
+
+**Champions internos, no imposici=C3=B3n top-down.** Designar referentes qu=
+e lideren la adopci=C3=B3n desde dentro =E2=80=94con tiempo dedicado=E2=80=
+=94 es lo que evita el rechazo. La herramienta impuesta desde arriba muere =
+en dos semanas.
+
+*=20
+
+**Pair Programming + Brainway.** Dos estrategias concretas para reducir la =
+brecha entre el que ya usa IA con criterio y el que todav=C3=ADa la ve como=
+ caja negra.
+
+*=20
+
+**Planning vs. Execution: modelos distintos para fases distintas.** Usar lo=
+s modelos m=C3=A1s potentes para planificar y los m=C3=A1s eficientes para =
+ejecutar. No es solo una decisi=C3=B3n de coste: es de calidad de output.
+
+*=20
+
+**Under promise, Over deliver.** La gesti=C3=B3n de expectativas con la dir=
+ecci=C3=B3n es tan importante como la adopci=C3=B3n t=C3=A9cnica. Prometer =
+demasiado en la fase de piloto destruye la credibilidad del proyecto.
+
+Si quieres ver todo esto en detalle est=C3=A1 en el v=C3=ADdeo:
+
+=E2=96=B6=EF=B8=8F C=C3=B3mo escalar un equipo con IA: De la resistencia al=
+ "Product Engineer" - Caso Civitatis: https://www.youtube.com/@lidr?sub_con=
+firmation=3D1
+
+https://www.youtube.com/@lidr?sub_confirmation=3D1=20
+
+Un abrazo,
+
+=C3=81lvaro
+
+P.D. Recuerda, si quieres estar en la sala el 20 de abril en Madrid &#12807=
+3; Reserva tu plaza en el CTO Connect de Codemotion >> https://codemo.tech/=
+LIDR_CTO-CONNECT
+
+**=C3=81lvaro Moya**
+
+LinkedIn Top Voice https://www.linkedin.com/in/alvarormoya/, =C2=BFconectam=
+os?
+
+CTO & experto en IA en Lidr.co https://www.lidr.co/
+
+Sent to: nico.araoz@cubetic.com
+
+=C2=BFTe quieres desuscribir? Haz clic aqu=C3=AD. Igualmente gracias por pa=
+sarte, fue bonito mientras dur=C3=B3. http://lidr86894.activehosted.com/pro=
+c.php?c=3D2609&m=3D3015&s=3De705197b8262f18e724a50311e20b4db&d=3D87308&v=3D=
+2&nl=3D100&act=3Dunsub
+
+LIDR Talent SL, Calle Craywinckel, 2 Escalera B, =C3=81tico 3, 08022 Barcel=
+ona, Barcelona, Espa=C3=B1a
+------=_Part_4130523_856761490.1774888533590
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, minimal-ui, initia=
+l-scale=3D1.0, maximum-scale=3D1.0, user-scalable=3D0;">
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+<meta name=3D"format-detection" content=3D"telephone=3Dno, date=3Dno, email=
+=3Dno, address=3Dno">
+<meta name=3D"x-apple-disable-message-reformatting">
+<title></title><!--[if (mso 16)]><style type=3D"text/css"> a { text-decorat=
+ion: none; } </style><![endif]--><!--[if gte mso 9]><style> sup { font-size=
+: 100% !important; } </style><![endif]--><!--[if gte mso 9]><noscript>
+<xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG></o:AllowPNG>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml>
+</noscript><![endif]--><!--[if gte mso 9]><style>sup { font-size: 100% !imp=
+ortant; }</style><![endif]--><!--[if mso]><xml>
+<w:WordDocument xmlns:w=3D"urn:schemas-microsoft-com:office:word">
+<w:DontUseAdvancedTypographyReadingMail/>
+</w:WordDocument>
+</xml>
+<![endif]--><!--[if !mso]><!-- -->
+<link href=3D"https://fonts.googleapis.com/css?family=3DRoboto:400,400i,700=
+,700i" rel=3D"stylesheet"><!--<![endif]-->
+<style type=3D"text/css">#outlook a { padding:0;}.es-button { mso-style-pri=
+ority:100!important; text-decoration:none!important;}a[x-apple-data-detecto=
+rs] { color:inherit!important; text-decoration:none!important; font-size:in=
+herit!important; font-family:inherit!important; font-weight:inherit!importa=
+nt; line-height:inherit!important;}.es-desk-hidden { display:none; float:le=
+ft; overflow:hidden; width:0; max-height:0; line-height:0; mso-hide:all;}@m=
+edia only screen and (max-width:600px) {p, ul li, ol li, a { line-height:15=
+0%!important } h1, h2, h3, h1 a, h2 a, h3 a { line-height:120%!important } =
+h1 { font-size:30px!important; text-align:inherit } h2 { font-size:26px!imp=
+ortant; text-align:inherit } h3 { font-size:20px!important; text-align:inhe=
+rit }
+.es-header-body h1 a, .es-content-body h1 a, .es-footer-body h1 a { font-si=
+ze:30px!important } .es-header-body h2 a, .es-content-body h2 a, .es-footer=
+-body h2 a { font-size:26px!important } .es-header-body h3 a, .es-content-b=
+ody h3 a, .es-footer-body h3 a { font-size:20px!important } .es-menu td a {=
+ font-size:13px!important } .es-header-body p, .es-header-body ul li, .es-h=
+eader-body ol li, .es-header-body a { font-size:16px!important } .es-conten=
+t-body p, .es-content-body ul li, .es-content-body ol li, .es-content-body =
+a { font-size:16px!important } .es-footer-body p, .es-footer-body ul li, .e=
+s-footer-body ol li, .es-footer-body a { font-size:16px!important } .es-inf=
+oblock p, .es-infoblock ul li, .es-infoblock ol li, .es-infoblock a { font-=
+size:12px!important } *[class=3D"gmail-fix"] { display:none!important } .es=
+-m-txt-c, .es-m-txt-c h1, .es-m-txt-c h2, .es-m-txt-c h3 { text-align:cente=
+r!important }
+.es-m-txt-r, .es-m-txt-r h1, .es-m-txt-r h2, .es-m-txt-r h3 { text-align:ri=
+ght!important } .es-m-txt-l, .es-m-txt-l h1, .es-m-txt-l h2, .es-m-txt-l h3=
+ { text-align:left!important } .es-m-txt-r img, .es-m-txt-c img, .es-m-txt-=
+l img { display:inline!important } .es-button-border { display:inline-block=
+!important } a.es-button, button.es-button { display:inline-block!important=
+; font-size:16px!important } .es-adaptive table, .es-left, .es-right { widt=
+h:100%!important } .ac-footer, .es-content table, .es-header table, .es-foo=
+ter table, .es-content, .es-footer, .es-header { width:100%!important; max-=
+width:600px!important } .ac-footer td, .ac-footer p, .es-adapt-td { display=
+:block!important; width:100%!important } .adapt-img { width:100%!important;=
+ height:auto!important } .es-m-p0 { padding:0px!important } .es-m-p0r { pad=
+ding-right:0px!important } .es-m-p0l { padding-left:0px!important } .es-m-p=
+0t { padding-top:0px!important }
+.es-m-p0b { padding-bottom:0!important } .es-m-p20b { padding-bottom:20px!i=
+mportant } .es-mobile-hidden, .es-hidden { display:none!important } tr.es-d=
+esk-hidden, td.es-desk-hidden, table.es-desk-hidden { width:auto!important;=
+ overflow:visible!important; float:none!important; max-height:inherit!impor=
+tant; line-height:inherit!important } tr.es-desk-hidden { display:table-row=
+!important } table.es-desk-hidden { display:table!important } td.es-desk-me=
+nu-hidden { display:table-cell!important } .es-menu td { width:1%!important=
+ } .es-adapt-td { display:block!important; width:100%!important } table.es-=
+table-not-adapt, .esd-block-html table { width:auto!important } table.es-so=
+cial { display:inline-block!important } table.es-social td { display:inline=
+-block!important } .es-desk-hidden { display:table-row!important; width:aut=
+o!important; overflow:visible!important; max-height:inherit!important } .h-=
+auto { height:auto!important } }
+@media screen and (max-width:384px) {.mail-message-content { width:414px!im=
+portant } }</style>
+</head>
+<body class=3D"es-wrapper-color" data-new-gr-c-s-loaded=3D"14.1229.0" lang=
+=3D"und" style=3D"font-family:roboto, 'helvetica neue', helvetica, arial, s=
+ans-serif;width:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100=
+%;padding:0;Margin:0;background-color:inherit">
+<div style=3D"display: none !important; padding: 0; height: 1px; font-size:=
+ 1px; background-color: inherit !important; opacity: 0; color: transparent;=
+ mso-line-height-rule: exactly; line-height:1px; mso-hide:all;">
+La adopci=C3=B3n es un problema de sistema=20
+<div style=3D"display: none; max-height: 0px; overflow: hidden;">
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C=
+&nbsp;=E2=80=8C
+</div>
+</div>
+<table class=3D"es-wrapper" width=3D"100%" cellspacing=3D"0" cellpadding=3D=
+"0" role=3D"none" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border=
+-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;backgro=
+und-repeat:repeat;background-position:center top;height:100%;background-col=
+or:inherit">
+<tr>
+<td valign=3D"top" style=3D"padding:0;Margin:0">
+<table cellpadding=3D"0" cellspacing=3D"0" class=3D"es-content" align=3D"ce=
+nter" role=3D"none" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;bord=
+er-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width=
+:100%">
+<tr>
+<td align=3D"center" bgcolor=3D"#ffffff" style=3D"padding:0;Margin:0;backgr=
+ound-color:#ffffff">
+<table bgcolor=3D"#ffffff" class=3D"es-content-body" align=3D"center" cellp=
+adding=3D"0" cellspacing=3D"0" role=3D"none" style=3D"mso-table-lspace:0pt;=
+mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background=
+-color:transparent;width:590px">
+<tr>
+<td align=3D"left" style=3D"padding:0;Margin:0">
+<table cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" role=3D"none" sty=
+le=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;bo=
+rder-spacing:0px">
+<tr>
+<td align=3D"center" valign=3D"top" style=3D"padding:0;Margin:0;width:650px=
+">
+<table cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"mso-tabl=
+e-lspace:0pt;mso-table-rspace:0pt;border-collapse:separate;border-spacing:0=
+px;border-radius:5px" role=3D"presentation">
+<tr>
+<td align=3D"left" style=3D"padding:0;Margin:0">
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px">=F0=
+=9F=91=8B Muy buenas,</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px">Hace=
+ unos d=C3=ADas te habl=C3=A9 de los 5 pilares que aseguran el =C3=A9xito e=
+ntre adoptar IA y simplemente tolerar que el equipo la use.</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>
+Esta es la segunda parte. Y viene desde dentro.</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+<strong>Francisco Marro=C3=B1as, VP of Engineering en Civitatis,</strong> s=
+e sienta a hablar sin filtro sobre c=C3=B3mo se escala un equipo cuando la =
+IA ya est=C3=A1 dentro pero el sistema todav=C3=ADa no existe.&nbsp;</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>
+El miedo al despido, el colapso de las Code Reviews, la figura del Product =
+Engineer y c=C3=B3mo medir la adopci=C3=B3n con m=C3=A9tricas y no bajo per=
+cepciones.</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px">Recu=
+erda que en LIDR te regalamos una entrada al <strong>CTO Connect de Codemot=
+ion</strong> 2026. Madrid, 20 de abril. Si a=C3=BAn no has reservado la tuy=
+a=E2=80=A6</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><str=
+ong><a target=3D"_blank" href=3D"https://lidr86894.acemlnb.com/lt.php?x=3D4=
+lZy~GE6JFCe55V.-dLHVeKh1XRVjtDyvuovXnHEVnKZDHCt-ky7xOhy13yo-RVfjDZo3nLJIXns=
+5Xz6zOxGU.C-1XQhjtX" style=3D"-webkit-text-size-adjust:none;-ms-text-size-a=
+djust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#20=
+57ee;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana=
+, sans-serif">Hazlo ahora en este enlace &gt;&gt;</a></strong></p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:27px;color:#333333;font-size:18px"><str=
+ong><span style=3D"background-color:#ffd966">2 casos reales de adopci=C3=B3=
+n: Civitatis y Europcar</span></strong></p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+<strong>Del monolito al micro, y del onboarding de 6 semanas a 1.</strong><=
+/p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>
+Dos resultados concretos. El desmantelamiento de monolito que no avanzaba p=
+as=C3=B3 de meses a 4 d=C3=ADas con IA integrada en el flujo =E2=80=94Copil=
+ot, Cursor, Claude y agentes=E2=80=94 con el contexto correcto y las revisi=
+ones correctas. Y el onboarding de nuevos ingenieros baj=C3=B3 de 6 semanas=
+ a 1: no salt=C3=A1ndose pasos, sino permitiendo que el nuevo developer con=
+sulte arquitectura, patrones internos y DDD directamente sobre el c=C3=B3di=
+go del proyecto, sin depender de que un senior tenga hueco.</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><str=
+ong>Primeros pasos reales, no piloto de laboratorio.</strong></p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>
+Francisco comparte c=C3=B3mo Europcar abord=C3=B3 la adopci=C3=B3n en un en=
+torno con inercia alta y equipos acostumbrados a procesos consolidados. La =
+clave: empezar con casos de uso concretos y Champions internos que reducen =
+la fricci=C3=B3n antes de escalar. Sin esto, la herramienta se impone desde=
+ arriba y muere en dos semanas.</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:27px;color:#333333;font-size:18px"><str=
+ong><span style=3D"background-color:#ffd966">Las dificultades que nadie cue=
+nta en las keynotes</span></strong></p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+</p>
+<ul>
+<li style=3D"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-li=
+ne-height-rule:exactly;font-family:helvetica, 'helvetica neue', arial, verd=
+ana, sans-serif;line-height:24px;color:#333333;margin-left:0;font-size:16px=
+">
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><str=
+ong>Resistencia del equipo:</strong> miedo al despido, ego de developer sen=
+ior y desconocimiento de qu=C3=A9 cambia en su rol. Son tres resistencias d=
+istintas que necesitan tres respuestas distintas.</p></li>
+<li style=3D"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-li=
+ne-height-rule:exactly;font-family:helvetica, 'helvetica neue', arial, verd=
+ana, sans-serif;line-height:24px;color:#333333;margin-left:0;font-size:16px=
+">
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><str=
+ong>El cuello de botella se desplaza:</strong> si la IA escribe el c=C3=B3d=
+igo en minutos, =C2=BFqui=C3=A9n lo revisa? Las PRs y el QA se convierten e=
+n el nuevo punto de colapso. El problema no desaparece: cambia de sitio.</p=
+></li>
+<li style=3D"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-li=
+ne-height-rule:exactly;font-family:helvetica, 'helvetica neue', arial, verd=
+ana, sans-serif;line-height:24px;color:#333333;margin-left:0;font-size:16px=
+">
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><str=
+ong>Riesgo de opacidad:</strong> el peligro de no entender el c=C3=B3digo q=
+ue genera la IA. Producir m=C3=A1s no es lo mismo que producir mejor. Y el =
+criterio t=C3=A9cnico =E2=80=94la capacidad de revisar y validar=E2=80=94 n=
+o se puede delegar.</p></li>
+<li style=3D"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-li=
+ne-height-rule:exactly;font-family:helvetica, 'helvetica neue', arial, verd=
+ana, sans-serif;line-height:24px;color:#333333;margin-left:0;font-size:16px=
+">
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><str=
+ong>ROI dif=C3=ADcil de justificar:</strong> no con PRs ni l=C3=ADneas de c=
+=C3=B3digo. Francisco explica qu=C3=A9 m=C3=A9tricas ha usado para demostra=
+r el impacto hacia arriba en la organizaci=C3=B3n.</p></li>
+</ul>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:27px;color:#333333;font-size:18px"><str=
+ong><span style=3D"background-color:#ffd966">Los tips que s=C3=AD funcionan=
+ a nivel equipo</span></strong></p>
+<ul>
+<li style=3D"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-li=
+ne-height-rule:exactly;font-family:helvetica, 'helvetica neue', arial, verd=
+ana, sans-serif;line-height:24px;color:#333333;margin-left:0;font-size:16px=
+">
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><str=
+ong>Champions internos, no imposici=C3=B3n top-down.</strong> Designar refe=
+rentes que lideren la adopci=C3=B3n desde dentro =E2=80=94con tiempo dedica=
+do=E2=80=94 es lo que evita el rechazo. La herramienta impuesta desde arrib=
+a muere en dos semanas.</p></li>
+<li style=3D"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-li=
+ne-height-rule:exactly;font-family:helvetica, 'helvetica neue', arial, verd=
+ana, sans-serif;line-height:24px;color:#333333;margin-left:0;font-size:16px=
+">
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><str=
+ong>Pair Programming + Brainway.</strong> Dos estrategias concretas para re=
+ducir la brecha entre el que ya usa IA con criterio y el que todav=C3=ADa l=
+a ve como caja negra.</p></li>
+<li style=3D"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-li=
+ne-height-rule:exactly;font-family:helvetica, 'helvetica neue', arial, verd=
+ana, sans-serif;line-height:24px;color:#333333;margin-left:0;font-size:16px=
+">
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><str=
+ong>Planning vs. Execution: modelos distintos para fases distintas.</strong=
+> Usar los modelos m=C3=A1s potentes para planificar y los m=C3=A1s eficien=
+tes para ejecutar. No es solo una decisi=C3=B3n de coste: es de calidad de =
+output.</p></li>
+<li style=3D"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-li=
+ne-height-rule:exactly;font-family:helvetica, 'helvetica neue', arial, verd=
+ana, sans-serif;line-height:24px;color:#333333;margin-left:0;font-size:16px=
+">
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><str=
+ong>Under promise, Over deliver.</strong> La gesti=C3=B3n de expectativas c=
+on la direcci=C3=B3n es tan importante como la adopci=C3=B3n t=C3=A9cnica. =
+Prometer demasiado en la fase de piloto destruye la credibilidad del proyec=
+to.</p></li>
+</ul>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px">Si q=
+uieres ver todo esto en detalle est=C3=A1 en el v=C3=ADdeo:</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px">=E2=
+=96=B6=EF=B8=8F <strong><a target=3D"_blank" href=3D"https://lidr86894.acem=
+lnb.com/lt.php?x=3D4lZy~GE6JFCe55V.-dLHVeKh1XRVjtDyvuovXnHEVnKZDHCt-ky7xOhy=
+13yo-RVfjDZo3nLJIXns5Xz6zOxGU.C-1XQhjtb" style=3D"-webkit-text-size-adjust:=
+none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration=
+:underline;color:#2057ee;font-size:16px;font-family:helvetica, 'helvetica n=
+eue', arial, verdana, sans-serif">C=C3=B3mo escalar un equipo con IA: De la=
+ resistencia al "Product Engineer" - Caso Civitatis:</a></strong></p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvet=
+ica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px;displa=
+y:none"><br></p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvet=
+ica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px;displa=
+y:none"><br></p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvet=
+ica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px;displa=
+y:none"><br></p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvet=
+ica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px;displa=
+y:none"><br></p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvet=
+ica, arial, sans-serif;line-height:21px;color:#333333;font-size:14px;displa=
+y:none"><br></p></td>
+</tr>
+<tr>
+<td align=3D"left" style=3D"padding:0;Margin:0">
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvet=
+ica, arial, sans-serif;line-height:16.5px;color:#333333;font-size:11px"></p=
+></td>
+</tr>
+<tr>
+<td align=3D"left" style=3D"padding:0;Margin:0">
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvet=
+ica, arial, sans-serif;line-height:16.5px;color:#333333;font-size:11px"></p=
+></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+</table>
+<table cellpadding=3D"0" cellspacing=3D"0" class=3D"es-content" align=3D"ce=
+nter" role=3D"none" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;bord=
+er-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width=
+:100%">
+<tr>
+<td align=3D"center" style=3D"padding:0;Margin:0">
+<table bgcolor=3D"#ffffff" class=3D"es-content-body" align=3D"center" cellp=
+adding=3D"0" cellspacing=3D"0" role=3D"none" style=3D"mso-table-lspace:0pt;=
+mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background=
+-color:transparent;width:590px">
+<tr>
+<td align=3D"left" style=3D"padding:0;Margin:0">
+<table cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" role=3D"none" sty=
+le=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;bo=
+rder-spacing:0px">
+<tr>
+<td align=3D"center" valign=3D"top" style=3D"padding:0;Margin:0;width:590px=
+">
+<table cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" role=3D"presentat=
+ion" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:col=
+lapse;border-spacing:0px">
+<tr>
+<td align=3D"center" style=3D"padding:0;Margin:0;font-size:0px"><a target=
+=3D"_blank" href=3D"https://lidr86894.acemlnb.com/lt.php?x=3D4lZy~GE6JFCe55=
+V.-dLHVeKh1XRVjtDyvuovXnHEVnKZDHCt-ky7xOhy13yo-RVfjDZo3nLJIXns5Xz6zOxGU.C-1=
+XQhjtb" style=3D"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;ms=
+o-line-height-rule:exactly;text-decoration:underline;color:#333333;font-siz=
+e:14px"><img class=3D"adapt-img" src=3D"https://lidr86894.activehosted.com/=
+cdn-cgi/image/dpr=3D2,fit=3Dscale-down,format=3Dauto,onerror=3Dredirect,wid=
+th=3D650/content/8vRN3/2026/03/30/a8ab3bc7-afbc-4e65-bfc5-7bf21f956dbe.jpeg=
+" alt=3D"" style=3D"display:block;border:0;outline:none;text-decoration:non=
+e;-ms-interpolation-mode:bicubic" data-cf-ir-is-resized=3D"true" width=3D"5=
+90"></a></td>
+</tr>
+<tr>
+<td align=3D"left" style=3D"padding:0;Margin:0">
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px">Un a=
+brazo,</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px">=C3=
+=81lvaro</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px">P.D.=
+ Recuerda, si quieres estar en la sala el 20 de abril en Madrid =F0=9F=91=
+=89 <strong><a target=3D"_blank" href=3D"https://lidr86894.acemlnb.com/lt.p=
+hp?x=3D4lZy~GE6JFCe55V.-dLHVeKh1XRVjtDyvuovXnHEVnKZDHCt-ky7xOhy13yo-RVfjDZo=
+3nLJIXns5Xz6zOxGU.C-1XQhjtX" style=3D"-webkit-text-size-adjust:none;-ms-tex=
+t-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;c=
+olor:#2660f5;font-size:16px;font-family:helvetica, 'helvetica neue', arial,=
+ verdana, sans-serif">Reserva tu plaza en el CTO Connect de Codemotion &gt;=
+&gt;</a></strong></p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:16px"><br>=
+</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvet=
+ica, arial, sans-serif;line-height:21px;color:#333333;font-size:14px;displa=
+y:none"><br></p></td>
+</tr>
+<tr>
+<td align=3D"center" style=3D"Margin:0;padding-top:20px;padding-left:20px;p=
+adding-right:20px;padding-bottom:40px;font-size:0px">
+<table border=3D"0" width=3D"100%" height=3D"100%" cellpadding=3D"0" cellsp=
+acing=3D"0" role=3D"presentation" style=3D"mso-table-lspace:0pt;mso-table-r=
+space:0pt;border-collapse:collapse;border-spacing:0px">
+<tr>
+<td style=3D"padding:0;Margin:0;border-bottom:1px solid #ffd966;background:=
+unset;height:0px;width:100%;margin:0px"></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td align=3D"center" style=3D"padding:10px;Margin:0;font-size:0px"><img cla=
+ss=3D"adapt-img" src=3D"https://content.app-us1.com/cdn-cgi/image/dpr=3D2,f=
+it=3Dscale-down,format=3Dauto,onerror=3Dredirect,width=3D650/8vRN3/2022/12/=
+02/dc5d6475-c2c8-4ded-82a0-bc143ba354b5.png" alt=3D"" style=3D"display:bloc=
+k;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic=
+" data-cf-ir-is-resized=3D"true" width=3D"122"></td>
+</tr>
+<tr>
+<td align=3D"center" style=3D"padding:0;Margin:0">
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:24px;color:#333333;font-size:20px"><str=
+ong>=C3=81lvaro Moya</strong></p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:19.2px;color:#333333;font-size:16px"><a=
+ target=3D"_blank" style=3D"-webkit-text-size-adjust:none;-ms-text-size-adj=
+ust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#3b89=
+c8;font-size:16px;font-family:helvetica, 'helvetica neue', arial, verdana, =
+sans-serif" href=3D"https://lidr86894.acemlnb.com/lt.php?x=3D4lZy~GE6JFCe55=
+V.-dLHVeKh1XRVjtDyvuovXnHEVnKZDHCt-ky7xOhy13yo-RVfjDZo3nLJIXns5Xz6zOxGU.C-1=
+XQhjtf">LinkedIn Top Voice</a>, =C2=BFconectamos?</p>
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', ari=
+al, verdana, sans-serif;line-height:19.2px;color:#333333;font-size:16px"><e=
+m>CTO &amp; experto en IA en <a target=3D"_blank" href=3D"https://lidr86894=
+.acemlnb.com/lt.php?x=3D4lZy~GE6JFCe55V.-dLHVeKh1XRVjtDyvuovXnHEVnKZDHCt-ky=
+7xOhy13yo-RVfjDZo3nLJIXns5Xz6zOxGU.C-1XQhk_9" style=3D"-webkit-text-size-ad=
+just:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decor=
+ation:underline;color:#3b89c8;font-size:16px;font-family:helvetica, 'helvet=
+ica neue', arial, verdana, sans-serif;line-height:19.2px">Lidr.co</a></em><=
+/p></td>
+</tr>
+<tr>
+<td align=3D"left" style=3D"padding:0;Margin:0">
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvet=
+ica, arial, sans-serif;line-height:21px;color:#333333;font-size:14px"><br><=
+br><br></p></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+</table>
+<table class=3D"ac-footer" cellspacing=3D"0" cellpadding=3D"0" align=3D"cen=
+ter" role=3D"none" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;borde=
+r-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:=
+100%;background-color:inherit;background-repeat:repeat;background-position:=
+center top">
+<tr>
+<td align=3D"center" style=3D"padding:0;Margin:0;padding-top:20px;padding-b=
+ottom:20px;background:inherit;font-family:inherit;font-size:11px;color:inhe=
+rit">
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:inherit;line-height:16.5px;font-=
+size:inherit;color:inherit">Sent to: nico.araoz@cubetic.com<br><br><a style=
+=3D"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height=
+-rule:exactly;text-decoration:none;font-family:inherit;color:#cccccc;font-w=
+eight:bold" href=3D"http://lidr86894.activehosted.com/proc.php?c=3D2609&m=
+=3D3015&s=3De705197b8262f18e724a50311e20b4db&d=3D87308&v=3D2&nl=3D100&act=
+=3Dunsub" target=3D"_blank">=C2=BFTe quieres desuscribir? Haz clic aqu=C3=
+=AD. Igualmente gracias por pasarte, fue bonito mientras dur=C3=B3.</a><br>=
+<br><span class=3D"perstag_address" style=3D"color:inherit;font-family:inhe=
+rit;font-size:11px">LIDR Talent SL, Calle Craywinckel, 2 Escalera B, =C3=81=
+tico 3, 08022 Barcelona, Barcelona, Espa=C3=B1a</span></p></td>
+</tr>
+</table>
+<br>
+<img src=3D"https://lidr86894.acemlnb.com/lt.php?x=3D4TZi05LJIXoKHhVp_NHFVO=
+F0266oidTww-Y3kHfFJaGe5p_6yQ~HUBJvAK8RvEP2kMgvZ.IJknMKGwC4AAADwR3f13yhjUEsy=
+lgwX5D" border=3D"0" width=3D"1" height=3D"1" style=3D"display:block;width:=
+1px!important;min-width:1px!important;max-width:1px!important;height:1px!im=
+portant;border:0;overflow:hidden;"/>
+</body>
+</html>
+------=_Part_4130523_856761490.1774888533590--
