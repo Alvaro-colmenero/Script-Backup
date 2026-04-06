@@ -29,4 +29,10 @@ class ZipManager {
         $zip->close();
         return true;
     }
+
+    public function unzipFolder($source, $destination) {
+        $zip = new ZipArchive();
+
+
+    }
 }

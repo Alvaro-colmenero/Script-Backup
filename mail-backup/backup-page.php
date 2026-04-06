@@ -94,7 +94,7 @@
         document.getElementById('resultArea').innerHTML = "";
 
         emailStr = document.getElementById('email').value;
-        now = new Date();
+        now = new Date(Date.now() + (new Date()).getTimezoneOffset() * 60000);
 
         if(interval) clearInterval(interval);
 
@@ -165,7 +165,7 @@
     function zipFile ()
     {
         let y = now.getFullYear(), m = (now.getMonth() + 1).toString().padStart(2, '0'),
-            d = (now.getDate()).toString().padStart(2, '0'), h = (now.getHours() - 1).toString().padStart(2, '0'),
+            d = (now.getDate()).toString().padStart(2, '0'), h = now.getHours().toString().padStart(2, '0'),
             i = now.getMinutes().toString().padStart(2, '0'), s = now.getSeconds().toString().padStart(2, '0'),
             timeStamp = y + '-' + m + '-' + d + '_' + h + '-' + i + '-' + s,
             path = '<?= BACKUP_PATH ?>'
