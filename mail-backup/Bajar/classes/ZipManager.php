@@ -1,6 +1,10 @@
 <?php
 
 namespace classes;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use ZipArchive;
+
 class ZipManager
 {
 
@@ -9,9 +13,8 @@ class ZipManager
 
         $zip = new ZipArchive();
 
-        if (!$zip->open($destination, ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
+        if (!$zip->open($destination, ZipArchive::CREATE | ZipArchive::OVERWRITE))
             return false;
-        }
 
         $files = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($source),
@@ -19,9 +22,7 @@ class ZipManager
         );
 
         foreach ($files as $file) {
-
             if (!$file->isDir()) {
-
                 $filePath = $file->getRealPath();
                 $relativePath = substr($filePath, strlen($source) + 1);
 

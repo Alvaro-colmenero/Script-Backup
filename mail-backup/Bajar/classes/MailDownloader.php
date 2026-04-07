@@ -41,11 +41,11 @@ class MailDownloader
     public function downloadAll($folders, $basePath): void
     {
         // Límite de correos por carpeta, si es 0 los coge todos
-        $limit = 3;
+        $limit = 0;
+        $totalGlobal = 0;
 
         // 1. Contar mensajes totales para el cálculo del porcentaje
-        // (Consideramos el límite en el conteo para que la barra sea precisa)
-        $totalGlobal = 0;
+        $this->updateRealProgress(0, "Contando mensajes... ");
         foreach ($folders as $folder) {
             $this->imap->openFolder($folder);
             $count = $this->imap->getMessageCount();

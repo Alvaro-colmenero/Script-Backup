@@ -23,13 +23,16 @@ try {
 
     $login_user = ($auth_type === 'cpanel') ? $_POST['cpanel_user'] . "|" . $email : $email;
     $emailSafe = preg_replace('/[^a-zA-Z0-9]/', '_', $email);
-    $backupDir = BACKUP_PATH . $emailSafe . '_' . date('Y-m-d_H-i-s');
+    $dt = new DateTime("now", new DateTimeZone('Europe/London'));
+    $dt = $dt->format('Y-m-d_H-i-s');
+    $backupDir = BACKUP_PATH . $emailSafe . '_' . $dt;
 
     if (!file_exists($backupDir)) {
         updateProgress(0, "Creando nueva carpeta en backups... ", $progress_file);
         mkdir($backupDir, 0777, true);
     }
 
+    updateProgress(0, "Lanzando subproceso... ", $progress_file);
     pclose(
         popen(
             "start /B php backup.php "             //Comando de shell que lanza 'backup.php' en segundo plano

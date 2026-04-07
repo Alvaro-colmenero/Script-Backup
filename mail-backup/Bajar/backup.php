@@ -17,9 +17,11 @@ $progress_file = $argv[5];
 $backupDir = $argv[6];
 
 try {
-    updateProgress(0, "Lanzado el subproceso... ", $progress_file);
     $imap = new ImapClient();
+    updateProgress(0, "Conectando con servidor... ", $progress_file);
     $imap->connect($login_user, $password, $host, $port);
+
+    updateProgress(0, "Recopilando directorios... ", $progress_file);
     $folders = $imap->getFolders();
 
     $downloader = new MailDownloader($imap);
@@ -27,17 +29,22 @@ try {
 
     $downloader->downloadAll($folders, $backupDir);
 
-    $downloader->updateRealProgress(95, "Comprimiendo backup...");
+    updateProgress(95, "Comprimiendo backup...", $progress_file);
 
     $zipFile = $backupDir . '.zip';
     $zip = new ZipManager();
-    $zip->createZip($backupDir, $zipFile);
+    if(!$zip->createZip($backupDir, $zipFile))
+        updateProgress(95, "Error: Fallo al crear el zip.", $progress_file);
 
-    $downloader->updateRealProgress(100, "¡Finalizado!");
+    updateProgress(100, "¡Finalizado!", $progress_file);
 
 } catch (Exception $e) {
     updateProgress(0, "Error: " . $e->getMessage(), $progress_file);
-    //echo "<script>window.parent.document.getElementById('resultArea').innerHTML = '<b style=\"color:red\">Error: " . addslashes($e->getMessage()) . "</b>';</script>";
+} finally {
+    recursiveRemoveDirectory($backupDir);
+    sleep(5);
+    unlink($progress_file);
+    if (isset($imap)) $imap?->close();
 }
 
 function updateProgress($percent, $status, $progressFile): void
@@ -48,4 +55,17 @@ function updateProgress($percent, $status, $progressFile): void
             'status' => $status
         ]));
     }
+}
+
+function recursiveRemoveDirectory($directory)
+{
+    foreach(glob("{$directory}/*") as $file)
+    {
+        if(is_dir($file)) {
+            recursiveRemoveDirectory($file);
+        } else {
+            unlink($file);
+        }
+    }
+    rmdir($directory);
 }

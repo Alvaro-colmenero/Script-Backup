@@ -1,6 +1,8 @@
 <?php
 
 namespace classes;
+use Exception;
+
 class ImapClient
 {
 
