@@ -1,0 +1,437 @@
+Delivered-To: alvarocolrod@gmail.com
+Received: by 2002:a17:907:7819:b0:b98:1e0c:3913 with SMTP id la25csp335907ejc;
+ Thu, 19 Mar 2026 06:04:59 -0700 (PDT)
+X-Forwarded-Encrypted: i=2;
+ AJvYcCXZauEUJ/0cgETCmVdEgm0lZz+UEXwwit9WfqmFratcBvH5QuSktxaWamxSA8kBpKhhJPk9x4uY9xIji3g=@gmail.com
+X-Received: by 2002:a05:6820:f02f:b0:67b:c4bd:2a89 with SMTP id
+ 006d021491bc7-67c0dabcc17mr5090887eaf.20.1773925499021; Thu, 19 Mar 2026
+ 06:04:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773925499; cv=none; d=google.com;
+ s=arc-20240605;
+ b=AVBQhBoMyqcDoyLSBrmwj2uVpZun6oCoFu1nwRYlrH4ZifVeUxnrj/nBSeh2+nRYKM
+ rtoz4Gq4USc2CGzndfkg3yp/ozmTvPPGweYuMQrGM9ekkZcOnr7EHAMclw2hKitOjZf1
+ /ZGsz1DYfrpOCh19y1X2Iio0rJmPN0/Q1IbVTrKeR/aCJ0hJJRMNUfJAxTr1HEtm1788
+ oggsgfuFRQF5F2eGN9947bmMlIzikaBruLZAWii3NRbB7PL2C8ZyWJeZpop2xHfK4Ofw
+ UVgyr9qlb00co2AEvh8OS95ddc5b4+X5r8wj6HcGyeco5WwoDxDPxYPpC/+OoMBDUqYP 9rXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+ h=precedence:feedback-id:list-unsubscribe-post:list-id:date:subject
+ :to:from:mime-version:message-id:dkim-signature;
+ bh=I/H9UJYAwut8EpztNaKDjDh4j9n1woJqND2xKaFNSFU=;
+ fh=RTZsTDObBV16Je6X4A9ytJ92ZbOR+IEsRo0VhK/VRU8=;
+ b=D/4gCOj98Cc3DhpSLv2TDHq4fYhpUGGW2c9cHdRr1WsnK6WAv9e/tgEz3+1MSfBnIv
+ +VzIUYIKzmm4gA9mOFPKVr/M3RVe4VwkDe8mj7VQGUMzs3aO/+20CKrhRIuqhfBh74Ei
+ bC6/nKWYqxFJLMJO8lPLn2jEvRARwpGlvQIlGZDONjmvaQRVjHsHwO8grjmogxAKcfnS
+ txq4zC/8ZnIQT5mSdI5s8khDJEJW0qEyUT6gEtG0+hFmUEqXPcHKHifNOt+ja9MObHyZ
+ KFp8Mej4jTlhOEyKaiyTEpCnRnPXq101Ae8jjEHB3rVpPOy1aZzO89PSsVjLnBu2WiV0 jfKw==;
+ dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com; dkim=pass
+ header.i=@privaterelay.appleid.com header.s=prv2019 header.b=mcZpax5n;
+ spf=pass (google.com: domain of
+ privaterelay.bounce.m8jsxppndq@privaterelay.appleid.com designates
+ 57.103.72.27 as permitted sender)
+ smtp.mailfrom=privaterelay.bounce.m8jsxppndq@privaterelay.appleid.com;
+ dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=appleid.com
+Return-Path: <privaterelay.bounce.m8jsxppndq@privaterelay.appleid.com>
+Received: from outbound.ms.icloud.com
+ (p-west3-cluster5-host3-snip4-4.eps.apple.com. [57.103.72.27]) by
+ mx.google.com with ESMTPS id
+ af79cd13be357-8cfbed5ac8asi183207685a.128.2026.03.19.06.04.58 for
+ <alvarocolrod@gmail.com> (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384
+ bits=256/256); Thu, 19 Mar 2026 06:04:58 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ privaterelay.bounce.m8jsxppndq@privaterelay.appleid.com designates
+ 57.103.72.27 as permitted sender) client-ip=57.103.72.27;
+Authentication-Results: mx.google.com; dkim=pass
+ header.i=@privaterelay.appleid.com header.s=prv2019 header.b=mcZpax5n;
+ spf=pass (google.com: domain of
+ privaterelay.bounce.m8jsxppndq@privaterelay.appleid.com designates
+ 57.103.72.27 as permitted sender)
+ smtp.mailfrom=privaterelay.bounce.m8jsxppndq@privaterelay.appleid.com;
+ dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=appleid.com
+Received: from o56.p10.mailjet.com (o56.p10.mailjet.com [87.253.235.56]) by
+ outbound.ms.icloud.com (Postfix) with ESMTPS id 445ED1803D6E for
+ <alvarocolrod@gmail.com>; Thu, 19 Mar 2026 13:04:57 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=privaterelay.appleid.com; s=prv2019; t=1773925497; x=1776517497;
+ bh=I/H9UJYAwut8EpztNaKDjDh4j9n1woJqND2xKaFNSFU=;
+ h=Message-Id:MIME-Version:From:To:Subject:Date:Content-Type;
+ b=mcZpax5nxyM1DfY2lvVDZy3S5ARry6xdHNkK1pHJD5f10C/12ZlPcloHa4G7A3xG04OMsQLozKrJrlsULcLfWIIOdalo4nH6+vQyrCo88iXEgFvha3ignlCCvlbvB8LXY2BvbR8h1j5Xf/wt41pwFecVyOIDmy6A3LQdcK4w2o5tiZBJtBaHI2Mh7Gba5Nqmc/WdzaagsQpGjkWXxJN8L8hwrPqcC+xcQzHjCX6h1DIeS0Jmzk7B38qQfkgYMIsP7TPllW4G6o+KArh6jf9IZUIXwfssTsoqZBE+rHiVw3Eb6EtoEJHKMLcynDTuUJ94RVuyFT9nUhLIQDdbP4X74A==
+Authentication-Results: dkim-verifier.icloud.com; dkim=pass
+ header.d=newzik.com header.i=contact@newzik.com header.b=Xx9bit4T
+Message-Id: <83d9bf4a.AU4AAJI1TkkAAc3nfhAAAoh-UBEAAYCuFHcAnrQwACbNHgBpu_R3@mailjet.com>
+MIME-Version: 1.0
+From: Jeremy from Newzik
+ <contact_at_newzik_com_m8jsxppndq_41735d3c@privaterelay.appleid.com>
+To: m8jsxppndq@privaterelay.appleid.com
+Subject: =?UTF-8?Q?New_Feature=3A_Dynamic_shapes_are_?=
+ =?UTF-8?Q?here_=F0=9F=8E=B6?=
+Date: Thu, 19 Mar 2026 13:04:55 +0000 (UTC)
+List-Id: <contact.newzik.com.s1l56-5rmu7.mj>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Feedback-Id: 42.2542878.2365002:MJ
+Precedence: bulk
+X-CampaignID: 7749467664
+X-CSA-Complaints: csa-complaints@eco.de
+X-MJ-Mid: AU4AAJI1TkkAAc3nfhAAAoh-UBEAAYCuFHcAnrQwACbNHgBpu_R3mO-g2k8STjCJ_2mwx-nKMgAkFko
+X-MJ-SMTPGUID: 98efa0da-4f12-4e30-89ff-69b0c7e9ca32
+X-REPORT-ABUSE-TO: Message sent by Mailjet please report to abuse@mailjet.com
+ with a copy of the message
+Content-Type: multipart/alternative; boundary="=-C/IKhF62Po8ZezqlBDGq"
+X-Pr-ID: feae7d77-7a26-4b4b-9244-9399a2e2e192
+X-Pr-CD: 0
+X-JNJ: AAAAAAABBC+etZ23daNicKAAj8Dn9z46N+a3GZXCZrp+kPyAw/HL/syCPxmVvfsDjEnvU8fxcZJ37IJ3DuEX7B0WUvF4B9jjKnGL73ZteCCcsdxka+XUDI23ZqD58YJEaf+FfkwHORM6LRzAGbsFEXR+/8bLeMdYl0RkIIHFBiWcs7/4tGhVBO7AJj5eKRi/EOIijlXWAj1NUunmiAt4j1cfGCvGRFbZ86uL422aJENwVhxWtt3MjS7eVGqhReSkzYy6Z9a8H+HTOz623Q/2a678wWWtxk0tbSMSkTSPZiJJZtdoUJGkieBMjtC6F0dQIz2UE6SyUAtVQDtHdzs3NKb4Gc0JaMAjLsIDshMEpijya6EqzRrPNCrtYLId8vi7dWp9KrtNWA2RQ6JCzmJrqYPWBsYNqxk/nx7OXcKSoUch6FLW8bxbJg9ifM1JUWA3dkssgQV5p5azNM+nlwBm5aIsRZlPEnCbQyEJ2SktweOGeVvHhOvOXW2iChIrG9tI/4ZvBH6LZgDd+yva8Rnr3rV2+bhSpOVxdTcRuiw=
+
+
+--=-C/IKhF62Po8ZezqlBDGq
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<<logo centered>> [https://en.blog.newzik.com/]
+
+
+
+=F0=9F=8E=B6 NEW - Dynamic shapes added to annotation tools
+=F0=9F=8E=B6 On this occasion, we have added to the annotation tools, a new=
+ Shape tool allowing you to draw predefined shapes.=C2=A0
+
+The shape annotation tool includes: slur, crescendo/decrescendo, staff, lin=
+e, "tuplet", arrow, rectangle (filled or not filled), ellipse (filled or no=
+t filled).
+<<Dynamic shapes>> [https://support.newzik.com/en/support/solutions/article=
+s/77000152681-annotation-tools-in-newzik#Shapes]
+
+
+
+Any questions yet?=C2=A0
+
+You can join the r/Newzik subreddit and meet our user community. It=E2=80=
+=99s the perfect place for tips, best practices, or just to chat!=C2=A0
+
+[https://www.reddit.com/r/Newzik/]
+<<JOIN US>> [https://www.reddit.com/r/Newzik/]
+
+
+
+
+[]
+This e-mail has been sent to m8jsxppndq@privaterelay.appleid.com, click her=
+e to unsubscribe https://s1l56.mjt.lu/unsub2?m=3DAU4AAJI1TkkAAc3nfhAAAoh-UB=
+EAAYCuFHcAnrQwACbNHgBpu_R3mO-g2k8STjCJ_2mwx-nKMgAkFko&b=3D83d9bf4a&e=3D8e74=
+2cae&x=3DwsRbMUGjPSF-ALKVd5vJ_uDWxFFNpzEEwSC4Alnl-yAU2vmpThSRaN7Lbt2skxkD&h=
+l=3Den.
+NEWZIK - 7 Avenue Ingres 75016 Paris FR=
+
+--=-C/IKhF62Po8ZezqlBDGq
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html><html lang=3D"en" dir=3D"ltr" xmlns=3D"http://www.w3.org/199=
+9/xhtml" xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-m=
+icrosoft-com:office:office"><head><title>New Feature: Dynamic shapes are he=
+re =F0=9F=8E=B6</title><!--[if !mso]><!--><meta http-equiv=3D"X-UA-Compatib=
+le" content=3D"IE=3Dedge"><!--<![endif]--><meta http-equiv=3D"Content-Type"=
+ content=3D"text/html; charset=3DUTF-8"><meta name=3D"viewport" content=3D"=
+width=3Ddevice-width,initial-scale=3D1"><style type=3D"text/css">#outlook a=
+ { padding:0; }
+      body { margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size=
+-adjust:100%; }
+      table, td { border-collapse:collapse;mso-table-lspace:0pt;mso-table-r=
+space:0pt; }
+      img { border:0;height:auto;line-height:100%; outline:none;text-decora=
+tion:none;-ms-interpolation-mode:bicubic; }
+      p { display:block;margin:13px 0; }</style><!--[if mso]>
+    <noscript>
+    <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml>
+    </noscript>
+    <![endif]--><!--[if lte mso 11]>
+    <style type=3D"text/css">
+      .mj-outlook-group-fix { width:100% !important; }
+    </style>
+    <![endif]--><!--[if !mso]><!--><link href=3D"https://fonts.googleapis.c=
+om/css?family=3Dsans" rel=3D"stylesheet" type=3D"text/css"><link href=3D"ht=
+tps://fonts.googleapis.com/css?family=3Darial" rel=3D"stylesheet" type=3D"t=
+ext/css"><style type=3D"text/css">@import url(https://fonts.googleapis.com/=
+css?family=3Dsans);
+@import url(https://fonts.googleapis.com/css?family=3Darial);</style><!--<!=
+[endif]--><style type=3D"text/css">@media only screen and (min-width:480px)=
+ {
+        .mj-column-per-100 { width:100% !important; max-width: 100%; }
+.mj-column-per-50 { width:50% !important; max-width: 50%; }
+      }</style><style media=3D"screen and (min-width:480px)">.moz-text-html=
+ .mj-column-per-100 { width:100% !important; max-width: 100%; }
+.moz-text-html .mj-column-per-50 { width:50% !important; max-width: 50%; }<=
+/style><style type=3D"text/css">[owa] .mj-column-per-100 { width:100% !impo=
+rtant; max-width: 100%; }
+[owa] .mj-column-per-50 { width:50% !important; max-width: 50%; }</style><s=
+tyle type=3D"text/css">@media only screen and (max-width:479px) {
+      table.mj-full-width-mobile { width: 100% !important; }
+      td.mj-full-width-mobile { width: auto !important; }
+    }</style><style type=3D"text/css"></style></head><body style=3D"word-sp=
+acing:normal;background-color:#ffffff;"><div style=3D"display:none;font-siz=
+e:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;=
+overflow:hidden;">Slurs, crescendos and other shapes!</div><div style=3D"ba=
+ckground-color:#ffffff;" role=3D"main" lang=3D"en" dir=3D"ltr"><table align=
+=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presen=
+tation" style=3D"background:#ffeadb;background-color:#ffeadb;width:100%;"><=
+tbody><tr><td><!--[if mso | IE]><table align=3D"center" border=3D"0" cellpa=
+dding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"wid=
+th:600px;" width=3D"600" bgcolor=3D"#ffeadb" ><tr><td style=3D"line-height:=
+0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]--><div style=3D"=
+margin:0px auto;max-width:600px;"><table align=3D"center" border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"width:100%;"=
+><tbody><tr><td style=3D"direction:ltr;font-size:0px;padding:0px 0px 0px 0p=
+x;padding-bottom:0px;padding-left:0px;padding-right:0px;padding-top:0px;tex=
+t-align:center;"><!--[if mso | IE]><table role=3D"presentation" border=3D"0=
+" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-=
+align:top;width:600px;" ><![endif]--><div class=3D"mj-column-per-100 mj-out=
+look-group-fix" style=3D"font-size:0px;text-align:left;direction:ltr;displa=
+y:inline-block;vertical-align:top;width:100%;"><table border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"vertical-align:t=
+op;" width=3D"100%"><tbody><tr><td align=3D"center" style=3D"font-size:0px;=
+padding:10px 25px;word-break:break-word;"><table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"border-collapse:col=
+lapse;border-spacing:0px;"><tbody><tr><td style=3D"width:150px;"><a href=3D=
+"https://s1l56.mjt.lu/lnk/AU4AAJI1TkkAAc3nfhAAAoh-UBEAAYCuFHcAnrQwACbNHgBpu=
+_R3mO-g2k8STjCJ_2mwx-nKMgAkFko/1/v0UHLXUhnts00M9SB7HrRQ/aHR0cHM6Ly9lbi5ibG9=
+nLm5ld3ppay5jb20v" target=3D"_blank"><img alt=3D"logo centered" src=3D"http=
+s://s1l56.mjt.lu/img2/s1l56/5295a0f0-737d-4980-9ff5-c83c8263bce7/content" s=
+tyle=3D"border:none;display:block;outline:none;text-decoration:none;height:=
+auto;width:100%;font-size:13px;" width=3D"150" height=3D"auto"></a></td></t=
+r></tbody></table></td></tr></tbody></table></div><!--[if mso | IE]></td></=
+tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></=
+td></tr></table><![endif]--></td></tr></tbody></table><table align=3D"cente=
+r" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" s=
+tyle=3D"background:#ffeadb;background-color:#ffeadb;width:100%;"><tbody><tr=
+><td><!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:600px;=
+" width=3D"600" bgcolor=3D"#ffeadb" ><tr><td style=3D"line-height:0px;font-=
+size:0px;mso-line-height-rule:exactly;"><![endif]--><div style=3D"margin:0p=
+x auto;max-width:600px;"><table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"width:100%;"><tbody=
+><tr><td style=3D"direction:ltr;font-size:0px;padding:15px 0px 0px 0px;padd=
+ing-bottom:0px;padding-left:0px;padding-right:0px;padding-top:15px;text-ali=
+gn:center;"><!--[if mso | IE]><table role=3D"presentation" border=3D"0" cel=
+lpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align=
+:top;width:600px;" ><![endif]--><div class=3D"mj-column-per-100 mj-outlook-=
+group-fix" style=3D"font-size:0px;text-align:left;direction:ltr;display:inl=
+ine-block;vertical-align:top;width:100%;"><table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"vertical-align:top;=
+" width=3D"100%"><tbody><tr><td align=3D"left" style=3D"background:transpar=
+ent;font-size:0px;padding:0px 25px 0px 25px;padding-top:0px;padding-right:2=
+5px;padding-bottom:0px;padding-left:25px;word-break:break-word;"><div style=
+=3D"font-family:Verdana, Helvetica, Arial, sans-serif;font-size:13px;line-h=
+eight:1;text-align:left;color:#000000;"><h1 class=3D"text-build-content" st=
+yle=3D"text-align:center;; margin-top: 10px; margin-bottom: 10px; font-weig=
+ht: normal;"><span style=3D"color:#000000;font-family:Helvetica, Arial, san=
+s-serif;font-size:32px"><b>=F0=9F=8E=B6 NEW - Dynamic shapes added to annot=
+ation tools</b></span></h1></div></td></tr><tr><td align=3D"left" style=3D"=
+font-size:0px;padding:10px 25px;padding-top:0px;padding-bottom:0px;word-bre=
+ak:break-word;"><div style=3D"font-family:Verdana, Helvetica, Arial, sans-s=
+erif;font-size:13px;letter-spacing:normal;line-height:1;text-align:left;col=
+or:#000000;"><p class=3D"text-build-content" style=3D"text-align: center; m=
+argin: 10px 0; margin-top: 10px;"><span style=3D"color:#000000;font-family:=
+Helvetica, Arial, sans-serif;font-size:16px">=F0=9F=8E=B6 On this occasion,=
+ we have added to the annotation tools, a new Shape tool allowing you to dr=
+aw predefined shapes.&nbsp;</span></p><p class=3D"text-build-content" style=
+=3D"text-align: center; margin: 10px 0; margin-bottom: 10px;"><span style=
+=3D"color:#000000;font-family:Helvetica, Arial, sans-serif;font-size:16px">=
+The shape annotation tool includes: slur, crescendo/decrescendo, staff, lin=
+e, "tuplet", arrow, rectangle (filled or not filled), ellipse (filled or no=
+t filled).</span></p></div></td></tr><tr><td align=3D"center" style=3D"font=
+-size:0px;padding:20px 0px 20px 0px;padding-top:20px;padding-right:0px;padd=
+ing-bottom:20px;padding-left:0px;word-break:break-word;"><table border=3D"0=
+" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"border=
+-collapse:collapse;border-spacing:0px;"><tbody><tr><td style=3D"width:600px=
+;"><a href=3D"https://s1l56.mjt.lu/lnk/AU4AAJI1TkkAAc3nfhAAAoh-UBEAAYCuFHcA=
+nrQwACbNHgBpu_R3mO-g2k8STjCJ_2mwx-nKMgAkFko/2/sXtHzjO0K3q38lBBpU5rqw/aHR0cH=
+M6Ly9zdXBwb3J0Lm5ld3ppay5jb20vZW4vc3VwcG9ydC9zb2x1dGlvbnMvYXJ0aWNsZXMvNzcwM=
+DAxNTI2ODEtYW5ub3RhdGlvbi10b29scy1pbi1uZXd6aWsjU2hhcGVz#Shapes" target=3D"_=
+blank"><img alt=3D"Dynamic shapes" src=3D"https://s1l56.mjt.lu/img2/s1l56/3=
+7873e05-c5ff-4cef-8a64-90dcc6278430/content" style=3D"border:none;border-ra=
+dius:50px;display:block;outline:none;text-decoration:none;height:auto;width=
+:100%;font-size:13px;" width=3D"600" height=3D"auto"></a></td></tr></tbody>=
+</table></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table=
+><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></=
+table><![endif]--></td></tr></tbody></table><table align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"b=
+ackground:#ffeadb;background-color:#ffeadb;width:100%;"><tbody><tr><td><!--=
+[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" class=3D"" role=3D"presentation" style=3D"width:600px;" width=
+=3D"600" bgcolor=3D"#ffeadb" ><tr><td style=3D"line-height:0px;font-size:0p=
+x;mso-line-height-rule:exactly;"><![endif]--><div style=3D"margin:0px auto;=
+max-width:600px;"><table align=3D"center" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0" role=3D"presentation" style=3D"width:100%;"><tbody><tr><td =
+style=3D"direction:ltr;font-size:0px;padding:20px 0;text-align:center;"><!-=
+-[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;width:300p=
+x;" ><![endif]--><div class=3D"mj-column-per-50 mj-outlook-group-fix" style=
+=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertic=
+al-align:top;width:100%;"><table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%"><=
+tbody><tr><td align=3D"left" style=3D"font-size:0px;padding:10px 25px;paddi=
+ng-top:0px;padding-bottom:0px;word-break:break-word;"><div style=3D"font-fa=
+mily:Verdana, Helvetica, Arial, sans-serif;font-size:13px;letter-spacing:no=
+rmal;line-height:1;text-align:left;color:#000000;"><h3 class=3D"text-build-=
+content" style=3D"text-align:center;; margin-top: 10px; font-weight: normal=
+;"><span style=3D"color:#000000;font-family:Helvetica, Arial, sans-serif;fo=
+nt-size:20px"><b>Any questions yet?&nbsp;</b></span></h3><p class=3D"text-b=
+uild-content" style=3D"text-align: center; margin: 10px 0; margin-bottom: 1=
+0px;"><span style=3D"color:#000000;font-family:Helvetica, Arial, sans-serif=
+;font-size:16px">You can join the r/Newzik subreddit and meet our user comm=
+unity. It=E2=80=99s the perfect place for tips, best practices, or just to =
+chat!&nbsp;</span></p></div></td></tr></tbody></table></div><!--[if mso | I=
+E]></td><td class=3D"" style=3D"vertical-align:top;width:300px;" ><![endif]=
+--><div class=3D"mj-column-per-50 mj-outlook-group-fix" style=3D"font-size:=
+0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;w=
+idth:100%;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"vertical-align:top;" width=3D"100%"><tbody><tr><td =
+align=3D"center" style=3D"font-size:0px;padding:10px 25px;word-break:break-=
+word;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pres=
+entation" style=3D"border-collapse:collapse;border-spacing:0px;"><tbody><tr=
+><td style=3D"width:250px;"><a href=3D"https://s1l56.mjt.lu/lnk/AU4AAJI1Tkk=
+AAc3nfhAAAoh-UBEAAYCuFHcAnrQwACbNHgBpu_R3mO-g2k8STjCJ_2mwx-nKMgAkFko/3/-LVD=
+1HmFsWe5M7toObZGag/aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL05ld3ppay8" target=3D"_=
+blank"><img alt=3D"" src=3D"https://s1l56.mjt.lu/img2/s1l56/1e4ade63-1c64-4=
+6d9-a956-beeaa13fa652/content" style=3D"border:none;display:block;outline:n=
+one;text-decoration:none;height:auto;width:100%;font-size:13px;" width=3D"2=
+50" height=3D"auto"></a></td></tr></tbody></table></td></tr><tr><td align=
+=3D"center" vertical-align=3D"top" style=3D"font-size:0px;padding:10px 0px =
+10px 0px;padding-top:10px;padding-right:0px;padding-bottom:10px;padding-lef=
+t:0px;word-break:break-word;"><table border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" role=3D"presentation" style=3D"border-collapse:separate;line-hei=
+ght:100%;"><tbody><tr><td align=3D"center" bgcolor=3D"#000000" role=3D"pres=
+entation" style=3D"border:none;border-radius:30px;cursor:auto;mso-padding-a=
+lt:15px 25px 15px 25px;background:#000000;" valign=3D"top"><a href=3D"https=
+://s1l56.mjt.lu/lnk/AU4AAJI1TkkAAc3nfhAAAoh-UBEAAYCuFHcAnrQwACbNHgBpu_R3mO-=
+g2k8STjCJ_2mwx-nKMgAkFko/4/e7Wki2_E9rLSbK9-tBoysQ/aHR0cHM6Ly93d3cucmVkZGl0L=
+mNvbS9yL05ld3ppay8" style=3D"display:inline-block;background:#000000;color:=
+#ffffff;font-family:Verdana, Helvetica, Arial, sans-serif;font-size:20px;fo=
+nt-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transf=
+orm:none;padding:15px 25px 15px 25px;mso-padding-alt:0px;border-radius:30px=
+;" target=3D"_blank"><span style=3D"background-color:transparent;color:#fff=
+fff;font-family:Helvetica, Arial, sans-serif;font-size:20px;"><b>JOIN US</b=
+></span></a></td></tr></tbody></table></td></tr></tbody></table></div><!--[=
+if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div>=
+<!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table><=
+table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" rol=
+e=3D"presentation" style=3D"background:#ffeadb;background-color:#ffeadb;wid=
+th:100%;"><tbody><tr><td><!--[if mso | IE]><table align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation"=
+ style=3D"width:600px;" width=3D"600" bgcolor=3D"#ffeadb" ><tr><td style=3D=
+"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]--><=
+div style=3D"margin:0px auto;max-width:600px;"><table align=3D"center" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D=
+"width:100%;"><tbody><tr><td style=3D"direction:ltr;font-size:0px;padding:2=
+0px 0px 20px 0px;padding-left:0px;padding-right:0px;text-align:center;"><!-=
+-[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;width:600p=
+x;" ><![endif]--><div class=3D"mj-column-per-100 mj-outlook-group-fix" styl=
+e=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;verti=
+cal-align:top;width:100%;"><table border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%">=
+<tbody><tr><td align=3D"center" style=3D"font-size:0px;padding:10px 25px;wo=
+rd-break:break-word;"><!--[if mso | IE]><table align=3D"center" border=3D"0=
+" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" ><tr><td><![end=
+if]--><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" role=3D"presentation" style=3D"float:none;display:inline-table;"><tbody=
+><tr><td aria-hidden=3D"true" style=3D"padding:4px;vertical-align:middle;">=
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentatio=
+n" style=3D"background:#3B5998;border-radius:3px;width:20px;"><tbody><tr><t=
+d style=3D"font-size:0;height:20px;vertical-align:middle;width:20px;"><a hr=
+ef=3D"https://s1l56.mjt.lu/lnk/AU4AAJI1TkkAAc3nfhAAAoh-UBEAAYCuFHcAnrQwACbN=
+HgBpu_R3mO-g2k8STjCJ_2mwx-nKMgAkFko/5/4gSerRd73bsHC4h1yoi3ig/aHR0cHM6Ly93d3=
+cuZmFjZWJvb2suY29tL25ld3ppa2FwcA" target=3D"_blank"><img alt=3D"" height=3D=
+"20" src=3D"https://static.mailjet.com/ico-social/facebook.png" style=3D"bo=
+rder-radius:3px;display:block;" width=3D"20"></a></td></tr></tbody></table>=
+</td></tr></tbody></table><!--[if mso | IE]></td><td><![endif]--><table ali=
+gn=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pres=
+entation" style=3D"float:none;display:inline-table;"><tbody><tr><td aria-hi=
+dden=3D"true" style=3D"padding:4px;vertical-align:middle;"><table border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"back=
+ground:#405DE6;border-radius:3px;width:20px;"><tbody><tr><td style=3D"font-=
+size:0;height:20px;vertical-align:middle;width:20px;"><a href=3D"https://s1=
+l56.mjt.lu/lnk/AU4AAJI1TkkAAc3nfhAAAoh-UBEAAYCuFHcAnrQwACbNHgBpu_R3mO-g2k8S=
+TjCJ_2mwx-nKMgAkFko/6/37OHmxAMJeHvYM4bVSlgdA/aHR0cHM6Ly93d3cuaW5zdGFncmFtLm=
+NvbS9uZXd6aWthcHAvP2hsPWZy" target=3D"_blank"><img alt=3D"" height=3D"20" s=
+rc=3D"https://static.mailjet.com/ico-social/instagram.png" style=3D"border-=
+radius:3px;display:block;" width=3D"20"></a></td></tr></tbody></table></td>=
+</tr></tbody></table><!--[if mso | IE]></td><td><![endif]--><table align=3D=
+"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentat=
+ion" style=3D"float:none;display:inline-table;"><tbody><tr><td aria-hidden=
+=3D"true" style=3D"padding:4px;vertical-align:middle;"><table border=3D"0" =
+cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"backgrou=
+nd:#131B20;border-radius:3px;width:20px;"><tbody><tr><td style=3D"font-size=
+:0;height:20px;vertical-align:middle;width:20px;"><a href=3D"https://s1l56.=
+mjt.lu/lnk/AU4AAJI1TkkAAc3nfhAAAoh-UBEAAYCuFHcAnrQwACbNHgBpu_R3mO-g2k8STjCJ=
+_2mwx-nKMgAkFko/7/DAqpYPccfdHhNnzIqA6mcA/aHR0cHM6Ly93d3cudGlrdG9rLmNvbS9Abm=
+V3emlrYXBw" target=3D"_blank"><img alt=3D"" height=3D"20" src=3D"https://st=
+atic.mailjet.com/ico-social/tiktok.png" style=3D"border-radius:3px;display:=
+block;" width=3D"20"></a></td></tr></tbody></table></td></tr></tbody></tabl=
+e><!--[if mso | IE]></td><td><![endif]--><table align=3D"center" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"float=
+:none;display:inline-table;"><tbody><tr><td aria-hidden=3D"true" style=3D"p=
+adding:4px;vertical-align:middle;"><table border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0" role=3D"presentation" style=3D"background:#0077B5;border-ra=
+dius:3px;width:20px;"><tbody><tr><td style=3D"font-size:0;height:20px;verti=
+cal-align:middle;width:20px;"><a href=3D"https://s1l56.mjt.lu/lnk/AU4AAJI1T=
+kkAAc3nfhAAAoh-UBEAAYCuFHcAnrQwACbNHgBpu_R3mO-g2k8STjCJ_2mwx-nKMgAkFko/8/tI=
+mnUiODP1whdMESfCrwjA/aHR0cHM6Ly9mci5saW5rZWRpbi5jb20vY29tcGFueS9uZXd6aWs" t=
+arget=3D"_blank"><img alt=3D"" height=3D"20" src=3D"https://static.mailjet.=
+com/ico-social/linkedin.png" style=3D"border-radius:3px;display:block;" wid=
+th=3D"20"></a></td></tr></tbody></table></td></tr></tbody></table><!--[if m=
+so | IE]></td><td><![endif]--><table align=3D"center" border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"float:none;displ=
+ay:inline-table;"><tbody><tr><td aria-hidden=3D"true" style=3D"padding:4px;=
+vertical-align:middle;"><table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"background:#FF0000;border-radius:3px;=
+width:20px;"><tbody><tr><td style=3D"font-size:0;height:20px;vertical-align=
+:middle;width:20px;"><a href=3D"https://s1l56.mjt.lu/lnk/AU4AAJI1TkkAAc3nfh=
+AAAoh-UBEAAYCuFHcAnrQwACbNHgBpu_R3mO-g2k8STjCJ_2mwx-nKMgAkFko/9/yy0MyKMXXdc=
+Nt0I1HYkw5A/aHR0cHM6Ly93d3cueW91dHViZS5jb20vbmV3emlrYXBw" target=3D"_blank"=
+><img alt=3D"" height=3D"20" src=3D"https://static.mailjet.com/ico-social/y=
+outube.png" style=3D"border-radius:3px;display:block;" width=3D"20"></a></t=
+d></tr></tbody></table></td></tr></tbody></table><!--[if mso | IE]></td></t=
+r></table><![endif]--></td></tr><tr><td align=3D"center" style=3D"font-size=
+:0px;padding:10px 25px;word-break:break-word;"><div style=3D"font-family:Ve=
+rdana, Helvetica, Arial, sans-serif;font-size:11px;line-height:22px;text-al=
+ign:center;color:#000000;"><p class=3D"text-build-content" style=3D"text-al=
+ign: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"><span =
+style=3D"font-family:Helvetica;font-size:14px">This e-mail has been sent to=
+ m8jsxppndq@privaterelay.appleid.com, </span><a class=3D"link-build-content=
+" style=3D"color:inherit;text-decoration:none;; text-decoration: none;" tar=
+get=3D"_blank" href=3D"https://s1l56.mjt.lu/unsub2?m=3DAU4AAJI1TkkAAc3nfhAA=
+Aoh-UBEAAYCuFHcAnrQwACbNHgBpu_R3mO-g2k8STjCJ_2mwx-nKMgAkFko&amp;b=3D83d9bf4=
+a&amp;e=3D8e742cae&amp;x=3DwsRbMUGjPSF-ALKVd5vJ_uDWxFFNpzEEwSC4Alnl-yAU2vmp=
+ThSRaN7Lbt2skxkD&amp;hl=3Den"><span style=3D"font-family:Helvetica;font-siz=
+e:14px"><b>click here to unsubscribe</b></span></a><span style=3D"font-fami=
+ly:Helvetica;font-size:14px">.</span></p></div></td></tr><tr><td align=3D"c=
+enter" style=3D"font-size:0px;padding:10px 25px;word-break:break-word;"><di=
+v style=3D"font-family:Verdana, Helvetica, Arial, sans-serif;font-size:11px=
+;line-height:22px;text-align:center;color:#000000;"><p class=3D"text-build-=
+content" style=3D"text-align: center; margin: 10px 0; margin-top: 10px; mar=
+gin-bottom: 10px;" data-testid=3D"940hfOpISlgxSNRw_COon"><span style=3D"fon=
+t-family:Helvetica;font-size:14px">NEWZIK - 7 Avenue Ingres 75016 Paris FR<=
+/span></p></div></td></tr></tbody></table></div><!--[if mso | IE]></td></tr=
+></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td=
+></tr></table><![endif]--></td></tr></tbody></table></div><br/><a style=3D"=
+font-family: Arial, sans-serif;" href=3D"https://s1l56.mjt.lu/lnk/AU4AAJI1T=
+kkAAc3nfhAAAoh-UBEAAYCuFHcAnrQwACbNHgBpu_R3mO-g2k8STjCJ_2mwx-nKMgAkFko/0/gP=
+4Q1b2a2IkQzsEa866EeA/aHR0cHM6Ly9lbi5ibG9nLm5ld3ppay5jb20v?b=3D1">&#8203;</a=
+><a style=3D"text-decoration: none; display: inline-block;" href=3D"https:/=
+/s1l56.mjt.lu/lnk/AU4AAJI1TkkAAc3nfhAAAoh-UBEAAYCuFHcAnrQwACbNHgBpu_R3mO-g2=
+k8STjCJ_2mwx-nKMgAkFko/0/gP4Q1b2a2IkQzsEa866EeA/aHR0cHM6Ly9lbi5ibG9nLm5ld3p=
+pay5jb20v?b=3D3">
+<img src=3D"https://s1l56.mjt.lu/oo/AU4AAJI1TkkAAc3nfhAAAoh-UBEAAYCuFHcAnrQ=
+wACbNHgBpu_R3mO-g2k8STjCJ_2mwx-nKMgAkFko/56643bf5/e.gif" height=3D"1" width=
+=3D"1" alt=3D"" border=3D"0" style=3D"height:1px;width:1px;border:0;"/>
+</a></body></html>
+=
+
+--=-C/IKhF62Po8ZezqlBDGq--
+

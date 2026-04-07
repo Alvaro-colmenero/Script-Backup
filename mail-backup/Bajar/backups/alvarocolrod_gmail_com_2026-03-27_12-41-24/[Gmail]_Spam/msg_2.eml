@@ -1,0 +1,607 @@
+Delivered-To: alvarocolrod@gmail.com
+Received: by 2002:a17:907:3ea3:b0:b96:e1b9:7bc5 with SMTP id
+ hs35csp2758249ejc; Fri, 13 Mar 2026 10:15:31 -0700 (PDT)
+X-Forwarded-Encrypted: i=2;
+ AJvYcCUOWjWLHenRqGXfaPs33owgQvU5sagEkwWoe/2MA40yDEaPH36DncCNJm2PnwtghHIzWPsBZclIAJ+Fijw=@gmail.com
+X-Received: by 2002:a05:620a:6cc2:b0:8cd:8e8a:3584 with SMTP id
+ af79cd13be357-8cdb5a5c563mr534088585a.11.1773422130996; Fri, 13 Mar 2026
+ 10:15:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773422130; cv=none; d=google.com;
+ s=arc-20240605;
+ b=cRkE9bE1MsZShYg8gWRloKDVwlJCJ1BFLTdAeTtmWLxFJEpeGIHV063VX7gNvKHoqI
+ w1sj/3r4hDgdX9rJaEQws8yAUIbaLPkDIi3mM3int4RiQA+CVh0aaGCgKRbi642izmP2
+ Oh48G2b98OsMQzz/Q8cQEdHueHjxqaOrv80K2/3vp5dJu2xz2OFCuUYYNFWhSEg9qCHN
+ 2Or8J0dD5S+cQsJUev8NT7sVp7XN5XLQlCc17D6BRac6xvgujM0qZNaFa+jnbn35YGxr
+ 3WDrBWAV/HwgnBTehwijk/DjdbD/40BYMrmsOBI3ZeggeyVz1FRENQWjNvUkrlAzCCNL KGEQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+ h=precedence:feedback-id:list-unsubscribe-post:list-id:date:subject
+ :to:from:mime-version:message-id:dkim-signature;
+ bh=iTSnigVxlqBTldwh47o/co4eMCCZESOSSBSDJ2EBNJk=;
+ fh=RTZsTDObBV16Je6X4A9ytJ92ZbOR+IEsRo0VhK/VRU8=;
+ b=hmZhGqCpHevA1MD/EfBaOal1O9zSxonS0XTzxJzMb2Ejy13otgN1cyvcFXO5En9Fdf
+ 96mSrz7msKwKiQU5n8bI/jFU/naSRiCXGgpiobVkDJzhQ7ENyFeBctDnRKfpda1bE3Ep
+ 3GrPrROnrBMIUP3jmh5zuCUwGGyafGoahlS2cri0T5cW1Rk2c3qQFtbzT67+j2+gPu2/
+ Ub3D6KCogAkPAat7rhQmG14C4I052vpTEJ48cs2IQRRmANUlg75JHxQcPploeelxOaQQ
+ nN6w0BrZKJtB7dzJk5OKDJG+l+chsxeqRcYXO+FCsaXvLh3FbSVQXbqO2llOuOZ7mXhf CNGg==;
+ dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com; dkim=pass
+ header.i=@privaterelay.appleid.com header.s=prv2019 header.b=TEnjUC2H;
+ spf=pass (google.com: domain of
+ privaterelay.bounce.m8jsxppndq@privaterelay.appleid.com designates
+ 57.103.78.161 as permitted sender)
+ smtp.mailfrom=privaterelay.bounce.m8jsxppndq@privaterelay.appleid.com;
+ dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=appleid.com
+Return-Path: <privaterelay.bounce.m8jsxppndq@privaterelay.appleid.com>
+Received: from outbound.st.icloud.com
+ (p-east2-cluster4-host1-snip4-10.eps.apple.com. [57.103.78.161]) by
+ mx.google.com with ESMTPS id
+ af79cd13be357-8cda2122f02si1026315385a.210.2026.03.13.10.15.30 for
+ <alvarocolrod@gmail.com> (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384
+ bits=256/256); Fri, 13 Mar 2026 10:15:30 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ privaterelay.bounce.m8jsxppndq@privaterelay.appleid.com designates
+ 57.103.78.161 as permitted sender) client-ip=57.103.78.161;
+Authentication-Results: mx.google.com; dkim=pass
+ header.i=@privaterelay.appleid.com header.s=prv2019 header.b=TEnjUC2H;
+ spf=pass (google.com: domain of
+ privaterelay.bounce.m8jsxppndq@privaterelay.appleid.com designates
+ 57.103.78.161 as permitted sender)
+ smtp.mailfrom=privaterelay.bounce.m8jsxppndq@privaterelay.appleid.com;
+ dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=appleid.com
+Received: from o87.p38.mailjet.com (o87.p38.mailjet.com [185.250.237.87]) by
+ outbound.st.icloud.com (Postfix) with ESMTPS id B160A1801F93 for
+ <alvarocolrod@gmail.com>; Fri, 13 Mar 2026 17:15:28 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=privaterelay.appleid.com; s=prv2019; t=1773422130; x=1776014130;
+ bh=iTSnigVxlqBTldwh47o/co4eMCCZESOSSBSDJ2EBNJk=;
+ h=Message-Id:MIME-Version:From:To:Subject:Date:Content-Type;
+ b=TEnjUC2HFLpwxNllQrFhx29iCBC3HObfsMT6MLvwNFmss2GmoAyCfEDFkdNuyZh+eUNR0WszojVJMy+C6GoAFRoEfwY7nAGkGHBDa9e1JEmtCRb8Zc3093FzlVm18XS2617lImO1zHf4vx3tytcSIqdI1CSLveNDnEEXQimb3GbEYbbT7Py/pqXM2LtTxxCL43adOceYIAlNJF9J3Y8dVxSKeVwr5y56fv9l/geQXa+9x6JStLjulBpfjHqaWduUHKfCONuAh7gEAZmnXbnyu5Ws4q6cUkvW8SdrFPtr0ODTgZSAnC8ohnOTGOfqFzk0+x11Ngs3sUdsp2shCi+rbg==
+Authentication-Results: dkim-verifier.icloud.com; dkim=pass
+ header.d=newzik.com header.i=contact@newzik.com header.b=I/xuyiHw
+Message-Id: <1bdcc710.AV8AAJGWe5kAAc3nfdQAAoh-UBEAAYCuFHcAnrQwACbNHgBptEYv@mailjet.com>
+MIME-Version: 1.0
+From: Matthieu de Newzik
+ <contact_at_newzik_com_m8jsxppndq_41735d3c@privaterelay.appleid.com>
+To: m8jsxppndq@privaterelay.appleid.com
+Subject: Temporary Unavailability of LiveScores and Transpositions
+Date: Fri, 13 Mar 2026 17:15:27 +0000 (UTC)
+List-Id: <contact.newzik.com.s1l56-5rmu7.mj>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Feedback-Id: 42.2542878.2365002:MJ
+Precedence: bulk
+X-CampaignID: 7749467604
+X-CSA-Complaints: csa-complaints@eco.de
+X-MJ-Mid: AV8AAJGWe5kAAc3nfdQAAoh-UBEAAYCuFHcAnrQwACbNHgBptEYvcrV2ZHSdSpentHNA6e67sAAkFko
+X-MJ-SMTPGUID: 72b57664-749d-4a97-a7b4-7340e9eebbb0
+X-REPORT-ABUSE-TO: Message sent by Mailjet please report to abuse@mailjet.com
+ with a copy of the message
+Content-Type: multipart/alternative; boundary="=-55bbmHvjvGXx098GR41l"
+X-Pr-ID: 132843f3-643e-46d2-b298-889ded868866
+X-Pr-CD: 0
+X-JNJ: AAAAAAAB2KqzJy6FcWwdow5PBG410arlm0a/6HfWdYz7TzU+HhsuntjhafEBNWlwaZy5xgTFXKJJdJxI9ybQRJ9RGJO6o8XlQcNI/ma9+OwEXFZz4INPzPMGtZjELGZH/TVEipXPk3tcu1y8r5USe1DV8mhavdqLFIawdAgj3bHpc8lWE/OXQTCWKk6yJpf99fvfIfvw8vZvXkB0/NiDKAxtmooRi7S6rfA9pviN9MDFpYa/AKncBA4kwQLUsHj/ekR18rIDFTgWEJcf/QXPwFNcSnatH1F8G4ipFdj5FCJAkFGJ9LrDblNXLolz9c5ug1Olnnq7Wn/VqxHFzioILrC2eMtp7J6yRcDHv23/sOsRVlcuozgUIIEFY6OeMx7SpTVxo0pADX5bjHHuSz1x+Nh0VYl9IYJSiCtBTOaFvlac2bIfnzDZhljAPAtzBLkJxtvA5PWQWtSiAYyqXFQwgOYN5Qp8Vg8Nw5tgqoqnpgyQIwrU572i1XaBsLGkjh6FW/mKG52837v4BvV3yxemyQDH2emVouLR
+
+
+--=-55bbmHvjvGXx098GR41l
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<<logo centered>> [https://en.blog.newzik.com/]
+
+
+
+Temporary Unavailability of LiveScores and Transpositions
+Faites d=C3=A9filer vers le bas pour la version fran=C3=A7aise
+=E6=97=A5=E6=9C=AC=E8=AA=9E=E7=89=88=E3=82=92=E3=81=94=E8=A6=A7=E3=81=AB=E3=
+=81=AA=E3=82=8B=E3=81=AB=E3=81=AF=E3=80=81=E4=B8=8B=E3=81=AB=E3=82=B9=E3=82=
+=AF=E3=83=AD=E3=83=BC=E3=83=AB=E3=81=97=E3=81=A6=E3=81=8F=E3=81=A0=E3=81=95=
+=E3=81=84
+
+Dear Newzicians,
+Some of you may have already noticed that our OMR system has been experienc=
+ing downtime for the past few hours. As a result, the Newzik app is current=
+ly unable to perform LiveScores and transpositions.
+
+Our team is actively working to resolve the issue and restore this function=
+ality as soon as possible. We anticipate that the system will be back to no=
+rmal by the start of next week and will notify you immediately once LiveSco=
+res are available again.
+
+Please note, however, that the rest of the app=E2=80=99s features remain fu=
+lly operational: you can continue practicing music and working on your scor=
+es without interruption.
+
+We sincerely apologize for any inconvenience this may cause and remain at y=
+our disposal should you have any questions.
+
+Thank you for your understanding.
+
+Best regards,=C2=A0
+=C2=A0
+
+The Newzik Team
+---------------------------------------------------------------------------=
+-----
+Chers Newzicians,
+Certains parmi vous ont d=C3=A9j=C3=A0 pu le remarquer, mais notre syst=C3=
+=A8me d'OMR rencontre depuis d=C3=A9j=C3=A0 quelques heures des difficult=
+=C3=A9s. Ce faisant, l'app Newzik n'est pour l'instant plus en mesure de ch=
+arger des LiveScores et des transpositions.=C2=A0
+
+Nos =C3=A9quipes travaillent activement =C3=A0 la r=C3=A9solution du probl=
+=C3=A8me et =C3=A0 la restauration de ces fonctionnalit=C3=A9s. Nous estimo=
+ns n=C3=A9anmoins un retour =C3=A0 la normal au plus t=C3=B4t seulement en =
+d=C3=A9but de semaine prochaine. =C2=A0Nous vous informerons d=C3=A8s que v=
+ous pourrez de nouveau utiliser nos LiveScores.=C2=A0
+
+Nous vous informons toutefois que les autres fonctionnalit=C3=A9s de l'appl=
+ication demeurent pleinement accessibles : vous pouvez continuer =C3=A0 vou=
+s exercer et =C3=A0 travailler vos partitions sans interruption.
+
+Nous vous prions de nous excuser pour la g=C3=AAne occasionn=C3=A9e et deme=
+urons =C3=A0 votre disposition si vous avez la moindre question.=C2=A0
+
+Merci pour votre compr=C3=A9hension.
+
+Cordialement,=C2=A0=C2=A0
+
+L'Equipe Newzik=C2=A0
+---------------------------------------------------------------------------=
+-----
+=E3=81=8A=E5=AE=A2=E6=A7=98=E5=90=84=E4=BD=8D=E3=80=81
+=E3=81=84=E3=81=A4=E3=82=82Newzik=E3=82=92=E3=81=94=E5=88=A9=E7=94=A8=E3=81=
+=84=E3=81=9F=E3=81=A0=E3=81=8D=E8=AA=A0=E3=81=AB=E3=81=82=E3=82=8A=E3=81=8C=
+=E3=81=A8=E3=81=86=E3=81=94=E3=81=96=E3=81=84=E3=81=BE=E3=81=99=E3=80=82
+
+=E7=8F=BE=E5=9C=A8=E3=80=81OMR=EF=BC=88=E9=AB=98=E9=A1=8D=E6=A5=BD=E8=AD=9C=
+=E8=AA=8D=E8=AD=98=EF=BC=89=E3=82=B7=E3=82=B9=E3=83=86=E3=83=A0=E3=81=8C=E6=
+=95=B0=E6=99=82=E9=96=93=E3=81=AB=E3=82=8F=E3=81=9F=E3=82=8A=E5=81=9C=E6=AD=
+=A2=E3=81=97=E3=81=A6=E3=81=8A=E3=82=8A=E3=80=81Newzik=E3=82=A2=E3=83=97=E3=
+=83=AA=E3=81=AB=E3=81=A6LiveScore=EF=BC=88=E3=83=A9=E3=82=A4=E3=83=96=E3=82=
+=B9=E3=82=B3=E3=82=A2=EF=BC=89=E3=81=8A=E3=82=88=E3=81=B3=E7=A7=BB=E8=AA=BF=
+=E6=A9=9F=E8=83=BD=E3=81=8C=E3=81=94=E5=88=A9=E7=94=A8=E3=81=84=E3=81=9F=E3=
+=81=A0=E3=81=91=E3=81=AA=E3=81=84=E7=8A=B6=E6=B3=81=E3=81=A8=E3=81=AA=E3=81=
+=A3=E3=81=A6=E3=81=8A=E3=82=8A=E3=81=BE=E3=81=99=E3=80=82=E3=82=A2=E3=83=97=
+=E3=83=AA=E3=81=AE=E3=81=9D=E3=81=AE=E4=BB=96=E3=81=AE=E6=A9=9F=E8=83=BD=E3=
+=81=AF=E9=80=9A=E5=B8=B8=E9=80=9A=E3=82=8A=E3=81=8A=E4=BD=BF=E3=81=84=E3=81=
+=84=E3=81=9F=E3=81=A0=E3=81=91=E3=81=BE=E3=81=99=E3=81=AE=E3=81=A7=E3=80=81=
+=E5=BC=95=E3=81=8D=E7=B6=9A=E3=81=8D=E6=A5=BD=E8=AD=9C=E3=82=92=E4=BD=BF=E3=
+=81=A3=E3=81=9F=E3=81=9D=E3=81=AE=E4=BB=96=E3=82=92=E3=81=94=E5=88=A9=E7=94=
+=A8=E3=81=8F=E3=81=A0=E3=81=95=E3=81=84=E3=80=82
+
+=E6=97=A9=E6=80=A5=E3=81=AB=E6=A9=9F=E8=83=BD=E3=82=92=E5=BE=A9=E6=97=A7=E3=
+=81=99=E3=81=B9=E3=81=8F=E3=80=81=E7=8F=BE=E5=9C=A8=E3=83=81=E3=83=BC=E3=83=
+=A0=E3=81=AB=E3=81=A6=E5=95=8F=E9=A1=8C=E8=A7=A3=E6=B1=BA=E3=81=AB=E5=85=A8=
+=E5=8A=9B=E3=81=A7=E5=8F=96=E3=82=8A=E7=B5=84=E3=82=93=E3=81=A7=E3=81=8A=E3=
+=82=8A=E3=81=BE=E3=81=99=E3=80=82=E6=9D=A5=E9=80=B1=E5=88=9D=E3=82=81=E3=81=
+=BE=E3=81=A7=E3=81=AB=E3=81=AF=E3=82=B7=E3=82=B9=E3=83=86=E3=83=A0=E3=81=8C=
+=E6=AD=A3=E5=B8=B8=E3=81=AB=E6=88=BB=E3=82=8A=E3=80=81LiveScore=E3=81=8C=E5=
+=86=8D=E9=96=8B=E3=81=99=E3=82=8B=E8=A6=8B=E8=BE=BC=E3=81=BF=E3=81=A8=E3=81=
+=AA=E3=81=A3=E3=81=A6=E3=81=8A=E3=82=8A=E3=81=BE=E3=81=99=E3=80=82=E3=82=B7=
+=E3=82=B9=E3=83=86=E3=83=A0=E3=81=8C=E7=A8=BC=E5=83=8D=E6=AC=A1=E7=AC=AC=E3=
+=80=81=E6=94=B9=E3=82=81=E3=81=A6=E3=81=94=E9=80=A3=E7=B5=A1=E8=87=B4=E3=81=
+=97=E3=81=BE=E3=81=99=E3=80=82
+
+=E3=81=93=E3=81=AE=E5=BA=A6=E3=81=AF=E3=81=94=E4=B8=8D=E4=BE=BF=E3=82=92=E3=
+=81=8A=E3=81=8B=E3=81=91=E3=81=97=E3=80=81=E8=AA=A0=E3=81=AB=E7=94=B3=E3=81=
+=97=E8=A8=B3=E3=81=94=E3=81=96=E3=81=84=E3=81=BE=E3=81=9B=E3=82=93=E3=80=82=
+=E3=81=94=E8=B3=AA=E5=95=8F=E3=81=AA=E3=81=A9=E3=81=94=E3=81=96=E3=81=84=E3=
+=81=BE=E3=81=97=E3=81=9F=E3=82=89=E3=80=81=E3=81=8A=E6=B0=97=E8=BB=BD=E3=81=
+=AB=E3=81=8A=E5=95=8F=E3=81=84=E5=90=88=E3=82=8F=E3=81=9B=E3=81=8F=E3=81=A0=
+=E3=81=95=E3=81=84=E3=80=82
+
+=E4=BD=95=E5=8D=92=E3=81=94=E7=90=86=E8=A7=A3=E3=81=AE=E3=81=BB=E3=81=A9=E3=
+=82=88=E3=82=8D=E3=81=97=E3=81=8F=E3=81=8A=E9=A1=98=E3=81=84=E7=94=B3=E3=81=
+=97=E4=B8=8A=E3=81=92=E3=81=BE=E3=81=99=E3=80=82
+
+Newzik=E3=83=81=E3=83=BC=E3=83=A0 =E4=B8=80=E5=90=8C
+
+=C2=A0
+---------------------------------------------------------------------------=
+-----
+
+
+
+
+[]
+This e-mail has been sent to m8jsxppndq@privaterelay.appleid.com, click her=
+e to unsubscribe https://s1l56.mjt.lu/unsub2?m=3DAV8AAJGWe5kAAc3nfdQAAoh-UB=
+EAAYCuFHcAnrQwACbNHgBptEYvcrV2ZHSdSpentHNA6e67sAAkFko&b=3D1bdcc710&e=3Db5e0=
+e42c&x=3DwsRbMUGjPSF-ALKVd5vJ_uDWxFFNpzEEwSC4Alnl-yAU2vmpThSRaN7Lbt2skxkD&h=
+l=3Den_us.
+NEWZIK - 7 Avenue Ingres 75016 Paris FR=
+
+--=-55bbmHvjvGXx098GR41l
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html><html lang=3D"en-US" dir=3D"ltr" xmlns=3D"http://www.w3.org/=
+1999/xhtml" xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schema=
+s-microsoft-com:office:office"><head><title>Temporary Unavailability of Liv=
+eScores and Transpositions</title><!--[if !mso]><!--><meta http-equiv=3D"X-=
+UA-Compatible" content=3D"IE=3Dedge"><!--<![endif]--><meta http-equiv=3D"Co=
+ntent-Type" content=3D"text/html; charset=3DUTF-8"><meta name=3D"viewport" =
+content=3D"width=3Ddevice-width,initial-scale=3D1"><style type=3D"text/css"=
+>#outlook a { padding:0; }
+      body { margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size=
+-adjust:100%; }
+      table, td { border-collapse:collapse;mso-table-lspace:0pt;mso-table-r=
+space:0pt; }
+      img { border:0;height:auto;line-height:100%; outline:none;text-decora=
+tion:none;-ms-interpolation-mode:bicubic; }
+      p { display:block;margin:13px 0; }</style><!--[if mso]>
+    <noscript>
+    <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml>
+    </noscript>
+    <![endif]--><!--[if lte mso 11]>
+    <style type=3D"text/css">
+      .mj-outlook-group-fix { width:100% !important; }
+    </style>
+    <![endif]--><!--[if !mso]><!--><link href=3D"https://fonts.googleapis.c=
+om/css?family=3Dsans" rel=3D"stylesheet" type=3D"text/css"><link href=3D"ht=
+tps://fonts.googleapis.com/css?family=3Darial" rel=3D"stylesheet" type=3D"t=
+ext/css"><style type=3D"text/css">@import url(https://fonts.googleapis.com/=
+css?family=3Dsans);
+@import url(https://fonts.googleapis.com/css?family=3Darial);</style><!--<!=
+[endif]--><style type=3D"text/css">@media only screen and (min-width:480px)=
+ {
+        .mj-column-per-100 { width:100% !important; max-width: 100%; }
+      }</style><style media=3D"screen and (min-width:480px)">.moz-text-html=
+ .mj-column-per-100 { width:100% !important; max-width: 100%; }</style><sty=
+le type=3D"text/css">[owa] .mj-column-per-100 { width:100% !important; max-=
+width: 100%; }</style><style type=3D"text/css">@media only screen and (max-=
+width:479px) {
+      table.mj-full-width-mobile { width: 100% !important; }
+      td.mj-full-width-mobile { width: auto !important; }
+    }</style><style type=3D"text/css"></style></head><body style=3D"word-sp=
+acing:normal;background-color:#ffffff;"><div style=3D"display:none;font-siz=
+e:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;=
+overflow:hidden;">French and Japanese versions below</div><div style=3D"bac=
+kground-color:#ffffff;" role=3D"main" lang=3D"en-US" dir=3D"ltr"><table ali=
+gn=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pres=
+entation" style=3D"background:transparent;background-color:transparent;widt=
+h:100%;"><tbody><tr><td><!--[if mso | IE]><table align=3D"center" border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" st=
+yle=3D"width:600px;" width=3D"600" bgcolor=3D"transparent" ><tr><td style=
+=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-=
+-><div style=3D"margin:0px auto;max-width:600px;"><table align=3D"center" b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=
+=3D"width:100%;"><tbody><tr><td style=3D"direction:ltr;font-size:0px;paddin=
+g:0px 0px 0px 0px;padding-bottom:0px;padding-left:0px;padding-right:0px;pad=
+ding-top:0px;text-align:center;"><!--[if mso | IE]><table role=3D"presentat=
+ion" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" st=
+yle=3D"vertical-align:top;width:600px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size:0px;text-align:left;dire=
+ction:ltr;display:inline-block;vertical-align:top;width:100%;"><table borde=
+r=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"=
+vertical-align:top;" width=3D"100%"><tbody><tr><td align=3D"center" style=
+=3D"font-size:0px;padding:10px 25px;word-break:break-word;"><table border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"b=
+order-collapse:collapse;border-spacing:0px;"><tbody><tr><td style=3D"width:=
+150px;"><a href=3D"https://s1l56.mjt.lu/lnk/AV8AAJGWe5kAAc3nfdQAAoh-UBEAAYC=
+uFHcAnrQwACbNHgBptEYvcrV2ZHSdSpentHNA6e67sAAkFko/1/tfnVPHk5dWQw9pv27r0HnQ/a=
+HR0cHM6Ly9lbi5ibG9nLm5ld3ppay5jb20v" target=3D"_blank"><img alt=3D"logo cen=
+tered" src=3D"https://s1l56.mjt.lu/img2/s1l56/5295a0f0-737d-4980-9ff5-c83c8=
+263bce7/content" style=3D"border:none;display:block;outline:none;text-decor=
+ation:none;height:auto;width:100%;font-size:13px;" width=3D"150" height=3D"=
+auto"></a></td></tr></tbody></table></td></tr></tbody></table></div><!--[if=
+ mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!=
+--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table><ta=
+ble align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" style=3D"background:transparent;background-color:transpar=
+ent;width:100%;"><tbody><tr><td><!--[if mso | IE]><table align=3D"center" b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presenta=
+tion" style=3D"width:600px;" width=3D"600" bgcolor=3D"transparent" ><tr><td=
+ style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![e=
+ndif]--><div style=3D"margin:0px auto;max-width:600px;"><table align=3D"cen=
+ter" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation"=
+ style=3D"width:100%;"><tbody><tr><td style=3D"direction:ltr;font-size:0px;=
+padding:15px 0px 0px 0px;padding-bottom:0px;padding-left:0px;padding-right:=
+0px;padding-top:15px;text-align:center;"><!--[if mso | IE]><table role=3D"p=
+resentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=
+=3D"" style=3D"vertical-align:top;width:600px;" ><![endif]--><div class=3D"=
+mj-column-per-100 mj-outlook-group-fix" style=3D"font-size:0px;text-align:l=
+eft;direction:ltr;display:inline-block;vertical-align:top;width:100%;"><tab=
+le border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" s=
+tyle=3D"vertical-align:top;" width=3D"100%"><tbody><tr><td align=3D"left" s=
+tyle=3D"font-size:0px;padding:10px 25px;padding-top:0px;padding-bottom:0px;=
+word-break:break-word;"><div style=3D"font-family:Arial, sans-serif;font-si=
+ze:13px;letter-spacing:normal;line-height:1;text-align:left;color:#000000;"=
+><h1 class=3D"text-build-content" style=3D"text-align:center;; margin-top: =
+10px; margin-bottom: 10px; font-weight: normal;"><b>Temporary Unavailabilit=
+y of LiveScores and Transpositions</b></h1></div></td></tr><tr><td align=3D=
+"left" style=3D"font-size:0px;padding:10px 25px;padding-top:0px;padding-bot=
+tom:0px;word-break:break-word;"><div style=3D"font-family:Verdana, Helvetic=
+a, Arial, sans-serif;font-size:14px;letter-spacing:normal;line-height:1;tex=
+t-align:left;color:#000000;"><p class=3D"text-build-content" style=3D"margi=
+n: 10px 0; margin-top: 10px; margin-bottom: 10px;"><span style=3D"color:#00=
+0000;font-family:Arial"><i>Faites d=C3=A9filer vers le bas pour la version =
+fran=C3=A7aise</i></span><br><span style=3D"color:#000000;font-family:Arial=
+"><i>=E6=97=A5=E6=9C=AC=E8=AA=9E=E7=89=88=E3=82=92=E3=81=94=E8=A6=A7=E3=81=
+=AB=E3=81=AA=E3=82=8B=E3=81=AB=E3=81=AF=E3=80=81=E4=B8=8B=E3=81=AB=E3=82=B9=
+=E3=82=AF=E3=83=AD=E3=83=BC=E3=83=AB=E3=81=97=E3=81=A6=E3=81=8F=E3=81=A0=E3=
+=81=95=E3=81=84</i></span></p></div></td></tr><tr><td style=3D"font-size:0p=
+x;word-break:break-word;"><div style=3D"height:30px;line-height:30px;">&#82=
+02;</div></td></tr><tr><td align=3D"left" style=3D"background:transparent;f=
+ont-size:0px;padding:0px 25px 0px 25px;padding-top:0px;padding-right:25px;p=
+adding-bottom:0px;padding-left:25px;word-break:break-word;"><div style=3D"f=
+ont-family:Verdana, Helvetica, Arial, sans-serif;font-size:13px;line-height=
+:1;text-align:left;color:#000000;"><p class=3D"text-build-content" style=3D=
+"margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"><span style=3D"fon=
+t-family:Helvetica, Arial, sans-serif;font-size:16px"><b>Dear Newzicians,</=
+b></span></p></div></td></tr><tr><td align=3D"left" style=3D"font-size:0px;=
+padding:10px 25px;padding-top:0px;padding-bottom:0px;word-break:break-word;=
+"><div style=3D"font-family:Arial, sans-serif;font-size:13px;letter-spacing=
+:normal;line-height:1;text-align:left;color:#000000;"><p class=3D"text-buil=
+d-content" style=3D"margin: 10px 0; margin-top: 10px;"><span style=3D"font-=
+family:Helvetica, Arial, sans-serif;font-size:16px">Some of you may have al=
+ready noticed that our OMR system has been experiencing downtime for the pa=
+st few hours. As a result, the Newzik app is currently unable to perform Li=
+veScores and transpositions.</span></p><p class=3D"text-build-content" styl=
+e=3D"margin: 10px 0;"><span style=3D"font-family:Helvetica, Arial, sans-ser=
+if;font-size:16px">Our team is actively working to resolve the issue and re=
+store this functionality as soon as possible. We anticipate that the system=
+ will be back to normal by the start of next week and will notify you immed=
+iately once LiveScores are available again.</span></p><p class=3D"text-buil=
+d-content" style=3D"margin: 10px 0;"><span style=3D"font-family:Helvetica, =
+Arial, sans-serif;font-size:16px">Please note, however, that the <b>rest of=
+ the app=E2=80=99s features remain fully operational</b>:<b> </b>you can co=
+ntinue practicing music and working on your scores without interruption.</s=
+pan></p><p class=3D"text-build-content" style=3D"margin: 10px 0;"><span sty=
+le=3D"font-family:Helvetica, Arial, sans-serif;font-size:16px">We sincerely=
+ apologize for any inconvenience this may cause and remain at your disposal=
+ should you have any questions.</span></p><p class=3D"text-build-content" s=
+tyle=3D"margin: 10px 0;"><span style=3D"font-family:Helvetica, Arial, sans-=
+serif;font-size:16px">Thank you for your understanding.</span></p><p class=
+=3D"text-build-content" style=3D"margin: 10px 0;"><span style=3D"font-famil=
+y:Helvetica, Arial, sans-serif;font-size:16px">Best regards,&nbsp;</span><b=
+r>&nbsp;</p><p class=3D"text-build-content" style=3D"margin: 10px 0; margin=
+-bottom: 10px;"><span style=3D"font-family:Helvetica, Arial, sans-serif;fon=
+t-size:16px"><b>The Newzik Team</b></span></p></div></td></tr><tr><td align=
+=3D"center" style=3D"font-size:0px;padding:10px 25px;word-break:break-word;=
+"><p style=3D"border-top:solid 2px #000000;font-size:1px;margin:0px auto;wi=
+dth:100%;"></p><!--[if mso | IE]><table align=3D"center" border=3D"0" cellp=
+adding=3D"0" cellspacing=3D"0" style=3D"border-top:solid 2px #000000;font-s=
+ize:1px;margin:0px auto;width:550px;" role=3D"presentation" width=3D"550px"=
+ ><tr><td style=3D"height:0;line-height:0;"> &nbsp;
+</td></tr></table><![endif]--></td></tr><tr><td align=3D"left" style=3D"bac=
+kground:transparent;font-size:0px;padding:0px 25px 0px 25px;padding-top:0px=
+;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-w=
+ord;"><div style=3D"font-family:Verdana, Helvetica, Arial, sans-serif;font-=
+size:13px;line-height:1;text-align:left;color:#000000;"><p class=3D"text-bu=
+ild-content" style=3D"margin: 10px 0; margin-top: 10px; margin-bottom: 10px=
+;"><span style=3D"font-family:Helvetica, Arial, sans-serif;font-size:16px">=
+<b>Chers Newzicians,</b></span></p></div></td></tr><tr><td align=3D"left" s=
+tyle=3D"font-size:0px;padding:10px 25px;padding-top:0px;padding-bottom:0px;=
+word-break:break-word;"><div style=3D"font-family:Arial, sans-serif;font-si=
+ze:13px;letter-spacing:normal;line-height:1;text-align:left;color:#000000;"=
+><p class=3D"text-build-content" style=3D"margin: 10px 0; margin-top: 10px;=
+"><span style=3D"font-family:Helvetica, Arial, sans-serif;font-size:16px">C=
+ertains parmi vous ont d=C3=A9j=C3=A0 pu le remarquer, mais notre syst=C3=
+=A8me d'OMR rencontre depuis d=C3=A9j=C3=A0 quelques heures des difficult=
+=C3=A9s. Ce faisant, l'app Newzik n'est pour l'instant plus en mesure de ch=
+arger des LiveScores et des transpositions.&nbsp;</span></p><p class=3D"tex=
+t-build-content" style=3D"margin: 10px 0;"><span style=3D"font-family:Helve=
+tica, Arial, sans-serif;font-size:16px">Nos =C3=A9quipes travaillent active=
+ment =C3=A0 la r=C3=A9solution du probl=C3=A8me et =C3=A0 la restauration d=
+e ces fonctionnalit=C3=A9s. Nous estimons n=C3=A9anmoins un retour =C3=A0 l=
+a normal au plus t=C3=B4t seulement en d=C3=A9but de semaine prochaine. &nb=
+sp;Nous vous informerons d=C3=A8s que vous pourrez de nouveau utiliser nos =
+LiveScores.&nbsp;</span></p><p class=3D"text-build-content" style=3D"margin=
+: 10px 0;"><span style=3D"font-family:Helvetica, Arial, sans-serif;font-siz=
+e:16px">Nous vous informons toutefois que les <b>autres fonctionnalit=C3=A9=
+s de l'application demeurent pleinement accessibles </b>: vous pouvez conti=
+nuer =C3=A0 vous exercer et =C3=A0 travailler vos partitions sans interrupt=
+ion.</span></p><p class=3D"text-build-content" style=3D"margin: 10px 0;"><s=
+pan style=3D"font-family:Helvetica, Arial, sans-serif;font-size:16px">Nous =
+vous prions de nous excuser pour la g=C3=AAne occasionn=C3=A9e et demeurons=
+ =C3=A0 votre disposition si vous avez la moindre question.&nbsp;</span></p=
+><p class=3D"text-build-content" style=3D"margin: 10px 0;"><span style=3D"f=
+ont-family:Helvetica, Arial, sans-serif;font-size:16px">Merci pour votre co=
+mpr=C3=A9hension.</span></p><p class=3D"text-build-content" style=3D"margin=
+: 10px 0;"><span style=3D"font-family:Helvetica, Arial, sans-serif;font-siz=
+e:16px">Cordialement,&nbsp;</span>&nbsp;</p><p class=3D"text-build-content"=
+ style=3D"margin: 10px 0; margin-bottom: 10px;"><span style=3D"font-family:=
+Helvetica, Arial, sans-serif;font-size:16px"><b>L'Equipe Newzik&nbsp;</b></=
+span></p></div></td></tr><tr><td align=3D"center" style=3D"font-size:0px;pa=
+dding:10px 25px;word-break:break-word;"><p style=3D"border-top:solid 2px #0=
+00000;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><tab=
+le align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=
+=3D"border-top:solid 2px #000000;font-size:1px;margin:0px auto;width:550px;=
+" role=3D"presentation" width=3D"550px" ><tr><td style=3D"height:0;line-hei=
+ght:0;"> &nbsp;
+</td></tr></table><![endif]--></td></tr><tr><td align=3D"left" style=3D"bac=
+kground:transparent;font-size:0px;padding:0px 25px 0px 25px;padding-top:0px=
+;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-w=
+ord;"><div style=3D"font-family:Verdana, Helvetica, Arial, sans-serif;font-=
+size:13px;line-height:1;text-align:left;color:#000000;"><p class=3D"text-bu=
+ild-content" style=3D"margin: 10px 0; margin-top: 10px; margin-bottom: 10px=
+;"><span style=3D"font-family:Helvetica, Arial, sans-serif;font-size:16px">=
+<b>=E3=81=8A=E5=AE=A2=E6=A7=98=E5=90=84=E4=BD=8D=E3=80=81</b></span></p></d=
+iv></td></tr><tr><td align=3D"left" style=3D"font-size:0px;padding:10px 25p=
+x;padding-top:0px;padding-bottom:0px;word-break:break-word;"><div style=3D"=
+font-family:Arial, sans-serif;font-size:13px;letter-spacing:normal;line-hei=
+ght:1;text-align:left;color:#000000;"><p class=3D"text-build-content" style=
+=3D"margin: 10px 0; margin-top: 10px;"><span style=3D"font-family:Helvetica=
+, Arial, sans-serif;font-size:16px">=E3=81=84=E3=81=A4=E3=82=82Newzik=E3=82=
+=92=E3=81=94=E5=88=A9=E7=94=A8=E3=81=84=E3=81=9F=E3=81=A0=E3=81=8D=E8=AA=A0=
+=E3=81=AB=E3=81=82=E3=82=8A=E3=81=8C=E3=81=A8=E3=81=86=E3=81=94=E3=81=96=E3=
+=81=84=E3=81=BE=E3=81=99=E3=80=82</span></p><p class=3D"text-build-content"=
+ style=3D"margin: 10px 0;"><span style=3D"font-family:Helvetica, Arial, san=
+s-serif;font-size:16px">=E7=8F=BE=E5=9C=A8=E3=80=81OMR=EF=BC=88=E9=AB=98=E9=
+=A1=8D=E6=A5=BD=E8=AD=9C=E8=AA=8D=E8=AD=98=EF=BC=89=E3=82=B7=E3=82=B9=E3=83=
+=86=E3=83=A0=E3=81=8C=E6=95=B0=E6=99=82=E9=96=93=E3=81=AB=E3=82=8F=E3=81=9F=
+=E3=82=8A=E5=81=9C=E6=AD=A2=E3=81=97=E3=81=A6=E3=81=8A=E3=82=8A=E3=80=81New=
+zik=E3=82=A2=E3=83=97=E3=83=AA=E3=81=AB=E3=81=A6LiveScore=EF=BC=88=E3=83=A9=
+=E3=82=A4=E3=83=96=E3=82=B9=E3=82=B3=E3=82=A2=EF=BC=89=E3=81=8A=E3=82=88=E3=
+=81=B3=E7=A7=BB=E8=AA=BF=E6=A9=9F=E8=83=BD=E3=81=8C=E3=81=94=E5=88=A9=E7=94=
+=A8=E3=81=84=E3=81=9F=E3=81=A0=E3=81=91=E3=81=AA=E3=81=84=E7=8A=B6=E6=B3=81=
+=E3=81=A8=E3=81=AA=E3=81=A3=E3=81=A6=E3=81=8A=E3=82=8A=E3=81=BE=E3=81=99=E3=
+=80=82=E3=82=A2=E3=83=97=E3=83=AA=E3=81=AE=E3=81=9D=E3=81=AE=E4=BB=96=E3=81=
+=AE=E6=A9=9F=E8=83=BD=E3=81=AF=E9=80=9A=E5=B8=B8=E9=80=9A=E3=82=8A=E3=81=8A=
+=E4=BD=BF=E3=81=84=E3=81=84=E3=81=9F=E3=81=A0=E3=81=91=E3=81=BE=E3=81=99=E3=
+=81=AE=E3=81=A7=E3=80=81=E5=BC=95=E3=81=8D=E7=B6=9A=E3=81=8D=E6=A5=BD=E8=AD=
+=9C=E3=82=92=E4=BD=BF=E3=81=A3=E3=81=9F=E3=81=9D=E3=81=AE=E4=BB=96=E3=82=92=
+=E3=81=94=E5=88=A9=E7=94=A8=E3=81=8F=E3=81=A0=E3=81=95=E3=81=84=E3=80=82</s=
+pan></p><p class=3D"text-build-content" style=3D"margin: 10px 0;"><span sty=
+le=3D"font-family:Helvetica, Arial, sans-serif;font-size:16px">=E6=97=A9=E6=
+=80=A5=E3=81=AB=E6=A9=9F=E8=83=BD=E3=82=92=E5=BE=A9=E6=97=A7=E3=81=99=E3=81=
+=B9=E3=81=8F=E3=80=81=E7=8F=BE=E5=9C=A8=E3=83=81=E3=83=BC=E3=83=A0=E3=81=AB=
+=E3=81=A6=E5=95=8F=E9=A1=8C=E8=A7=A3=E6=B1=BA=E3=81=AB=E5=85=A8=E5=8A=9B=E3=
+=81=A7=E5=8F=96=E3=82=8A=E7=B5=84=E3=82=93=E3=81=A7=E3=81=8A=E3=82=8A=E3=81=
+=BE=E3=81=99=E3=80=82=E6=9D=A5=E9=80=B1=E5=88=9D=E3=82=81=E3=81=BE=E3=81=A7=
+=E3=81=AB=E3=81=AF=E3=82=B7=E3=82=B9=E3=83=86=E3=83=A0=E3=81=8C=E6=AD=A3=E5=
+=B8=B8=E3=81=AB=E6=88=BB=E3=82=8A=E3=80=81LiveScore=E3=81=8C=E5=86=8D=E9=96=
+=8B=E3=81=99=E3=82=8B=E8=A6=8B=E8=BE=BC=E3=81=BF=E3=81=A8=E3=81=AA=E3=81=A3=
+=E3=81=A6=E3=81=8A=E3=82=8A=E3=81=BE=E3=81=99=E3=80=82=E3=82=B7=E3=82=B9=E3=
+=83=86=E3=83=A0=E3=81=8C=E7=A8=BC=E5=83=8D=E6=AC=A1=E7=AC=AC=E3=80=81=E6=94=
+=B9=E3=82=81=E3=81=A6=E3=81=94=E9=80=A3=E7=B5=A1=E8=87=B4=E3=81=97=E3=81=BE=
+=E3=81=99=E3=80=82</span></p><p class=3D"text-build-content" style=3D"margi=
+n: 10px 0;"><span style=3D"font-family:Helvetica, Arial, sans-serif;font-si=
+ze:16px">=E3=81=93=E3=81=AE=E5=BA=A6=E3=81=AF=E3=81=94=E4=B8=8D=E4=BE=BF=E3=
+=82=92=E3=81=8A=E3=81=8B=E3=81=91=E3=81=97=E3=80=81=E8=AA=A0=E3=81=AB=E7=94=
+=B3=E3=81=97=E8=A8=B3=E3=81=94=E3=81=96=E3=81=84=E3=81=BE=E3=81=9B=E3=82=93=
+=E3=80=82=E3=81=94=E8=B3=AA=E5=95=8F=E3=81=AA=E3=81=A9=E3=81=94=E3=81=96=E3=
+=81=84=E3=81=BE=E3=81=97=E3=81=9F=E3=82=89=E3=80=81=E3=81=8A=E6=B0=97=E8=BB=
+=BD=E3=81=AB=E3=81=8A=E5=95=8F=E3=81=84=E5=90=88=E3=82=8F=E3=81=9B=E3=81=8F=
+=E3=81=A0=E3=81=95=E3=81=84=E3=80=82</span></p><p class=3D"text-build-conte=
+nt" style=3D"margin: 10px 0;"><span style=3D"font-family:Helvetica, Arial, =
+sans-serif;font-size:16px">=E4=BD=95=E5=8D=92=E3=81=94=E7=90=86=E8=A7=A3=E3=
+=81=AE=E3=81=BB=E3=81=A9=E3=82=88=E3=82=8D=E3=81=97=E3=81=8F=E3=81=8A=E9=A1=
+=98=E3=81=84=E7=94=B3=E3=81=97=E4=B8=8A=E3=81=92=E3=81=BE=E3=81=99=E3=80=82=
+</span></p><p class=3D"text-build-content" style=3D"margin: 10px 0;"><span =
+style=3D"font-family:Helvetica, Arial, sans-serif;font-size:16px"><b>Newzik=
+=E3=83=81=E3=83=BC=E3=83=A0 =E4=B8=80=E5=90=8C</b></span></p><p class=3D"te=
+xt-build-content" style=3D"margin: 10px 0; margin-bottom: 10px;">&nbsp;</p>=
+</div></td></tr><tr><td align=3D"center" style=3D"font-size:0px;padding:10p=
+x 25px;word-break:break-word;"><p style=3D"border-top:solid 2px #E6E6E6;fon=
+t-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align=
+=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"borde=
+r-top:solid 2px #E6E6E6;font-size:1px;margin:0px auto;width:550px;" role=3D=
+"presentation" width=3D"550px" ><tr><td style=3D"height:0;line-height:0;"> =
+&nbsp;
+</td></tr></table><![endif]--></td></tr><tr><td style=3D"font-size:0px;word=
+-break:break-word;"><div style=3D"height:20px;line-height:20px;">&#8202;</d=
+iv></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![e=
+ndif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table=
+><![endif]--></td></tr></tbody></table><table align=3D"center" border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"width:1=
+00%;"><tbody><tr><td><!--[if mso | IE]><table align=3D"center" border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=
+=3D"width:600px;" width=3D"600" ><tr><td style=3D"line-height:0px;font-size=
+:0px;mso-line-height-rule:exactly;"><![endif]--><div style=3D"margin:0px au=
+to;max-width:600px;"><table align=3D"center" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" role=3D"presentation" style=3D"width:100%;"><tbody><tr><=
+td style=3D"direction:ltr;font-size:0px;padding:20px 0px 20px 0px;padding-l=
+eft:0px;padding-right:0px;text-align:center;"><!--[if mso | IE]><table role=
+=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td =
+class=3D"" style=3D"vertical-align:top;width:600px;" ><![endif]--><div clas=
+s=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size:0px;text-al=
+ign:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"=
+><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentati=
+on" style=3D"vertical-align:top;" width=3D"100%"><tbody><tr><td align=3D"ce=
+nter" style=3D"font-size:0px;padding:10px 25px;word-break:break-word;"><!--=
+[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" role=3D"presentation" ><tr><td><![endif]--><table align=3D"cent=
+er" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" =
+style=3D"float:none;display:inline-table;"><tbody><tr><td aria-hidden=3D"tr=
+ue" style=3D"padding:4px;vertical-align:middle;"><table border=3D"0" cellpa=
+dding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"background:#3B=
+5998;border-radius:3px;width:20px;"><tbody><tr><td style=3D"font-size:0;hei=
+ght:20px;vertical-align:middle;width:20px;"><a href=3D"https://s1l56.mjt.lu=
+/lnk/AV8AAJGWe5kAAc3nfdQAAoh-UBEAAYCuFHcAnrQwACbNHgBptEYvcrV2ZHSdSpentHNA6e=
+67sAAkFko/2/UIqbDr-7L9DmbnTzV2mGsw/aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL25ld3pp=
+a2FwcA" target=3D"_blank"><img alt=3D"" height=3D"20" src=3D"https://static=
+.mailjet.com/ico-social/facebook.png" style=3D"border-radius:3px;display:bl=
+ock;" width=3D"20"></a></td></tr></tbody></table></td></tr></tbody></table>=
+<!--[if mso | IE]></td><td><![endif]--><table align=3D"center" border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"float:n=
+one;display:inline-table;"><tbody><tr><td aria-hidden=3D"true" style=3D"pad=
+ding:4px;vertical-align:middle;"><table border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" style=3D"background:#405DE6;border-radi=
+us:3px;width:20px;"><tbody><tr><td style=3D"font-size:0;height:20px;vertica=
+l-align:middle;width:20px;"><a href=3D"https://s1l56.mjt.lu/lnk/AV8AAJGWe5k=
+AAc3nfdQAAoh-UBEAAYCuFHcAnrQwACbNHgBptEYvcrV2ZHSdSpentHNA6e67sAAkFko/3/kzY9=
+ABbpKOMdFfMjCzj_zQ/aHR0cHM6Ly93d3cuaW5zdGFncmFtLmNvbS9uZXd6aWthcHAvP2hsPWZy=
+" target=3D"_blank"><img alt=3D"" height=3D"20" src=3D"https://static.mailj=
+et.com/ico-social/instagram.png" style=3D"border-radius:3px;display:block;"=
+ width=3D"20"></a></td></tr></tbody></table></td></tr></tbody></table><!--[=
+if mso | IE]></td><td><![endif]--><table align=3D"center" border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"float:none;d=
+isplay:inline-table;"><tbody><tr><td aria-hidden=3D"true" style=3D"padding:=
+4px;vertical-align:middle;"><table border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0" role=3D"presentation" style=3D"background:#131B20;border-radius:3p=
+x;width:20px;"><tbody><tr><td style=3D"font-size:0;height:20px;vertical-ali=
+gn:middle;width:20px;"><a href=3D"https://s1l56.mjt.lu/lnk/AV8AAJGWe5kAAc3n=
+fdQAAoh-UBEAAYCuFHcAnrQwACbNHgBptEYvcrV2ZHSdSpentHNA6e67sAAkFko/4/1rSN2n1ix=
+OCvlmBmHkz24A/aHR0cHM6Ly93d3cudGlrdG9rLmNvbS9AbmV3emlrYXBw" target=3D"_blan=
+k"><img alt=3D"" height=3D"20" src=3D"https://static.mailjet.com/ico-social=
+/tiktok.png" style=3D"border-radius:3px;display:block;" width=3D"20"></a></=
+td></tr></tbody></table></td></tr></tbody></table><!--[if mso | IE]></td><t=
+d><![endif]--><table align=3D"center" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" role=3D"presentation" style=3D"float:none;display:inline-table;=
+"><tbody><tr><td aria-hidden=3D"true" style=3D"padding:4px;vertical-align:m=
+iddle;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pre=
+sentation" style=3D"background:#0077B5;border-radius:3px;width:20px;"><tbod=
+y><tr><td style=3D"font-size:0;height:20px;vertical-align:middle;width:20px=
+;"><a href=3D"https://s1l56.mjt.lu/lnk/AV8AAJGWe5kAAc3nfdQAAoh-UBEAAYCuFHcA=
+nrQwACbNHgBptEYvcrV2ZHSdSpentHNA6e67sAAkFko/5/sTICJ-dLDQ7Jq8EvtZqKPg/aHR0cH=
+M6Ly9mci5saW5rZWRpbi5jb20vY29tcGFueS9uZXd6aWs" target=3D"_blank"><img alt=
+=3D"" height=3D"20" src=3D"https://static.mailjet.com/ico-social/linkedin.p=
+ng" style=3D"border-radius:3px;display:block;" width=3D"20"></a></td></tr><=
+/tbody></table></td></tr></tbody></table><!--[if mso | IE]></td><td><![endi=
+f]--><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" role=3D"presentation" style=3D"float:none;display:inline-table;"><tbody>=
+<tr><td aria-hidden=3D"true" style=3D"padding:4px;vertical-align:middle;"><=
+table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation=
+" style=3D"background:#FF0000;border-radius:3px;width:20px;"><tbody><tr><td=
+ style=3D"font-size:0;height:20px;vertical-align:middle;width:20px;"><a hre=
+f=3D"https://s1l56.mjt.lu/lnk/AV8AAJGWe5kAAc3nfdQAAoh-UBEAAYCuFHcAnrQwACbNH=
+gBptEYvcrV2ZHSdSpentHNA6e67sAAkFko/6/N_AF-LWtbY-U94dmKg_hZg/aHR0cHM6Ly93d3c=
+ueW91dHViZS5jb20vbmV3emlrYXBw" target=3D"_blank"><img alt=3D"" height=3D"20=
+" src=3D"https://static.mailjet.com/ico-social/youtube.png" style=3D"border=
+-radius:3px;display:block;" width=3D"20"></a></td></tr></tbody></table></td=
+></tr></tbody></table><!--[if mso | IE]></td></tr></table><![endif]--></td>=
+</tr><tr><td align=3D"center" style=3D"font-size:0px;padding:10px 25px;word=
+-break:break-word;"><div style=3D"font-family:Verdana, Helvetica, Arial, sa=
+ns-serif;font-size:11px;line-height:22px;text-align:center;color:#000000;">=
+<p class=3D"text-build-content" style=3D"text-align: center; margin: 10px 0=
+; margin-top: 10px; margin-bottom: 10px;" data-testid=3D"yAOsq29TxKBKbRktKs=
+Ijk"><span style=3D"font-family:Helvetica;font-size:16px">This e-mail has b=
+een sent to m8jsxppndq@privaterelay.appleid.com, </span><a class=3D"link-bu=
+ild-content" style=3D"color:inherit;text-decoration:none;; text-decoration:=
+ none;" target=3D"_blank" href=3D"https://s1l56.mjt.lu/unsub2?m=3DAV8AAJGWe=
+5kAAc3nfdQAAoh-UBEAAYCuFHcAnrQwACbNHgBptEYvcrV2ZHSdSpentHNA6e67sAAkFko&amp;=
+b=3D1bdcc710&amp;e=3Db5e0e42c&amp;x=3DwsRbMUGjPSF-ALKVd5vJ_uDWxFFNpzEEwSC4A=
+lnl-yAU2vmpThSRaN7Lbt2skxkD&amp;hl=3Den_us"><span style=3D"color:#3c99f6;fo=
+nt-family:Helvetica;font-size:16px"><b>click here to unsubscribe</b></span>=
+</a><span style=3D"font-family:Helvetica;font-size:16px">.</span></p></div>=
+</td></tr><tr><td align=3D"center" style=3D"font-size:0px;padding:10px 25px=
+;word-break:break-word;"><div style=3D"font-family:Verdana, Helvetica, Aria=
+l, sans-serif;font-size:11px;line-height:22px;text-align:center;color:#0000=
+00;"><p class=3D"text-build-content" style=3D"text-align: center; margin: 1=
+0px 0; margin-top: 10px; margin-bottom: 10px;" data-testid=3D"940hfOpISlgxS=
+NRw_COon"><span style=3D"font-family:Helvetica;font-size:16px">NEWZIK - 7 A=
+venue Ingres 75016 Paris FR</span></p></div></td></tr></tbody></table></div=
+><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table>=
+</div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></t=
+able></div><br/><a style=3D"font-family: Arial, sans-serif;" href=3D"https:=
+//s1l56.mjt.lu/lnk/AV8AAJGWe5kAAc3nfdQAAoh-UBEAAYCuFHcAnrQwACbNHgBptEYvcrV2=
+ZHSdSpentHNA6e67sAAkFko/0/OVBnJVxVI_bYgydfLDQSEw/aHR0cHM6Ly9lbi5ibG9nLm5ld3=
+ppay5jb20v?b=3D1">&#8203;</a><a style=3D"text-decoration: none; display: in=
+line-block;" href=3D"https://s1l56.mjt.lu/lnk/AV8AAJGWe5kAAc3nfdQAAoh-UBEAA=
+YCuFHcAnrQwACbNHgBptEYvcrV2ZHSdSpentHNA6e67sAAkFko/0/OVBnJVxVI_bYgydfLDQSEw=
+/aHR0cHM6Ly9lbi5ibG9nLm5ld3ppay5jb20v?b=3D3">
+<img src=3D"https://s1l56.mjt.lu/oo/AV8AAJGWe5kAAc3nfdQAAoh-UBEAAYCuFHcAnrQ=
+wACbNHgBptEYvcrV2ZHSdSpentHNA6e67sAAkFko/0c656407/e.gif" height=3D"1" width=
+=3D"1" alt=3D"" border=3D"0" style=3D"height:1px;width:1px;border:0;"/>
+</a></body></html>
+=
+
+--=-55bbmHvjvGXx098GR41l--
+
